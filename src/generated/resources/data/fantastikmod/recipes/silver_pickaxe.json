@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "k": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "fantastikmod:silver_ingot"
+    }
+  },
+  "pattern": [
+    "sss",
+    " k ",
+    " k "
+  ],
+  "result": {
+    "item": "fantastikmod:silver_pickaxe"
+  },
+  "show_notification": true
+}

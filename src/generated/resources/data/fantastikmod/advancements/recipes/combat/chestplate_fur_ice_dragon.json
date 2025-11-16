@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fur_ice_dragon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:fur_ice_dragon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fantastikmod:chestplate_fur_ice_dragon"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_fur_ice_dragon",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fantastikmod:chestplate_fur_ice_dragon"
+    ]
+  },
+  "sends_telemetry_event": false
+}

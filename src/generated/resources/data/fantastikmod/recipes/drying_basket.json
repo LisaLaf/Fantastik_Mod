@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "minecraft:string"
+    },
+    "t": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "sts",
+    "tst",
+    "sts"
+  ],
+  "result": {
+    "item": "fantastikmod:drying_basket"
+  },
+  "show_notification": true
+}

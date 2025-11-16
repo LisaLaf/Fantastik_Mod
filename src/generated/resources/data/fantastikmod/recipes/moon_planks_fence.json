@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "d": {
+      "item": "fantastikmod:moon_planks"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "dsd",
+    "dsd",
+    "   "
+  ],
+  "result": {
+    "count": 3,
+    "item": "fantastikmod:moon_planks_fence"
+  },
+  "show_notification": true
+}

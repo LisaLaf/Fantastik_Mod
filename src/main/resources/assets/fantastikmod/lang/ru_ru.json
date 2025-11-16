@@ -1,0 +1,122 @@
+{
+  "item.fantastikmod.gemkitsune": "Самоцвет Кицунэ",
+  "item.fantastikmod.moonmascot": "Луный талисман",
+  "item.fantastikmod.tofu": "Тофу",
+  "item.fantastikmod.rice": "Риса",
+  "item.fantastikmod.strawberry": "Клубника",
+  "item.fantastikmod.egg_kitsune_light": "Яйцо Призыва Светлой Кицунэ",
+  "item.fantastikmod.egg_ice_dragon": "Яйцо Призыва Ледяного Дракона",
+  "item.fantastikmod.egg_moon_deer": "Яйцо Призыва Лунного Оленя",
+  "item.fantastikmod.egg_blue_butterfly": "Яйцо Призыва Голубой Бабочки",
+  "item.fantastikmod.auripigment": "Аурипигмент",
+  "item.fantastikmod.silver_raw": "Необработанное Серебро",
+  "item.fantastikmod.gem_moon": "Драгоценный Лунный Камень",
+  "item.fantastikmod.tea_leaf": "Чайный Лист",
+  "item.fantastikmod.tea_leafs_green": "Зелёные чайные листы",
+  "item.fantastikmod.tea_leafs_black": "Чёрный чайные листы",
+  "item.fantastikmod.matcha_powder": "Порошок матча",
+  "item.fantastikmod.strawberry_mochi": "Клубничный Моти",
+  "item.fantastikmod.matcha_mochi": "Моти Из Матча",
+  "item.fantastikmod.mochi": "Моти",
+  "item.fantastikmod.dough_mochi": "Тесто Для Моти",
+  "item.fantastikmod.heart_ice_dragon": "Сердце Ледяного Дракона",
+  "item.fantastikmod.fur_ice_dragon": "Мех Ледяного Дракона",
+  "item.fantastikmod.soul_tamed_kitsune": "Душа Кицуне",
+  "item.fantastikmod.lively_soul_tamed_kitsune": "Живая Душа Кицуне",
+  "item.fantastikmod.black_tea": "Чёрный Чай",
+  "item.fantastikmod.green_tea": "Зелёный Чай",
+  "item.fantastikmod.matcha_tea": "Матча Чай",
+
+  "item.fantastikmod.moon_dust": "Лунная пыль",
+  "item.fantastikmod.silver_ingot": "Серебряный слиток",
+  "item.fantastikmod.moon_lamp": "Лунная лампа",
+  "item.fantastikmod.silver_helmet": "Серебряный шлем",
+  "item.fantastikmod.silver_chestplate": "Серебряный нагрудник",
+  "item.fantastikmod.silver_leggings": "Серебряные поножи",
+  "item.fantastikmod.silver_boots": "Серебряные ботинки",
+  "item.fantastikmod.silver_sword": "Серебряный меч",
+  "item.fantastikmod.silver_pickaxe": "Серебряная кирка",
+  "item.fantastikmod.silver_axe": "Серебряный топор",
+  "item.fantastikmod.silver_shovel": "Серебряная лопата",
+  "item.fantastikmod.silver_hoe": "Серебряная мотыга",
+
+  "block.fantastikmod.auripigment_block": "Блок Аурипигмента",
+
+  "item.fantastikmod.tea_ceremony_music_disc": "Музыкальная Пластинка",
+  "item.fantastikmod.tea_ceremony_music_disc.desc": "Lisa Laf - Чайная Церемония",
+
+
+  "item.fantastikmod.strawberry_seeds": "Семена Клубники",
+  "item.fantastikmod.tea_seeds": "Семена Чайного Куста",
+
+  "item.fantastikmod.sword_auripigment": "Аурипигментовый меч",
+
+  "item.fantastikmod.auripigment_boots": "Аурипигментовые Ботинки",
+  "item.fantastikmod.auripigment_chestplate": "Аурипигментовый Нагрудник",
+  "item.fantastikmod.auripigment_helmet": "Аурипигментовый Шлем",
+  "item.fantastikmod.auripigment_leggings": "Аурипигментовые Латы",
+
+  "item.fantastikmod.boots_fur_ice_dragon": "Ботинки Из Меха Ледяного Дракона",
+  "item.fantastikmod.chestplate_fur_ice_dragon": "Нагрудник Из Меха Ледяного Дракона",
+  "item.fantastikmod.helmet_fur_ice_dragon": "Шлем Из Меха Ледяного Дракона",
+  "item.fantastikmod.leggings_fur_ice_dragon": "Латы Из Меха Ледяного Дракона",
+
+  "block.fantastikmod.ash_block": "Блок Пепла",
+
+  "block.fantastikmod.silver_ore": "Серебрянная руда",
+  "block.fantastikmod.moonstone": "Лунный Булыжник",
+  "block.fantastikmod.moon_ore": "Лунная Руда",
+
+  "block.fantastikmod.tree_moon_log_block": "Бревно Лунного Дерева",
+  "block.fantastikmod.moon_planks": "Доски Лунного Дерева",
+  "block.fantastikmod.tree_moon_foliage_block": "Листва Лунного Дерева",
+  "block.fantastikmod.auripigment_ore_block": "Руда Аурипигмента",
+  "block.fantastikmod.gemkitsune_block": "Блок Самцветов Китцунэ",
+
+  "block.fantastikmod.moon_tree_door": "Дверь Из Лунных Досок",
+  "block.fantastikmod.moon_tree_trapdoor": "Люк Из Лунных Досок",
+  "block.fantastikmod.moon_planks_fence": "Забор Из Лунных Досок",
+  "block.fantastikmod.moon_planks_fence_gate": "Калитка Из Лунных Досок",
+  "block.fantastikmod.moon_planks_button": "Кнопка Из Лунных Досок",
+  "block.fantastikmod.moon_planks_plate": "Плита Из Лунных Досок",
+  "block.fantastikmod.moon_planks_stairs": "Лестница Из Лунных Досок",
+  "block.fantastikmod.moon_planks_slab": "Полублок Из Лунных Досок",
+  "block.fantastikmod.silver_block": "Серебряный блок",
+  "block.fantastikmod.moon_gem_block": "Блок лунного самоцвета",
+  "block.fantastikmod.moon_planks_wall": "Стена из лунных досок",
+
+  "block.fantastikmod.moon_sapling": "Сажанец Лунного Дерева",
+  "block.fantastikmod.moon_lily": "Лунная Лилия",
+  "block.fantastikmod.moon_northern_bluebell": "Лунный Синий Зверобой",
+  "block.fantastikmod.moon_heather": "Лунный Вереск",
+  "block.fantastikmod.moon_grass": "Лунная Трава",
+  "block.fantastikmod.moon_grass_1": "Лунная Трава",
+  "block.fantastikmod.moon_vine": "Лунная Лиана",
+  "block.fantastikmod.frost": "Иний",
+
+  "item.fantastikmod.silver_stick": "Серебрянная Палка",
+
+  "item.fantastikmod.moon_pickaxe": "Лунная кирка",
+  "item.fantastikmod.moon_axe": "Лунный топор",
+  "item.fantastikmod.moon_shovel": "Лунная лопата",
+  "item.fantastikmod.moon_sword": "Лунный меч",
+
+
+  "block.fantastikmod.drying_basket": "Корзина для сушки",
+
+  "entity.minecraft.villager.fantastikmod.teamaster": "Чайный Мастер",
+
+  "sounds.fantastikmod.gemkitsune_block_break": "Ломается блок лисьей руды",
+  "sounds.fantastikmod.gemkitsune_block_step": "Шаги по лисьей руде",
+  "sounds.fantastikmod.gemkitsune_block_place": "Ставится блок лисьей руды",
+  "sounds.fantastikmod.gemkitsune_block_hit": "Удар по лисьей руде",
+  "sounds.fantastikmod.gemkitsune_block_fall": "Падение на лисью руду",
+
+  "sounds.fantastikmod.kitsune_idle": "Кицунэ вокализирует",
+  "sounds.fantastikmod.kitsune_laugh": "Кицунэ смеётся",
+  "sounds.fantastikmod.kitsune_angry": "Кицунэ рычит",
+  "sounds.fantastikmod.kitsune_hurt": "Кицунэ ранена",
+
+
+  "cretivetab.fantastik_tab": "Фантастик"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "d": {
+      "item": "fantastikmod:moon_planks"
+    }
+  },
+  "pattern": [
+    "d  ",
+    "dd ",
+    "ddd"
+  ],
+  "result": {
+    "count": 4,
+    "item": "fantastikmod:moon_planks_stairs"
+  },
+  "show_notification": true
+}

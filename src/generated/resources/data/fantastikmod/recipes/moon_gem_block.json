@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "fantastikmod:gem_moon"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "ggg",
+    "ggg"
+  ],
+  "result": {
+    "item": "fantastikmod:moon_gem_block"
+  },
+  "show_notification": true
+}

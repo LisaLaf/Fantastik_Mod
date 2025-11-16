@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "fantastikmod:block/moon_planks_slab"
+    },
+    "type=double": {
+      "model": "fantastikmod:block/moon_planks"
+    },
+    "type=top": {
+      "model": "fantastikmod:block/moon_planks_slab_top"
+    }
+  }
+}

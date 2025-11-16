@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "fantastikmod:auripigment"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " a ",
+    " a ",
+    " s "
+  ],
+  "result": {
+    "item": "fantastikmod:sword_auripigment"
+  },
+  "show_notification": true
+}

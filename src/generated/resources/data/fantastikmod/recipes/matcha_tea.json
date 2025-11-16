@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "m": {
+      "item": "minecraft:water_bucket"
+    },
+    "s": {
+      "item": "minecraft:glass_bottle"
+    },
+    "t": {
+      "item": "fantastikmod:matcha_powder"
+    }
+  },
+  "pattern": [
+    "mt ",
+    "s  ",
+    "   "
+  ],
+  "result": {
+    "item": "fantastikmod:matcha_tea"
+  },
+  "show_notification": true
+}

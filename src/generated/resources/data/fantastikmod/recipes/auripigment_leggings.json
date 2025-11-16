@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "fantastikmod:auripigment"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "a a",
+    "a a"
+  ],
+  "result": {
+    "item": "fantastikmod:auripigment_leggings"
+  },
+  "show_notification": true
+}

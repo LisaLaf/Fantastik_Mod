@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "fantastikmod:block/moon_tree_door_bottom",
+    "top": "fantastikmod:block/moon_tree_door_top"
+  }
+}

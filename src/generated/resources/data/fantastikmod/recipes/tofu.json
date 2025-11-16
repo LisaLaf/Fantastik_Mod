@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:bowl"
+    },
+    "e": {
+      "item": "minecraft:egg"
+    },
+    "m": {
+      "item": "minecraft:milk_bucket"
+    },
+    "s": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "pattern": [
+    "mmm",
+    "ses",
+    " b "
+  ],
+  "result": {
+    "item": "fantastikmod:tofu"
+  },
+  "show_notification": true
+}

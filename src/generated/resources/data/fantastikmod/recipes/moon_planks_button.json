@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "fantastikmod:moon_planks"
+    }
+  ],
+  "result": {
+    "item": "fantastikmod:moon_planks_button"
+  }
+}

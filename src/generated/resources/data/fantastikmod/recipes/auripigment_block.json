@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "fantastikmod:auripigment"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "ggg",
+    "ggg"
+  ],
+  "result": {
+    "item": "fantastikmod:auripigment_block"
+  },
+  "show_notification": true
+}

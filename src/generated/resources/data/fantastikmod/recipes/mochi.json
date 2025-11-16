@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fantastikmod:dough_mochi"
+    }
+  ],
+  "result": {
+    "item": "fantastikmod:mochi"
+  }
+}

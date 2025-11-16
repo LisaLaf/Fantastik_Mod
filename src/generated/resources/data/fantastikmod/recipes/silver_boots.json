@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "s": {
+      "item": "fantastikmod:silver_ingot"
+    }
+  },
+  "pattern": [
+    "s s",
+    "s s",
+    "   "
+  ],
+  "result": {
+    "item": "fantastikmod:silver_boots"
+  },
+  "show_notification": true
+}

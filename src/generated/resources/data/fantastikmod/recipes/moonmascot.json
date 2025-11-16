@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "f": {
+      "item": "minecraft:string"
+    },
+    "m": {
+      "item": "fantastikmod:moon_dust"
+    },
+    "s": {
+      "item": "fantastikmod:silver_ingot"
+    }
+  },
+  "pattern": [
+    "f f",
+    " s ",
+    "mmm"
+  ],
+  "result": {
+    "item": "fantastikmod:moonmascot"
+  },
+  "show_notification": true
+}

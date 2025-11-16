@@ -1,0 +1,225 @@
+package net.lisalaf.fantastikmod.datagen;
+
+import net.lisalaf.fantastikmod.block.ModBlocks;
+import net.lisalaf.fantastikmod.block.custom.MoonVineBlock;
+import net.lisalaf.fantastikmod.block.custom.RiceCropBlock;
+import net.lisalaf.fantastikmod.block.custom.StrawberryCropBlock;
+import net.lisalaf.fantastikmod.block.custom.TeaCropBlock;
+import net.lisalaf.fantastikmod.fantastikmod;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
+
+@SuppressWarnings("removal")
+public class ModBlockStateProvider extends BlockStateProvider {
+
+    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+        super(output, fantastikmod.MOD_ID, exFileHelper);
+        System.out.println("ModBlockStateProvider constructor called");
+    }
+
+    @Override
+    protected void registerStatesAndModels() {
+        System.out.println("Registering block states and models...");
+
+        // ПРОСТЫЕ БЛОКИ (которые дропают себя)
+        simpleBlockWithItem(ModBlocks.ASH_BLOCK.get(), cubeAll(ModBlocks.ASH_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.AURIPIGMENT_BLOCK.get(), cubeAll(ModBlocks.AURIPIGMENT_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.DRYING_BASKET.get(), cubeAll(ModBlocks.DRYING_BASKET.get()));
+        simpleBlockWithItem(ModBlocks.GEMKITSUNE_BLOCK.get(), cubeAll(ModBlocks.GEMKITSUNE_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.MOON_PLANKS.get(), cubeAll(ModBlocks.MOON_PLANKS.get()));
+
+        simpleBlockWithItem(ModBlocks.AURIPIGMENT_ORE_BLOCK.get(), cubeAll(ModBlocks.AURIPIGMENT_ORE_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.MOON_ORE.get(), cubeAll(ModBlocks.MOON_ORE.get()));
+        simpleBlockWithItem(ModBlocks.MOONSTONE.get(), cubeAll(ModBlocks.MOONSTONE.get()));
+        simpleBlockWithItem(ModBlocks.SILVER_ORE.get(), cubeAll(ModBlocks.SILVER_ORE.get()));
+        simpleBlockWithItem(ModBlocks.SILVER_BLOCK.get(), cubeAll(ModBlocks.SILVER_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.MOON_GEM_BLOCK.get(), cubeAll(ModBlocks.MOON_GEM_BLOCK.get()));
+
+        leavesBlock(ModBlocks.TREE_MOON_FOLIAGE_BLOCK);
+        
+        logBlock((RotatedPillarBlock) ModBlocks.TREE_MOON_LOG_BLOCK.get(),
+                modLoc("block/tree_moon_log_block"),      // боковая текстура
+                modLoc("block/tree_moon_log_block_top")   // текстура торцов
+        );
+
+        // ФУНКЦИОНАЛЬНЫЕ БЛОКИ (специальные модели)
+        // Лестница
+        stairsBlock(((StairBlock) ModBlocks.MOON_PLANKS_STAIRS.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Плита
+        slabBlock(((SlabBlock) ModBlocks.MOON_PLANKS_SLAB.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Забор
+        fenceBlock(((FenceBlock) ModBlocks.MOON_PLANKS_FENCE.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Калитка
+        fenceGateBlock(((FenceGateBlock) ModBlocks.MOON_PLANKS_FENCE_GATE.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Стена
+        wallBlock(((WallBlock) ModBlocks.MOON_WALL.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Кнопка
+        buttonBlock(((ButtonBlock) ModBlocks.MOON_PLANKS_BUTTON.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Нажимная плита
+        pressurePlateBlock(((PressurePlateBlock) ModBlocks.MOON_PLANKS_PLATE.get()),
+                blockTexture(ModBlocks.MOON_PLANKS.get()));
+
+        // Люк
+        trapdoorBlockWithRenderType(((TrapDoorBlock) ModBlocks.MOON_TREE_TRAPDOOR.get()),
+                modLoc("block/moon_tree_trapdoor"), true, "cutout");
+
+        // Дверь
+        doorBlockWithRenderType(((DoorBlock) ModBlocks.MOON_TREE_DOOR.get()),
+                modLoc("block/moon_tree_door_bottom"),
+                modLoc("block/moon_tree_door_top"), "cutout");
+
+        makeStrawberryCrop((CropBlock) ModBlocks.STRAWBERRY_CROP.get(), "strawberry_stage", "strawberry_stage");
+        makeTeaCrop((CropBlock) ModBlocks.TEA_CROP.get(), "tea_stage", "tea_stage");
+        makeRiceCrop(((CropBlock) ModBlocks.RICE_CROP.get()), "rice_stage_", "rice_stage_");
+
+
+
+        simpleBlockWithItem(ModBlocks.MOON_LILY.get(), models().cross(blockTexture(ModBlocks.MOON_LILY.get()).getPath(),
+                blockTexture(ModBlocks.MOON_LILY.get())).renderType("cutout"));
+        simpleBlockWithItem(ModBlocks.POTTED_MOON_LILY.get(), models().singleTexture("potted_moon_lily", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(ModBlocks.MOON_LILY.get())).renderType("cutout"));
+
+        simpleBlockWithItem(ModBlocks.MOON_HEATHER.get(), models().cross(blockTexture(ModBlocks.MOON_HEATHER.get()).getPath(),
+                blockTexture(ModBlocks.MOON_HEATHER.get())).renderType("cutout"));
+        simpleBlockWithItem(ModBlocks.POTTED_MOON_HEATHER.get(), models().singleTexture("potted_moon_heather", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(ModBlocks.MOON_HEATHER.get())).renderType("cutout"));
+
+        simpleBlockWithItem(ModBlocks.MOON_NORTHERN_BLUEBELL.get(), models().cross(blockTexture(ModBlocks.MOON_NORTHERN_BLUEBELL.get()).getPath(),
+                blockTexture(ModBlocks.MOON_NORTHERN_BLUEBELL.get())).renderType("cutout"));
+        simpleBlockWithItem(ModBlocks.POTTED_MOON_NORTHERN_BLUEBELL.get(), models().singleTexture("potted_moon_northern_bluebell", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(ModBlocks.MOON_NORTHERN_BLUEBELL.get())).renderType("cutout"));
+
+        simpleBlockWithItem(ModBlocks.MOON_GRASS.get(),
+                models().cross(blockTexture(ModBlocks.MOON_GRASS.get()).getPath(),
+                                blockTexture(ModBlocks.MOON_GRASS.get()))
+                        .renderType("cutout"));
+        simpleBlockWithItem(ModBlocks.MOON_GRASS_1.get(),
+                models().cross(blockTexture(ModBlocks.MOON_GRASS_1.get()).getPath(),
+                                blockTexture(ModBlocks.MOON_GRASS_1.get()))
+                        .renderType("cutout"));
+
+        saplingBlock(ModBlocks.MOON_SAPLING);
+
+
+        simpleBlockWithItem(ModBlocks.MOON_VINE.get(),
+                models().cross("moon_vine", modLoc("block/moon_vine"))
+                        .renderType("cutout"));
+
+        simpleBlockWithItem(ModBlocks.FROST.get(),
+                models().withExistingParent("frost", "block/snow_height2")
+                        .texture("particle", modLoc("block/frost"))
+                        .texture("texture", modLoc("block/frost"))
+                        .renderType("translucent"));
+
+
+
+
+        System.out.println("All blocks registered successfully!");
+    }
+
+    private void frostBlock(RegistryObject<Block> block) {
+        // Модель для отображения
+        models().withExistingParent(block.getId().getPath(), "block/snow_height2")
+                .texture("particle", modLoc("block/frost"))
+                .texture("texture", modLoc("block/frost"));
+
+        // Блокстатес с разной высотой
+        getVariantBuilder(block.get()).forAllStates(state -> {
+            int layers = state.getValue(SnowLayerBlock.LAYERS);
+            return new ConfiguredModel[]{
+                    new ConfiguredModel(models().getExistingFile(
+                            modLoc("block/frost_height" + layers * 2)
+                    ))
+            };
+        });
+    }
+
+
+    private void saplingBlock(RegistryObject<Block> blockRegistryObject) {
+        simpleBlock(blockRegistryObject.get(),
+                models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout"));
+    }
+
+
+    private void leavesBlock(RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(),
+                models().singleTexture(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                                new ResourceLocation("minecraft:block/leaves"),
+                                "all", blockTexture(blockRegistryObject.get()))
+                        .renderType("cutout_mipped")); // Используйте "cutout_mipped" для листвы
+    }
+    private void logBlock(RotatedPillarBlock block, ResourceLocation sideTexture, ResourceLocation endTexture) {
+        axisBlock(block, sideTexture, endTexture);
+    }
+
+    public void makeStrawberryCrop(CropBlock block, String modelName, String textureName) {
+        Function<BlockState, ConfiguredModel[]> function = state -> strawberryStates(state, block, modelName, textureName);
+
+        getVariantBuilder(block).forAllStates(function);
+    }
+
+
+    private ConfiguredModel[] strawberryStates(BlockState state, CropBlock block, String modelName, String textureName) {
+        ConfiguredModel[] models = new ConfiguredModel[1];
+        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((StrawberryCropBlock) block).getAgeProperty()),
+                new ResourceLocation(fantastikmod.MOD_ID, "block/" + textureName + state.getValue(((StrawberryCropBlock) block).getAgeProperty()))).renderType("cutout"));
+
+        return models;
+    }
+
+    public void makeTeaCrop(CropBlock block, String modelName, String textureName) {
+        Function<BlockState, ConfiguredModel[]> function = state -> teaStates(state, block, modelName, textureName);
+
+        getVariantBuilder(block).forAllStates(function);
+    }
+
+    private ConfiguredModel[] teaStates(BlockState state, CropBlock block, String modelName, String textureName) {
+        ConfiguredModel[] models = new ConfiguredModel[1];
+        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((TeaCropBlock) block).getAgeProperty()),
+                new ResourceLocation(fantastikmod.MOD_ID, "block/" + textureName + state.getValue(((TeaCropBlock) block).getAgeProperty()))).renderType("cutout"));
+
+        return models;
+    }
+
+    public void makeRiceCrop(CropBlock block, String modelName, String textureName) {
+        Function<BlockState, ConfiguredModel[]> function = state -> riceStates(state, block, modelName, textureName);
+
+        getVariantBuilder(block).forAllStates(function);
+    }
+
+    private ConfiguredModel[] riceStates(BlockState state, CropBlock block, String modelName, String textureName) {
+        ConfiguredModel[] models = new ConfiguredModel[1];
+        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((RiceCropBlock) block).getAgeProperty()),
+                new ResourceLocation(fantastikmod.MOD_ID, "block/" + textureName + state.getValue(((RiceCropBlock) block).getAgeProperty()))).renderType("cutout"));
+
+        return models;
+    }
+
+
+
+
+}

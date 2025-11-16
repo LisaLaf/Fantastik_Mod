@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "fantastikmod:block/moon_planks",
+    "side": "fantastikmod:block/moon_planks",
+    "top": "fantastikmod:block/moon_planks"
+  }
+}

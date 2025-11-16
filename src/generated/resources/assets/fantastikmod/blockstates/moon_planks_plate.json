@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "fantastikmod:block/moon_planks_plate"
+    },
+    "powered=true": {
+      "model": "fantastikmod:block/moon_planks_plate_down"
+    }
+  }
+}

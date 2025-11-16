@@ -1,0 +1,128 @@
+{
+  "gemkitsune_block_break": {
+    "subtitle": "sounds.fantastikmod.gemkitsune_block_break",
+    "sounds": [
+      "fantastikmod:gemkitsune_block_break"
+    ]
+  },
+  "gemkitsune_block_step": {
+    "subtitle": "sounds.fantastikmod.gemkitsune_block_step",
+    "sounds": [
+      "fantastikmod:gemkitsune_block_step"
+    ]
+  },
+  "gemkitsune_block_place": {
+    "subtitle": "sounds.fantastikmod.gemkitsune_block_place",
+    "sounds": [
+      "fantastikmod:gemkitsune_block_place"
+    ]
+  },
+  "gemkitsune_block_hit": {
+    "subtitle": "sounds.fantastikmod.gemkitsune_block_hit",
+    "sounds": [
+      "fantastikmod:gemkitsune_block_hit"
+    ]
+  },
+  "gemkitsune_block_fall": {
+    "subtitle": "sounds.fantastikmod.gemkitsune_block_fall",
+    "sounds": [
+      "fantastikmod:gemkitsune_block_fall"
+    ]
+  },
+  "tea_ceremony": {
+    "sounds": [
+      {
+        "name": "fantastikmod:tea_ceremony",
+        "stream": true
+      }
+    ]
+  },
+
+  "kitsune_idle1": {
+    "subtitle": "sounds.fantastikmod.kitsune_idle",
+    "sounds": [
+      "fantastikmod:kitsune_idle1"
+    ]
+  },
+  "kitsune_idle2": {
+    "subtitle": "sounds.fantastikmod.kitsune_idle",
+    "sounds": [
+      "fantastikmod:kitsune_idle2"
+    ]
+  },
+  "kitsune_idle3": {
+    "subtitle": "sounds.fantastikmod.kitsune_idle",
+    "sounds": [
+      "fantastikmod:kitsune_idle3"
+    ]
+  },
+  "kitsune_idle4": {
+    "subtitle": "sounds.fantastikmod.kitsune_idle",
+    "sounds": [
+      "fantastikmod:kitsune_idle4"
+    ]
+  },
+
+  "kitsune_laugh1": {
+    "subtitle": "sounds.fantastikmod.kitsune_laugh",
+    "sounds": [
+      "fantastikmod:kitsune_laugh1"
+    ]
+  },
+  "kitsune_laugh2": {
+    "subtitle": "sounds.fantastikmod.kitsune_laugh",
+    "sounds": [
+      "fantastikmod:kitsune_laugh2"
+    ]
+  },
+  "kitsune_laugh3": {
+    "subtitle": "sounds.fantastikmod.kitsune_laugh",
+    "sounds": [
+      "fantastikmod:kitsune_laugh3"
+    ]
+  },
+
+  "kitsune_angry1": {
+    "subtitle": "sounds.fantastikmod.kitsune_angry",
+    "sounds": [
+      "fantastikmod:kitsune_angry1"
+    ]
+  },
+
+  "kitsune_hurt1": {
+    "subtitle": "sounds.fantastikmod.kitsune_hurt",
+    "sounds": [
+      "fantastikmod:kitsune_hurt1"
+    ]
+  },
+  "kitsune_hurt2": {
+    "subtitle": "sounds.fantastikmod.kitsune_hurt",
+    "sounds": [
+      "fantastikmod:kitsune_hurt2"
+    ]
+  },
+  "dragon_idle1": {
+    "subtitle": "sounds.fantastikmod.dragon_idle",
+    "sounds": [
+      "fantastikmod:dragon_idle1"
+    ]
+  },
+  "dragon_idle2": {
+    "subtitle": "sounds.fantastikmod.dragon_idle",
+    "sounds": [
+      "fantastikmod:dragon_idle2"
+    ]
+  },
+  "dragon_idle3": {
+    "subtitle": "sounds.fantastikmod.dragon_idle",
+    "sounds": [
+      "fantastikmod:dragon_idle3"
+    ]
+  },
+  "aggressive_dragon_roar": {
+    "subtitle": "sounds.fantastikmod.dragon_roar",
+    "sounds": [
+      "fantastikmod:aggressive_dragon_roar"
+    ]
+  }
+}

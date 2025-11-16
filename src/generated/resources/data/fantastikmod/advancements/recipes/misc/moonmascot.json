@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_soul_tamed_kitsune": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:moonmascot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fantastikmod:moonmascot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_soul_tamed_kitsune",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fantastikmod:moonmascot"
+    ]
+  },
+  "sends_telemetry_event": false
+}

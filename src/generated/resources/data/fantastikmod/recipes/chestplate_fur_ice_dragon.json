@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "fantastikmod:fur_ice_dragon"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "i i",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "item": "fantastikmod:chestplate_fur_ice_dragon"
+  },
+  "show_notification": true
+}

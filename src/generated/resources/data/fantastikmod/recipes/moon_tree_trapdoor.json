@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "d": {
+      "item": "fantastikmod:moon_planks"
+    }
+  },
+  "pattern": [
+    "ddd",
+    "ddd",
+    "   "
+  ],
+  "result": {
+    "count": 2,
+    "item": "fantastikmod:moon_tree_trapdoor"
+  },
+  "show_notification": true
+}

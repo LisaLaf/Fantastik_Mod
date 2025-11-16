@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "fantastikmod:gemkitsune"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "ggg",
+    "ggg"
+  ],
+  "result": {
+    "item": "fantastikmod:gemkitsune_block"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,120 @@
+{
+  "item.fantastikmod.gemkitsune": "Gem Kitsune",
+  "item.fantastikmod.moonmascot": "Moon mascot",
+  "item.fantastikmod.tofu": "Tofu",
+  "item.fantastikmod.rice": "Rice",
+  "item.fantastikmod.strawberry": "Strawberry",
+  "item.fantastikmod.egg_kitsune_light": "Egg Spawn kitsune Light",
+  "item.fantastikmod.egg_blue_butterfly": "Egg Spawn Blue Butterfly",
+  "item.fantastikmod.egg_ice_dragon": "Egg Spawn Ice Dragon",
+  "item.fantastikmod.egg_moon_deer": "Egg Spawn Moon Deer",
+  "item.fantastikmod.auripigment": "Auripigment",
+  "block.fantastikmod.auripigment_block": "Auripigment Block",
+  "item.fantastikmod.silver_raw": "Silver Raw",
+  "item.fantastikmod.gem_moon": "Gem Moon",
+  "item.fantastikmod.tea_leaf": "Tea Leaf",
+  "item.fantastikmod.black_tea": "Black Tea",
+  "item.fantastikmod.green_tea": "Green Tea",
+  "item.fantastikmod.matcha_tea": "Matcha Tea",
+  "item.fantastikmod.tea_leafs_green": "Tea Leafs Green",
+  "item.fantastikmod.tea_leafs_black": "Tea Leafs Black",
+  "item.fantastikmod.matcha_powder": "Matcha Powder",
+  "item.fantastikmod.strawberry_mochi": "Strawberry Mochi",
+  "item.fantastikmod.matcha_mochi": "Matcha Mochi",
+  "item.fantastikmod.mochi": "Mochi",
+  "item.fantastikmod.dough_mochi": "Dough Mochi",
+  "item.fantastikmod.heart_ice_dragon": "Heart Ice Dragon",
+  "item.fantastikmod.fur_ice_dragon": "Fur Ice Dragon",
+  "item.fantastikmod.soul_tamed_kitsune": "Soul Kitsune",
+  "item.fantastikmod.lively_soul_tamed_kitsune": "Lively Soul Kitsune",
+  "item.fantastikmod.moon_dust": "Moon Dust",
+  "item.fantastikmod.silver_ingot": "Silver Ingot",
+  "item.fantastikmod.moon_lamp": "Moon Lamp",
+  "item.fantastikmod.silver_helmet": "Silver Helmet",
+  "item.fantastikmod.silver_chestplate": "Silver Chestplate",
+  "item.fantastikmod.silver_leggings": "Silver Leggings",
+  "item.fantastikmod.silver_boots": "Silver Boots",
+  "item.fantastikmod.silver_sword": "Silver Sword",
+  "item.fantastikmod.silver_pickaxe": "Silver Pickaxe",
+  "item.fantastikmod.silver_axe": "Silver Axe",
+  "item.fantastikmod.silver_shovel": "Silver Shovel",
+  "item.fantastikmod.silver_hoe": "Silver Hoe",
+
+
+  "item.fantastikmod.tea_ceremony_music_disc": "Music Disc",
+  "item.fantastikmod.tea_ceremony_music_disc.desc": "Lisa Laf - Tea Ceremony",
+
+  "item.fantastikmod.strawberry_seeds": "Strawberry Seeds",
+  "item.fantastikmod.tea_seeds": "Seeds Tea Bush",
+
+  "item.fantastikmod.sword_auripigment": "Sword Auripigment",
+
+  "item.fantastikmod.auripigment_boots": "Auripigment Boots",
+  "item.fantastikmod.auripigment_chestplate": "Auripigment Chestplate",
+  "item.fantastikmod.auripigment_helmet": "Auripigment Helmet",
+  "item.fantastikmod.auripigment_leggings": "Auripigment Leggings",
+
+  "item.fantastikmod.boots_fur_ice_dragon": "Boots Fur Ice Dragon",
+  "item.fantastikmod.chestplate_fur_ice_dragon": "Chestplate Fur Ice Dragon",
+  "item.fantastikmod.helmet_fur_ice_dragon": "Helmet Fur Ice Dragon",
+  "item.fantastikmod.leggings_fur_ice_dragon": "Leggings Fur Ice Dragon",
+
+  "item.fantastikmod.moon_pickaxe": "Moon Pickaxe",
+  "item.fantastikmod.moon_axe": "Moon Axe",
+  "item.fantastikmod.moon_shovel": "Moon Shovel",
+  "item.fantastikmod.moon_sword": "Moon Sword",
+
+  "item.fantastikmod.silver_stick": "Silver Stick",
+
+  "block.fantastikmod.ash_block": "Block ash",
+  "block.fantastikmod.auripigment_ore_block": "Auripigment Ore",
+  "block.fantastikmod.silver_ore": "Silver Ore",
+  "block.fantastikmod.moonstone": "Moon Stone",
+  "block.fantastikmod.moon_ore": "Moon Ore",
+  "block.fantastikmod.moon_vine": "Moon Vine",
+  "block.fantastikmod.frost": "Frost",
+
+  "block.fantastikmod.moon_planks": "Planks Moon Tree",
+  "block.fantastikmod.tree_moon_log_block": "Tree moon log",
+  "block.fantastikmod.tree_moon_foliage_block": "Tree Moon Roliage",
+  "block.fantastikmod.gemkitsune_block": "Gem Kitsune block",
+
+  "block.fantastikmod.silver_block": "Silver Block",
+  "block.fantastikmod.moon_gem_block": "Moon Gem Block",
+  "block.fantastikmod.moon_planks_wall": "Wall Moon Planks",
+
+  "block.fantastikmod.moon_tree_door": "Door Moon Planks",
+  "block.fantastikmod.moon_tree_trapdoor": "Trapdoor Moon Planks",
+  "block.fantastikmod.moon_planks_fence": "Fence Moon Planks",
+  "block.fantastikmod.moon_planks_fence_gate": "Fence Gate Moon Planks",
+  "block.fantastikmod.moon_planks_button": "Button Moon Planks",
+  "block.fantastikmod.moon_planks_plate": "Plate Moon Planks",
+  "block.fantastikmod.moon_planks_stairs": "Stairs Moon Planks",
+  "block.fantastikmod.moon_planks_slab": "Slab Moon Planks",
+
+  "block.fantastikmod.drying_basket": "Drying Basket",
+
+  "block.fantastikmod.moon_lily": "Moon Lily",
+  "block.fantastikmod.moon_northern_bluebell": "Moon Northern Bluebell",
+  "block.fantastikmod.moon_heather": "Moon Heather",
+  "block.fantastikmod.moon_grass": "Moon Grass",
+  "block.fantastikmod.moon_grass_1": "Moon Grass",
+  "block.fantastikmod.moon_sapling": "Moon Sapling",
+
+
+  "entity.minecraft.villager.fantastikmod.teamaster": "Tea Master",
+
+  "sounds.fantastikmod.gemkitsune_block_break": "Gem Kitsune block breaks",
+  "sounds.fantastikmod.gemkitsune_block_step": "Gem Kitsune block steps",
+  "sounds.fantastikmod.gemkitsune_block_place": "Gem Kitsune block placed",
+  "sounds.fantastikmod.gemkitsune_block_hit": "Gem Kitsune block hits",
+  "sounds.fantastikmod.gemkitsune_block_fall": "Gem Kitsune block falls",
+
+  "sounds.fantastikmod.kitsune_idle": "Kitsune vocalizes",
+  "sounds.fantastikmod.kitsune_laugh": "Kitsune laughs",
+  "sounds.fantastikmod.kitsune_angry": "Kitsune growls",
+  "sounds.fantastikmod.kitsune_hurt": "Kitsune hurts",
+
+
+  "cretivetab.fantastik_tab": "Fantastik"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fantastikmod:auripigment_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "fantastikmod:auripigment"
+  }
+}

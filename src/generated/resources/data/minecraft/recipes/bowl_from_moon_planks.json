@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "fantastikmod:moon_planks"
+    }
+  },
+  "pattern": [
+    "P P",
+    " P "
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:bowl"
+  },
+  "show_notification": true
+}

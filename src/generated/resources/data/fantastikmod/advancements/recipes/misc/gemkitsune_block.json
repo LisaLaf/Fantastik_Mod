@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gemkitsune": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:gemkitsune"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fantastikmod:gemkitsune_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_gemkitsune",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fantastikmod:gemkitsune_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_auripigment": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:auripigment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fantastikmod:sword_auripigment"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_auripigment",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fantastikmod:sword_auripigment"
+    ]
+  },
+  "sends_telemetry_event": false
+}

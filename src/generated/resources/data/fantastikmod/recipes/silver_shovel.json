@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "k": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "fantastikmod:silver_ingot"
+    }
+  },
+  "pattern": [
+    " s ",
+    " k ",
+    " k "
+  ],
+  "result": {
+    "item": "fantastikmod:silver_shovel"
+  },
+  "show_notification": true
+}

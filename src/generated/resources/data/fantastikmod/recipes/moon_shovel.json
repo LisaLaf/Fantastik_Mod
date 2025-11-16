@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "item": "fantastikmod:gem_moon"
+    },
+    "s": {
+      "item": "fantastikmod:silver_stick"
+    }
+  },
+  "pattern": [
+    " g ",
+    " s ",
+    " s "
+  ],
+  "result": {
+    "item": "fantastikmod:moon_shovel"
+  },
+  "show_notification": true
+}

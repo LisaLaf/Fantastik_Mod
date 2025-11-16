@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "item": "fantastikmod:gem_moon"
+    },
+    "s": {
+      "item": "fantastikmod:silver_stick"
+    }
+  },
+  "pattern": [
+    "ggg",
+    " s ",
+    " s "
+  ],
+  "result": {
+    "item": "fantastikmod:moon_pickaxe"
+  },
+  "show_notification": true
+}

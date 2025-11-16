@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "chance": 0.07,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "name": "fantastikmod:moon_dust"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "fantastikmod:blocks/moon_grass_1"
+}

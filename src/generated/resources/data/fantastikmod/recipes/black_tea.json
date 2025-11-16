@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "m": {
+      "item": "minecraft:water_bucket"
+    },
+    "s": {
+      "item": "minecraft:glass_bottle"
+    },
+    "t": {
+      "item": "fantastikmod:tea_leafs_black"
+    }
+  },
+  "pattern": [
+    "mt ",
+    "s  ",
+    "   "
+  ],
+  "result": {
+    "item": "fantastikmod:black_tea"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:has_structure/village_plains",
+  "spawners": {
+    "type": "fantastikmod:kitsune_light",
+    "maxCount": 7,
+    "minCount": 2,
+    "weight": 10
+  }
+}
