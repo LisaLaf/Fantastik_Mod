@@ -1,6 +1,7 @@
 package net.lisalaf.fantastikmod.datagen.loot;
 
 import net.lisalaf.fantastikmod.block.ModBlocks;
+import net.lisalaf.fantastikmod.block.custom.CrowberryShrubBlock;
 import net.lisalaf.fantastikmod.block.custom.RiceCropBlock;
 import net.lisalaf.fantastikmod.block.custom.StrawberryCropBlock;
 import net.lisalaf.fantastikmod.block.custom.TeaCropBlock;
@@ -101,6 +102,13 @@ public class ModBlockLootTables extends LootTableProvider {
 
             this.add(ModBlocks.RICE_CROP.get(), createCropDrops(ModBlocks.RICE_CROP.get(), ModItems.RICE.get(),
                     ModItems.RICE.get(), riceConditionBuilder));
+
+            LootItemCondition.Builder crowberryCondition = LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(ModBlocks.BUSH_CROWBERRY.get())
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CrowberryShrubBlock.AGE, 4));
+
+            this.add(ModBlocks.BUSH_CROWBERRY.get(), createCropDrops(ModBlocks.BUSH_CROWBERRY.get(), ModItems.MOON_CROWBERRY.get(),
+                    ModItems.MOON_CROWBERRY.get(), crowberryCondition));
 
             this.add(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get(), block ->
                     createSilkTouchDispatchTable(block,

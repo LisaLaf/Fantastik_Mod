@@ -24,28 +24,20 @@ public class DataGenerators {
 
         System.out.println("=== DATA GENERATION STARTED ===");
 
-
-        // 1. Block States (модели блоков)
          generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
 
-        // 2. Item Models (модели предметов)
           generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
 
-        // 3. Loot Tables (дроп с блоков)
          generator.addProvider(event.includeServer(), new ModBlockLootTables(packOutput));
 
-        // 4. Recipe Provider (рецепты) - если есть
          generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
 
-        // 5. Block Tags (теги блоков) - если есть
          generator.addProvider(event.includeServer(), new ModBlockTagGenerator(packOutput, lookupProvider, existingFileHelper));
 
         generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
 
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
 
-        // 6. Item Tags (теги предметов) - если есть
-         // generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput, lookupProvider, existingFileHelper));
 
         System.out.println("=== ALL DATA PROVIDERS REGISTERED SUCCESSFULLY ===");
     }

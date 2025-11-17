@@ -5,6 +5,7 @@ import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.item.BookHelper;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
 import net.minecraft.core.BlockPos;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -168,6 +170,24 @@ public class ModEvent {
                 new ItemStack(Items.EMERALD, 20),
                 new ItemStack(ModItems.FUR_ICE_DRAGON.get(), 1),
                 3, 10, 0.5f));
+    }
+
+    @SubscribeEvent
+    public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+        ItemStack stack = event.getItemStack();
+        if (stack.getItem() == ModItems.NOTE_1.get() ||
+                stack.getItem() == ModItems.NOTE_2.get() ||
+                stack.getItem() == ModItems.NOTE_3.get() ||
+                stack.getItem() == ModItems.NOTE_4.get() ||
+                stack.getItem() == ModItems.NOTE_5.get() ||
+                stack.getItem() == ModItems.NOTE_6.get()) {
+
+            ItemStack book = BookHelper.getCorrespondingBook(stack.getItem());
+            if (!book.isEmpty()) {
+                event.getEntity().setItemInHand(event.getHand(), book);
+                event.setCanceled(true);
+            }
+        }
     }
 
 

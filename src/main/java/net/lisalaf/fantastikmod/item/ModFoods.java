@@ -27,6 +27,8 @@ public class ModFoods {
             .saturationMod(0.3f).effect(() -> new MobEffectInstance(MobEffects.HEAL, 100), 0.4f).build();
     public static final FoodProperties MATCHA_TEA = new FoodProperties.Builder().nutrition(8).fast()
             .saturationMod(0.3f).effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 150), 1.0f).build();
+    public static final FoodProperties MOON_CROWBERRY = new FoodProperties.Builder().nutrition(1).fast()
+            .saturationMod(0.1f).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 40), 0.9f).build();
 
 
     public static final FoodProperties HEART_ICE_DRAGON = new FoodProperties.Builder().nutrition(7).fast()

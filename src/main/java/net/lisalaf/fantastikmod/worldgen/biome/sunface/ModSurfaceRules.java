@@ -23,6 +23,7 @@ public class ModSurfaceRules {
                                 SurfaceRules.ifTrue(SurfaceRules.ON_CEILING,
                                         SurfaceRules.state(Blocks.STONE.defaultBlockState())
                                 )
+
                         )
                 )
         );

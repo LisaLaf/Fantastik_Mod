@@ -3,8 +3,8 @@
   "biomes": "#minecraft:has_structure/village_plains",
   "spawners": {
     "type": "fantastikmod:kitsune_light",
-    "maxCount": 7,
-    "minCount": 2,
-    "weight": 10
+    "maxCount": 4,
+    "minCount": 1,
+    "weight": 40
   }
 }

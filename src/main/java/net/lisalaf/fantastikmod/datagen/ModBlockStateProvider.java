@@ -1,10 +1,7 @@
 package net.lisalaf.fantastikmod.datagen;
 
 import net.lisalaf.fantastikmod.block.ModBlocks;
-import net.lisalaf.fantastikmod.block.custom.MoonVineBlock;
-import net.lisalaf.fantastikmod.block.custom.RiceCropBlock;
-import net.lisalaf.fantastikmod.block.custom.StrawberryCropBlock;
-import net.lisalaf.fantastikmod.block.custom.TeaCropBlock;
+import net.lisalaf.fantastikmod.block.custom.*;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -94,6 +91,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         makeStrawberryCrop((CropBlock) ModBlocks.STRAWBERRY_CROP.get(), "strawberry_stage", "strawberry_stage");
         makeTeaCrop((CropBlock) ModBlocks.TEA_CROP.get(), "tea_stage", "tea_stage");
+        makeCrowberryShrub((CropBlock) ModBlocks.BUSH_CROWBERRY.get(), "shrub_crowberry_", "shrub_crowberry_");
         makeRiceCrop(((CropBlock) ModBlocks.RICE_CROP.get()), "rice_stage_", "rice_stage_");
 
 
@@ -174,6 +172,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
     private void logBlock(RotatedPillarBlock block, ResourceLocation sideTexture, ResourceLocation endTexture) {
         axisBlock(block, sideTexture, endTexture);
+    }
+
+    public void makeCrowberryShrub(CropBlock block, String modelName, String textureName) {
+        Function<BlockState, ConfiguredModel[]> function = state -> crowberryStates(state, block, modelName, textureName);
+        getVariantBuilder(block).forAllStates(function);
+    }
+
+    private ConfiguredModel[] crowberryStates(BlockState state, CropBlock block, String modelName, String textureName) {
+        ConfiguredModel[] models = new ConfiguredModel[1];
+        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((CrowberryShrubBlock) block).getAgeProperty()),
+                new ResourceLocation(fantastikmod.MOD_ID, "block/" + textureName + state.getValue(((CrowberryShrubBlock) block).getAgeProperty()))).renderType("cutout"));
+
+        return models;
     }
 
     public void makeStrawberryCrop(CropBlock block, String modelName, String textureName) {

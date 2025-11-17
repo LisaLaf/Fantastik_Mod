@@ -78,6 +78,8 @@ public class ModItems {
             ()-> new Item( new Item.Properties().stacksTo(64).food(ModFoods.GREEN_TEA)));
     public static final RegistryObject<Item> MATCHA_TEA = ITEMS.register("matcha_tea",
             ()-> new Item( new Item.Properties().stacksTo(64).food(ModFoods.MATCHA_TEA)));
+    public static final RegistryObject<Item> MOON_CROWBERRY = ITEMS.register("moon_crowberry",
+            ()-> new  ItemNameBlockItem(ModBlocks.BUSH_CROWBERRY.get(), new Item.Properties().stacksTo(64).food(ModFoods.MOON_CROWBERRY)));
 
     public static final RegistryObject<Item> STRAWBERRY_SEEDS = ITEMS.register("strawberry_seeds",
             ()-> new ItemNameBlockItem(ModBlocks.STRAWBERRY_CROP.get(), new Item.Properties().stacksTo(64)));
@@ -258,6 +260,19 @@ public class ModItems {
                     return super.hurtEnemy(stack, target, attacker);
                 }
             });
+
+    public static final RegistryObject<Item> NOTE_1 = ITEMS.register("note_1",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NOTE_2 = ITEMS.register("note_2",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NOTE_3 = ITEMS.register("note_3",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NOTE_4 = ITEMS.register("note_4",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NOTE_5 = ITEMS.register("note_5",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NOTE_6 = ITEMS.register("note_6",
+            () -> new Item(new Item.Properties()));
 
 
     public static void register(IEventBus eventBus) {

@@ -1,6 +1,7 @@
 package net.lisalaf.fantastikmod.worldgen;
 
 import net.lisalaf.fantastikmod.block.ModBlocks;
+import net.lisalaf.fantastikmod.block.custom.CrowberryShrubBlock;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -42,6 +43,9 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_GRASS_KEY = registerKey("moon_grass");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_GRASS_1_KEY = registerKey("moon_grass_1");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_VINE_KEY = registerKey("moon_vine");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BUSH_CROWBERRY_KEY = registerKey("bush_crowberry");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOONSTONE_KEY = registerKey("moonstone");
 
    // public static final ResourceKey<ConfiguredFeature<?, ?>> TEA_HOUSE_KEY = registerKey("tea_house");
 
@@ -104,6 +108,25 @@ public class ModConfiguredFeatures {
                                         BlockPredicate.replaceable(),
                                         BlockPredicate.matchesBlocks(Direction.UP.getNormal(), ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get())
                                 ))));
+
+        register(context, BUSH_CROWBERRY_KEY, Feature.FLOWER,
+                new RandomPatchConfiguration(25, 3, 5,
+                        PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(
+                                                ModBlocks.BUSH_CROWBERRY.get().defaultBlockState()
+                                                        .setValue(CrowberryShrubBlock.AGE, 4)
+                                        )
+                                )
+                        )
+                )
+        );
+
+        register(context, MOONSTONE_KEY, Feature.ORE, new OreConfiguration(
+                stoneReplaceable,
+                ModBlocks.MOONSTONE.get().defaultBlockState(),
+                64
+        ));
 
 
 

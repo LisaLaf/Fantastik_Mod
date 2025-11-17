@@ -53,11 +53,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> TEA_CROP = BLOCKS.register("tea_crop",
             () -> new TeaCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noOcclusion()));
 
+    public static final RegistryObject<Block> BUSH_CROWBERRY = BLOCKS.register("bush_crowberry",
+            () -> new CrowberryShrubBlock(BlockBehaviour.Properties.copy(Blocks.SWEET_BERRY_BUSH).noOcclusion().noCollission().lightLevel(state ->6)));
+
     public static final RegistryObject<Block> GEMKITSUNE_BLOCK = registerBlock("gemkitsune_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST).lightLevel(state -> 8)));
 
     public static final RegistryObject<Block> AURIPIGMENT_BLOCK = registerBlock("auripigment_block",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST).lightLevel(state -> 4)));
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).lightLevel(state -> 4)));
 
     public static final RegistryObject<Block> TREE_MOON_LOG_BLOCK = registerBlock("tree_moon_log_block",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).lightLevel(state -> 4)));

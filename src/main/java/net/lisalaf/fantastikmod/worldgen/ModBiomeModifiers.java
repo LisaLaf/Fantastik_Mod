@@ -55,9 +55,9 @@ public class ModBiomeModifiers {
                 List.of(
                         new MobSpawnSettings.SpawnerData(
                                 ModEntities.KITSUNE_LIGHT.get(),
-                                10,
-                                2,
-                                7
+                                40,
+                                1,
+                                4
                         )
                 )
         ));

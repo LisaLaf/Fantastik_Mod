@@ -26,6 +26,7 @@
   "item.fantastikmod.black_tea": "Чёрный Чай",
   "item.fantastikmod.green_tea": "Зелёный Чай",
   "item.fantastikmod.matcha_tea": "Матча Чай",
+  "item.fantastikmod.moon_crowberry": "Лунная Вороника",
 
   "item.fantastikmod.moon_dust": "Лунная пыль",
   "item.fantastikmod.silver_ingot": "Серебряный слиток",
@@ -101,6 +102,11 @@
   "item.fantastikmod.moon_shovel": "Лунная лопата",
   "item.fantastikmod.moon_sword": "Лунный меч",
 
+  "block.fantastikmod.strawberry_crop": "Клубника",
+  "block.fantastikmod.rice_crop": "Рис",
+  "block.fantastikmod.tea_crop": "Чайный куст",
+  "block.fantastikmod.bush_crowberry": "Куст Вороники",
+
 
   "block.fantastikmod.drying_basket": "Корзина для сушки",
 
@@ -117,6 +123,20 @@
   "sounds.fantastikmod.kitsune_angry": "Кицунэ рычит",
   "sounds.fantastikmod.kitsune_hurt": "Кицунэ ранена",
 
+
+  "item.fantastikmod.note_1": "Записка о торговце",
+  "item.fantastikmod.note_2": "Записка о драконьем мехе",
+  "item.fantastikmod.note_3": "Записка о кицуне",
+  "item.fantastikmod.note_4": "Записка о ночных звуках",
+  "item.fantastikmod.note_5": "Записка о пророчестве",
+  "item.yourmod.note_6": "Записка о тофу",
+
+  "book.fantastikmod.note1.page1": "Этот странствующий торговец пытался мне продать какой-то там лунный цветок из какого-то там Лунного леса или голубого.... Не стал даже слушать. За 5 изумрудов лучше что-нибудь полезное купить чем светящийся цветок из какого-то леса неизвестного леса.",
+  "book.fantastikmod.note2.page1": "Недавно заходил торговец и продавал за 20 ИЗУМРУДОВ драконий мех... Вещь действительно редкая... Но цена... Кажется проще самостоятельно идти в снега на её поиски чем купить достаточно для хорошей брони.",
+  "book.fantastikmod.note3.page1": "Кицуне... Крайне необычные лисы. Разговаривают и даже защищают от монстров... Интересно, откуда они пришли? Слышал от одного путешественника про богиню одну, Инари вроде бы звали. Как поговаривали именно она кицуне в мир отправила. Насколько это правда?",
+  "book.fantastikmod.note4.page1": "Ночью был страшный вой и топот копыт... Вроде лошадиные, а вроде нет...",
+  "book.fantastikmod.note5.page1": "И настанет конец всему сущему когда два брата поглотят солнце и луну... О чём говорил тот путешественник?",
+  "book.fantastikmod.note6.page1": "Такие сильные существа и обожают простое тофу? Мне казалось что чем сильнее и старше, а эти лисы здесь живут дольше чем я в 2 раза, то тем более возвышенные потребности... А оно вот как бывает.",
 
   "cretivetab.fantastik_tab": "Фантастик"
 }

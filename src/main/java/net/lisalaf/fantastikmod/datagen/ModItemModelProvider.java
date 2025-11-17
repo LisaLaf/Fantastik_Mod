@@ -58,6 +58,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSimpleItem("moon_pickaxe");
         registerSimpleItem("moon_shovel");
         registerSimpleItem("moon_sword");
+        registerSimpleItem("moon_crowberry");
 
         registerSimpleItem("strawberry_seeds");
         registerSimpleItem("tea_seeds");

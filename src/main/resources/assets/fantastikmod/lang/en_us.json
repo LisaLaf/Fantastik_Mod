@@ -28,6 +28,7 @@
   "item.fantastikmod.soul_tamed_kitsune": "Soul Kitsune",
   "item.fantastikmod.lively_soul_tamed_kitsune": "Lively Soul Kitsune",
   "item.fantastikmod.moon_dust": "Moon Dust",
+  "item.fantastikmod.moon_crowberry": "Moon Crowberry",
   "item.fantastikmod.silver_ingot": "Silver Ingot",
   "item.fantastikmod.moon_lamp": "Moon Lamp",
   "item.fantastikmod.silver_helmet": "Silver Helmet",
@@ -101,6 +102,11 @@
   "block.fantastikmod.moon_grass_1": "Moon Grass",
   "block.fantastikmod.moon_sapling": "Moon Sapling",
 
+  "block.fantastikmod.strawberry_crop": "Strawberries",
+  "block.fantastikmod.rice_crop": "Rice",
+  "block.fantastikmod.tea_crop": "Tea Plant",
+  "block.fantastikmod.bush_crowberry": "Crowberry Bush",
+
 
   "entity.minecraft.villager.fantastikmod.teamaster": "Tea Master",
 
@@ -114,6 +120,20 @@
   "sounds.fantastikmod.kitsune_laugh": "Kitsune laughs",
   "sounds.fantastikmod.kitsune_angry": "Kitsune growls",
   "sounds.fantastikmod.kitsune_hurt": "Kitsune hurts",
+
+  "item.fantastikmod.note_1": "Trader Note",
+  "item.fantastikmod.note_2": "Dragon Fur Note",
+  "item.fantastikmod.note_3": "Kitsune Note",
+  "item.fantastikmod.note_4": "Night Sounds Note",
+  "item.fantastikmod.note_5": "Prophecy Note",
+  "item.fantastikmod.note_6": "Tofu Note",
+
+  "book.fantastikmod.note1.page1": "This wandering trader tried to sell me some kind of moon flower from some kind of Moon Forest or Blue... I didn't even listen. For 5 emeralds, it's better to buy something useful than a glowing flower from some unknown forest.",
+  "book.fantastikmod.note2.page1": "Recently a trader came and sold dragon fur for 20 EMERALDS... A really rare thing... But the price... It seems easier to go to the snows to search for it yourself than to buy enough for good armor.",
+  "book.fantastikmod.note3.page1": "Kitsune... Extremely unusual foxes. They talk and even protect from monsters... I wonder where they came from? I heard from one traveler about some goddess, Inari I think she was called. They said it was she who sent the kitsune into the world. How true is this?",
+  "book.fantastikmod.note4.page1": "At night there was a terrible howl and the clatter of hooves... Like horses, but not quite...",
+  "book.fantastikmod.note5.page1": "And the end of all things will come when two brothers swallow the sun and moon... What was that traveler talking about?",
+  "book.fantastikmod.note6.page1": "Such powerful creatures and they adore simple tofu? I thought that the stronger and older, and these foxes have lived here twice as long as me, the more sublime the needs would be... But that's how it happens.",
 
 
   "cretivetab.fantastik_tab": "Fantastik"

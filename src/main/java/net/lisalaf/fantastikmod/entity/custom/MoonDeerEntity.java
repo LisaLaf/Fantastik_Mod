@@ -17,6 +17,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -214,6 +216,50 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
 
+        // ЛЕЧЕНИЕ ЯГОДАМИ
+        if (itemstack.is(ModItems.MOON_CROWBERRY.get())) {
+            if (!isTamed()) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+
+                this.playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.9F + random.nextFloat() * 0.2F);
+
+
+                Component message = getWildFeedingMessage(player);
+                player.displayClientMessage(message, true);
+
+
+                return InteractionResult.sidedSuccess(level().isClientSide);
+
+            } else {
+                // Прирученный олень - лечение
+                if (this.getHealth() < this.getMaxHealth()) {
+                    if (!player.getAbilities().instabuild) {
+                        itemstack.shrink(1);
+                    }
+
+                    // Восстановление здоровья
+                    this.heal(4.0F); // 2 сердца = 4 единицы здоровья
+
+                    spawnHealingParticles();
+                    this.playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
+
+                    // Сообщение для прирученного оленя
+                    Component message = getTamedHealingMessage(player);
+                    player.displayClientMessage(message, true);
+
+                    return InteractionResult.sidedSuccess(level().isClientSide);
+                } else {
+                    // Если здоровье полное
+                    Component message = getFullHealthMessage(player);
+                    player.displayClientMessage(message, true);
+                    return InteractionResult.PASS;
+                }
+            }
+        }
+
+        // Код приручения и управления
         if (!isTamed() && itemstack.is(ModItems.MOONMASCOT.get())) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
@@ -222,7 +268,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
             return InteractionResult.sidedSuccess(level().isClientSide);
         }
 
-        // НОВЫЙ КОД: Переключение режима палкой (без урона)
         if (isTamed() && player.getUUID().equals(getOwnerUUID()) && itemstack.is(net.minecraft.world.item.Items.STICK)) {
             cycleAIMode();
             player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
@@ -232,7 +277,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
         if (isTamed() && player.getUUID().equals(getOwnerUUID())) {
             if (player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
-                // Убрали cycleAIMode отсюда
                 player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
                 return InteractionResult.sidedSuccess(level().isClientSide);
             }
@@ -251,6 +295,25 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
 
         return super.mobInteract(player, hand);
+    }
+
+    private void spawnHealingParticles() {
+        if (level().isClientSide) {
+            for(int i = 0; i < 12; ++i) {
+                level().addParticle(ParticleTypes.GLOW,
+                        getRandomX(0.8D), getRandomY() + 0.5D, getRandomZ(0.8D),
+                        (random.nextDouble() - 0.5) * 0.1D,
+                        0.2D,
+                        (random.nextDouble() - 0.5) * 0.1D);
+            }
+            for(int i = 0; i < 8; ++i) {
+                level().addParticle(ParticleTypes.HEART,
+                        getRandomX(0.6D), getRandomY() + 0.8D, getRandomZ(0.6D),
+                        (random.nextDouble() - 0.5) * 0.05D,
+                        0.3D,
+                        (random.nextDouble() - 0.5) * 0.05D);
+            }
+        }
     }
 
     private void tame(Player player) {
@@ -363,7 +426,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
     // === ЕЗДА НА ОЛЕНЕ ===
 
-    // Добавьте этот внутренний класс перед методами
     private class MoonDeerJumpControl extends JumpControl {
         public MoonDeerJumpControl() {
             super(MoonDeerEntity.this);
@@ -383,14 +445,12 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === ПРАВИЛЬНЫЕ МЕТОДЫ ДЛЯ PlayerRideable В 1.20.1 ===
 
     @Override
     public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
         return super.getDismountLocationForPassenger(passenger);
     }
 
-    // Добавьте этот метод для кастомного прыжка:
     private void performCustomJump() {
         if (this.onGround() && jumpCooldown <= 0) {
             // Мощный прыжок вперед
@@ -489,18 +549,14 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
         // Не получать урон при падении с высоты до 4 блоков
         if (fallDistance <= 4.0F) {
-            return false; // Нет урона
+            return false;
         }
-        // Для падений выше 4 блоков использовать стандартный расчет
         return super.causeFallDamage(fallDistance - 4.0F, damageMultiplier, source);
     }
 
-
-    // Улучшенный прыжок с земли
     @Override
     protected void jumpFromGround() {
         super.jumpFromGround();
-        // Увеличиваем горизонтальную составляющую прыжка
         Vec3 currentMovement = this.getDeltaMovement();
         this.setDeltaMovement(
                 currentMovement.x * 2.0,
@@ -509,15 +565,12 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         );
     }
 
-    // Добавьте этот метод для лучшего контроля скорости
     @Override
     protected float getJumpPower() {
         return 1.1F * super.getJumpPower();
     }
 
 
-
-    // === ОТОБРАЖЕНИЕ HP ===
     @Override
     public boolean showVehicleHealth() {
         return true;
@@ -611,7 +664,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     // ИСПРАВЛЕНИЕ: Реализация абстрактного метода
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        // Возвращаем null, так как олени не размножаются
         return null;
     }
 
@@ -622,7 +674,7 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return false;
+        return stack.is(ModItems.MOON_CROWBERRY.get());
     }
 
     // === ГЕТТЕРЫ И СЕТТЕРЫ ===
@@ -788,8 +840,164 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
             }
         }
     }
+    // === СООБЩЕНИЯ ПРИ КОРМЛЕНИИ ДИКОГО ОЛЕНЯ ===
+    private Component getWildFeedingMessage(Player player) {
+        boolean isRussian = isRussianLanguage(player);
 
+        if (isRussian) {
+            String[] messages = {
+                    "Спасибо за угощение.",
+                    "Вкусная ягода...",
+                    "Приятно встретить дружелюбного путника.",
+                    "Я не часто принимаю пищу из чужих рук.",
+                    "Спасибо. Лес делится дарами со всеми.",
+                    "Ты добрый человек.",
+                    "Благодарю за угощение."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        } else {
+            String[] messages = {
+                    "Thanks for the treat.",
+                    "Tasty berry...",
+                    "Nice to meet a friendly traveler.",
+                    "I don't often take food from strangers.",
+                    "Thank you. The forest shares its gifts with everyone.",
+                    "You are a kind person.",
+                    "Thank you for the treat."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        }
+    }
 
+    // === СООБЩЕНИЯ ПРИ ЛЕЧЕНИИ ПРИРУЧЕННОГО ОЛЕНЯ ===
+    private Component getTamedHealingMessage(Player player) {
+        boolean isRussian = isRussianLanguage(player);
 
+        if (isRussian) {
+            String[] messages = {
+                    "Спасибо, я почувствовал себя лучше.",
+                    "Мои силы возвращаются.",
+                    "Спасибо за заботу.",
+                    "Ягоды помогают мне восстановиться.",
+                    "Спасибо, теперь я снова полон сил.",
+                    "Приятно, когда о тебе заботятся.",
+                    "Спасибо за лечение.",
+                    "Я чувствую себя лучше."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        } else {
+            String[] messages = {
+                    "Thanks, I feel better.",
+                    "My strength is returning.",
+                    "Thank you for your care.",
+                    "The berries help me recover.",
+                    "Thanks, now I'm full of energy again.",
+                    "It's nice to be taken care of.",
+                    "Thank you for the healing.",
+                    "I feel better."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        }
+    }
 
+    // === СООБЩЕНИЕ ПРИ ПОЛНОМ ЗДОРОВЬЕ ===
+    private Component getFullHealthMessage(Player player) {
+        boolean isRussian = isRussianLanguage(player);
+
+        if (isRussian) {
+            String[] messages = {
+                    "Мои силы восстановлены. Лунная магия уже течет во мне в полной мере.",
+                    "Я не нуждаюсь в исцелении. Духи леса уже даровали мне свою защиту.",
+                    "Спасибо за заботу, но лунный свет уже наполняет меня энергией.",
+                    "Мое здоровье в порядке. Сила древнего леса оберегает меня."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        } else {
+            String[] messages = {
+                    "My strength is restored. Lunar magic already flows through me fully.",
+                    "I don't need healing. The forest spirits have already granted me their protection.",
+                    "Thank you for your care, but moonlight already fills me with energy.",
+                    "My health is fine. The power of the ancient forest protects me."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        }
+    }
+
+    // === СООБЩЕНИЯ ПРИ УДАРЕ ===
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getDirectEntity() instanceof Player player) {
+            if (!this.level().isClientSide) {
+                if (isTamed()) {
+                    // Прирученный олень - компаньон в путешествии
+                    Component message = getHurtTamedMessage(player);
+                    player.sendSystemMessage(message);
+                } else {
+                    // Дикий олень - дух леса
+                    Component message = getHurtWildMessage(player);
+                    player.sendSystemMessage(message);
+                }
+            }
+        }
+        return super.hurt(source, amount);
+    }
+
+    // === СООБЩЕНИЯ ПРИ УДАРЕ ДИКОГО ОЛЕНЯ ===
+    private Component getHurtWildMessage(Player player) {
+        boolean isRussian = isRussianLanguage(player);
+
+        if (isRussian) {
+            String[] messages = {
+                    "За что? Я тебе не сделал ничего плохого.",
+                    "Ты нарушаешь покой леса.",
+                    "Лес не прощает таких поступков.",
+                    "Я всего лишь дух этого места. Зачем причинять мне боль?",
+                    "Ты чужеземец, но это не повод для жестокости.",
+                    "Мир леса хрупок. Не разрушай его.",
+                    "Я не твой враг, путник.",
+                    "Боль... Зачем?"
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        } else {
+            String[] messages = {
+                    "Why? I haven't done anything to you.",
+                    "You're disturbing the peace of the forest.",
+                    "The forest doesn't forgive such actions.",
+                    "I'm just a spirit of this place. Why cause me pain?",
+                    "You're a foreigner, but that's no reason for cruelty.",
+                    "The forest world is fragile. Don't destroy it.",
+                    "I'm not your enemy, traveler.",
+                    "Pain... Why?"
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        }
+    }
+
+    // === СООБЩЕНИЯ ПРИ УДАРЕ ПРИРУЧЕННОГО ОЛЕНЯ ===
+    private Component getHurtTamedMessage(Player player) {
+        boolean isRussian = isRussianLanguage(player);
+
+        if (isRussian) {
+            String[] messages = {
+                    "Я думал, мы компаньоны в этом путешествии...",
+                    "Зачем причинять боль тому, кто доверяет тебе?",
+                    "Я последовал за тобой добровольно...",
+                    "Боль от руки спутника ранит сильнее.",
+                    "Я оставил лес ради нашего пути. Не предавай это.",
+                    "Это не тот путь, что мы выбрали вместе."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        } else {
+            String[] messages = {
+                    "I thought we were companions on this journey...",
+                    "The moon amulet bound us, but not for this.",
+                    "Why hurt someone who trusts you?",
+                    "I followed you voluntarily...",
+                    "Pain from a companion's hand hurts more.",
+                    "I left the forest for our path. Don't betray that.",
+                    "This is not the path we chose together."
+            };
+            return Component.literal(messages[random.nextInt(messages.length)]);
+        }
+    }
 }

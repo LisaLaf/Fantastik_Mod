@@ -59,6 +59,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
     private static final int MIN_TAMING_TOFU = 25;
     private static final int MAX_TAMING_TOFU = 40;
 
+
     // Data Parameters
     private static final EntityDataAccessor<Integer> DATA_VARIANT = SynchedEntityData.defineId(KitsuneLightEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_EYE_VARIANT = SynchedEntityData.defineId(KitsuneLightEntity.class, EntityDataSerializers.INT);
@@ -497,14 +498,81 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
         }
 
         if (isTamed() && player.getUUID().equals(getOwnerUUID())) {
-            // Циклическое переключение режимов по правой кнопке
+            // Смена режима деревянной палкой
+            if (itemstack.getItem() == Items.STICK && hand == InteractionHand.MAIN_HAND) {
+                // Запрет смены режима если спит
+                if (isSleeping() || isSleepAnimPlaying() || isWakeAnimPlaying()) {
+                    if (!this.level().isClientSide) {
+                        player.displayClientMessage(Component.literal(isRussianPlayer(player) ?
+                                "Кицуне спит, следует разбудить её если вам что-то надо" :
+                                "Kitsune is asleep, you should wake her up if you need anything"), true);
+                    }
+                    return InteractionResult.FAIL;
+                }
+
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+
+                cycleAIMode();
+                player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
+
+                // Если переключаем из режима сидения - заставляем встать
+                if (getAIMode() != AI_SIT && (isSitting() || isSitAnimPlaying())) {
+                    if (isSitAnimPlaying()) {
+                        setSitAnimPlaying(false);
+                    }
+                    startStandAnimation();
+                }
+                // Если переключаем в режим сидения - садимся
+                else if (getAIMode() == AI_SIT && !isSitting() && !isSitAnimPlaying()) {
+                    startSitAnimation();
+                }
+
+                return InteractionResult.sidedSuccess(level().isClientSide);
+            }
+
+            // Циклическое переключение режимов по правой кнопке (без предмета)
             if (itemstack.isEmpty() && hand == InteractionHand.MAIN_HAND) {
+                // Запрет смены режима если спит
+                if (isSleeping() || isSleepAnimPlaying() || isWakeAnimPlaying()) {
+                    if (!this.level().isClientSide) {
+                        player.displayClientMessage(Component.literal(isRussianPlayer(player) ?
+                                "Кицуне спит, следует разбудить её если вам что-то надо" :
+                                "Kitsune is asleep, you should wake her up if you need anything"), true);
+                    }
+                    return InteractionResult.FAIL;
+                }
+
                 if (!player.isCrouching()) {
                     cycleAIMode();
                     player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
+
+                    // Если переключаем из режима сидения - заставляем встать
+                    if (getAIMode() != AI_SIT && (isSitting() || isSitAnimPlaying())) {
+                        if (isSitAnimPlaying()) {
+                            setSitAnimPlaying(false);
+                        }
+                        startStandAnimation();
+                    }
+                    // Если переключаем в режим сидения - садимся
+                    else if (getAIMode() == AI_SIT && !isSitting() && !isSitAnimPlaying()) {
+                        startSitAnimation();
+                    }
+
                     return InteractionResult.sidedSuccess(level().isClientSide);
                 } else {
                     // При Shift+ПКМ - принудительно посадить/поднять
+                    // Запрет если спит
+                    if (isSleeping() || isSleepAnimPlaying() || isWakeAnimPlaying()) {
+                        if (!this.level().isClientSide) {
+                            player.displayClientMessage(Component.literal(isRussianPlayer(player) ?
+                                    "Кицуне спит, следует разбудить её если вам что-то надо" :
+                                    "Kitsune is asleep, you should wake her up if you need anything"), true);
+                        }
+                        return InteractionResult.FAIL;
+                    }
+
                     if (isSitting() && !isStandAnimPlaying()) {
                         startStandAnimation();
                     } else if (!isSitting() && !isSitAnimPlaying()) {
@@ -514,7 +582,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
                 }
             }
         } else if (itemstack.is(ModItems.TOFU.get()) && !this.isTamed() && !this.isBaby()) {
-            // ПРИРУЧЕНИЕ диких взрослых кицунэ - ДОЛЖНО БЫТЬ ЗДЕСЬ!
+            // ПРИРУЧЕНИЕ диких взрослых кицунэ
             return handleTaming(player, itemstack);
         } else if (itemstack.is(ModItems.TOFU.get()) && this.isTamed()) {
             // Кормление прирученной кицунэ тофу
@@ -522,22 +590,9 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
                 itemstack.shrink(1);
             }
 
-            // Если кицунэ обижена - это прощение (ОДИН раз проверяем!)
-            if (this.isAngry() && player.getUUID().equals(getOwnerUUID())) {
-                setAngry(false);
-                setHitCount(0);
-                setOffended(false); // Сбрасываем флаг обиды
-                sendForgivenessMessage(player);
-
-                // Встаём если сидели из-за обиды
-                if (isSitting() && !isStandAnimPlaying()) {
-                    startStandAnimation();
-                }
-            } else {
-                // Обычное кормление
-                if (this.random.nextInt(3) == 0) {
-                    sendTofuMessage(player);
-                }
+            // Обычное кормление с сообщением
+            if (this.random.nextInt(3) == 0) {
+                sendTofuMessage(player);
             }
 
             spawnTamingParticles();
@@ -659,6 +714,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
         sendTamingMessage(player);
         spawnTamingSuccessParticles();
         playSound(ModSounds.KITSUNE_IDLE1.get(), 1.0F, 1.0F);
+
     }
 
     private void sendTamingMessage(Player player) {
@@ -1068,14 +1124,14 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        // Сохраняем состояние сна ДО обработки урона
+        // Сохраняем состояние сна до обработки урона
         boolean wasSleeping = this.isSleeping();
         Player attacker = null;
         if (source.getEntity() instanceof Player player) {
             attacker = player;
         }
 
-        // Увеличиваем счётчик ударов ДО обработки
+        // Увеличиваем счётчик ударов до обработки
         int oldHitCount = getHitCount();
         if (source.getEntity() instanceof Player) {
             setHitCount(oldHitCount + 1);
@@ -1106,26 +1162,8 @@ public class KitsuneLightEntity extends Animal implements GeoEntity {
         if (!this.level().isClientSide && this.isTamed() && attacker != null &&
                 attacker.getUUID().equals(this.getOwnerUUID()) && !wasSleeping) {
 
-            // 30% шанс на сообщение при ударе хозяина
-            if (this.random.nextInt(3) == 0) {
+            if (this.random.nextInt(5) == 0) {
                 sendOwnerHurtMessage(attacker);
-            }
-
-            // Увеличиваем счётчик ударов от хозяина
-            setHitCount(getHitCount() + 1);
-
-            // Если хозяин бьёт слишком много - кицунэ обижается и садится
-            if (getHitCount() >= 3) {
-                setAngry(true);
-                setOffended(true); // Устанавливаем флаг обиды
-
-                // Обида - садится и отказывается двигаться
-                if (!isSitting() && !isSitAnimPlaying()) {
-                    startSitAnimation();
-                    sendAngryTofuMessage(attacker); // Сообщение о необходимости тофу
-                }
-                // Сбрасываем счётчик чтобы не спамить сообщениями
-                setHitCount(0);
             }
         }
 

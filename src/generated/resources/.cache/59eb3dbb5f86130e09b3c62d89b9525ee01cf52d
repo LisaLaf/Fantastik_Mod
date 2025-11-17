@@ -1,7 +1,8 @@
-// 1.20.1	2025-11-16T04:10:39.2686608	Loot Tables
+// 1.20.1	2025-11-16T22:46:16.7145314	Loot Tables
 b0ac6d05772691c53f71656a660673af83b8589d data/fantastikmod/loot_tables/blocks/ash_block.json
 b1afd71791786b2bd9b446578b0212aad7be94ca data/fantastikmod/loot_tables/blocks/auripigment_block.json
 7bb11a449c0c7b07085beec173c606af5033b406 data/fantastikmod/loot_tables/blocks/auripigment_ore_block.json
+db6e1d1a640e758eee07f8ad32f40226d0d67c88 data/fantastikmod/loot_tables/blocks/bush_crowberry.json
 127cb48a3f439f87435298b6fbe68379acbc4b8f data/fantastikmod/loot_tables/blocks/drying_basket.json
 4f50dc8e4c81babb39c06511cdb09c2eada0ab42 data/fantastikmod/loot_tables/blocks/frost.json
 cb03c7cf434694b22e043d5965f05f01ca127aec data/fantastikmod/loot_tables/blocks/gemkitsune_block.json

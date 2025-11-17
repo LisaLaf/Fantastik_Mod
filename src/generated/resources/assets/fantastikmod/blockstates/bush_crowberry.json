@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "fantastikmod:block/shrub_crowberry_0"
+    },
+    "age=1": {
+      "model": "fantastikmod:block/shrub_crowberry_1"
+    },
+    "age=2": {
+      "model": "fantastikmod:block/shrub_crowberry_2"
+    },
+    "age=3": {
+      "model": "fantastikmod:block/shrub_crowberry_3"
+    },
+    "age=4": {
+      "model": "fantastikmod:block/shrub_crowberry_4"
+    }
+  }
+}

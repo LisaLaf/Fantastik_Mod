@@ -34,6 +34,10 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> MOON_VINE_UNDER_TREES = registerKey("moon_vine_under_trees");
 
+    public static final ResourceKey<PlacedFeature> BUSH_CROWBERRY_PLACED_KEY = registerKey("bush_crowberry_placed");
+
+    public static final ResourceKey<PlacedFeature> MOONSTONE_PLACED_KEY = registerKey("moonstone_placed");
+
     public static final ResourceKey<PlacedFeature> DRAGON_CAVE_PLACED_KEY = registerKey("dragon_cave_placed");
 
 
@@ -53,7 +57,7 @@ public class ModPlacedFeatures {
 
         register(context, AURIPIGMENT_ORE_PLACED_KEI, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_AURIPIGMENT_ORE_KEY),
                 List.of(
-                        CountPlacement.of(6), // 6 жил на чанк (железо - 9, уголь - 20)
+                        CountPlacement.of(3), // жил на чанк (железо - 9, уголь - 20)
                         InSquarePlacement.spread(),
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(-10), // Не появляется в глубоком слайме
@@ -64,7 +68,7 @@ public class ModPlacedFeatures {
 
         register(context, MOON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_ORE_KEY),
                 List.of(
-                        CountPlacement.of(2), // 1 жила на чанк
+                        CountPlacement.of(2), //  жила на чанк
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(
                                 VerticalAnchor.absolute(20),  // От высоты 50
@@ -75,11 +79,11 @@ public class ModPlacedFeatures {
 
         register(context, MOON_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_KEY),
                 List.of(
-                        PlacementUtils.countExtra(10, 0.2f, 6), // 1 дерево + случайное доп
+                        PlacementUtils.countExtra(10, 0.2f, 6),
                         InSquarePlacement.spread(),
                         SurfaceWaterDepthFilter.forMaxDepth(0),
                         PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
-                        PlacementUtils.filteredByBlockSurvival(ModBlocks.MOON_SAPLING.get()), // или ваш саженец
+                        PlacementUtils.filteredByBlockSurvival(ModBlocks.MOON_SAPLING.get()),
                         BiomeFilter.biome()
                 ));
 
@@ -115,6 +119,14 @@ public class ModPlacedFeatures {
                         BiomeFilter.biome()
                 ));
 
+        register(context,BUSH_CROWBERRY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BUSH_CROWBERRY_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(1), // Частота спавна (меньше = чаще)
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                ));
+
         register(context, MOON_GRASS_1_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_GRASS_1_KEY),
                 List.of(
                         RarityFilter.onAverageOnceEvery(1), // Частота спавна (меньше = чаще)
@@ -138,6 +150,16 @@ public class ModPlacedFeatures {
                         ),
                         BiomeFilter.biome()
                 ));
+
+        register(context, MOONSTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOONSTONE_KEY),
+                ModOrePlacement.commonOrePlacement(
+                        20,
+                        HeightRangePlacement.uniform(
+                                VerticalAnchor.bottom(),
+                                VerticalAnchor.top()
+                        )
+                )
+        );
 
         //register(context, DRAGON_CAVE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DRAGON_CAVE_KEY), List.of(
                        // RarityFilter.onAverageOnceEvery(1000),

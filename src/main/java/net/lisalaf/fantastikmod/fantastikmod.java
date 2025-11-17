@@ -1,14 +1,17 @@
 package net.lisalaf.fantastikmod;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.datagen.ModWorldGenProvider;
+import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.client.BlueButterflyRenderer;
 import net.lisalaf.fantastikmod.entity.client.IceDragonRenderer;
 import net.lisalaf.fantastikmod.entity.client.KitsuneLightRenderer;
 import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
 import net.lisalaf.fantastikmod.entity.custom.BlueButterflyEntity;
+import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.sound.ModSounds;
@@ -30,6 +33,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -40,6 +44,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
 
@@ -82,9 +89,12 @@ public class fantastikmod {
 
         ModFeatures.FEATURES.register(modEventBus);
 
+        MinecraftForge.EVENT_BUS.register(ModEvent.class);
+
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::addFuel);
+        LOOT_MODIFIERS.register(modEventBus);
        // MinecraftForge.EVENT_BUS.register(this);modEventBus.addListener(this::addCreative);
 
 
@@ -187,4 +197,10 @@ public class fantastikmod {
             event.setBurnTime(300); // 15 секунд
         }
     }
+
+    private static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MOD_ID);
+
+    public static final RegistryObject<Codec<AddItemModifier>> ADD_ITEM =
+            LOOT_MODIFIERS.register("add_item", AddItemModifier.CODEC);
 }

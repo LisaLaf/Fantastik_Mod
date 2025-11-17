@@ -50,6 +50,7 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.TEA_LEAFS_BLACK.get());
                         output.accept(ModItems.MATCHA_POWDER.get());
                         output.accept(ModItems.MATCHA_MOCHI.get());
+                        output.accept(ModItems.MOON_CROWBERRY.get());
                         output.accept(ModItems.DOUGH_MOCHI.get());
                         output.accept(ModItems.STRAWBERRY_MOCHI.get());
                         output.accept(ModItems.MOCHI.get());

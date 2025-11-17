@@ -1,7 +1,8 @@
-// 1.20.1	2025-11-16T04:10:39.2608123	Block States: fantastikmod
+// 1.20.1	2025-11-16T22:46:16.6984928	Block States: fantastikmod
 ac7438448d75e22f93e94da392ca3025f3d2455a assets/fantastikmod/blockstates/ash_block.json
 f4ec7d494d1a6448c41be24f60fcb35e64b02def assets/fantastikmod/blockstates/auripigment_block.json
 150f05bccb28f5f947f7f1d13044b30f52dbe7d1 assets/fantastikmod/blockstates/auripigment_ore_block.json
+9397443864a99bbb93a533ff5d255b80e333b696 assets/fantastikmod/blockstates/bush_crowberry.json
 2ba0c662117855145ac103cf9194d0226715464a assets/fantastikmod/blockstates/drying_basket.json
 28f81d68b4ab5bea6bf261e8c7fe66ff2943f295 assets/fantastikmod/blockstates/frost.json
 75eb569a7694a940e3e5a0edb80f51aea0e4e939 assets/fantastikmod/blockstates/gemkitsune_block.json
@@ -93,6 +94,11 @@ b7bdb447321b426e8fff3381a5f8c9ebe86e6fb7 assets/fantastikmod/models/block/rice_s
 e97ad0ada99535f2866774b71556d7caff03dbfc assets/fantastikmod/models/block/rice_stage_6.json
 b86e555d50e056fcb8abeeff187399dc95352780 assets/fantastikmod/models/block/rice_stage_7.json
 303917febb5fd83a3cfdec6489251ba69fcc20d9 assets/fantastikmod/models/block/rice_stage_8.json
+96306cdb9719191d6953ecfe713eee060dfd5e1a assets/fantastikmod/models/block/shrub_crowberry_0.json
+9fb430b20d0efb6323090182fed06aa40b89da33 assets/fantastikmod/models/block/shrub_crowberry_1.json
+4c96cd601dfc33098b859b0c33a593a3b04395d0 assets/fantastikmod/models/block/shrub_crowberry_2.json
+ef29419e469431c07c1a7be8f7b144774b84bae7 assets/fantastikmod/models/block/shrub_crowberry_3.json
+d25d1ba087199cc00b92dd7211f9c228a533ef61 assets/fantastikmod/models/block/shrub_crowberry_4.json
 6b41158a9f7237e8198e0d11f2e5800280e0597d assets/fantastikmod/models/block/silver_block.json
 136857b52a2f2bd30768de26301c40e634478038 assets/fantastikmod/models/block/silver_ore.json
 176a96c4b3676ff11eb5eb90bea54d7b51a834f4 assets/fantastikmod/models/block/strawberry_stage0.json
