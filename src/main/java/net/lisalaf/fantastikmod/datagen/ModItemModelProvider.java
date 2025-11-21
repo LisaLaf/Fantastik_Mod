@@ -120,7 +120,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerArmorItem("auripigment_leggings");
         registerArmorItem("auripigment_boots");
 
-
+        registerArmorItem("moon_helmet");
+        registerArmorItem("moon_chestplate");
+        registerArmorItem("moon_leggings");
+        registerArmorItem("moon_boots");
 
         registerArmorItem("helmet_fur_ice_dragon");
         registerArmorItem("chestplate_fur_ice_dragon");

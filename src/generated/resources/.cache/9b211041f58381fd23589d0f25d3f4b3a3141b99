@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-16T21:56:01.1866719	Item Models: fantastikmod
+// 1.20.1	2025-11-21T06:08:37.1283834	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -33,13 +33,17 @@ e4a8c216dd9824c7ece34a8c2a6236ab441ef027 assets/fantastikmod/models/item/mochi.j
 7c8029694ebb071d58be765bafa24b64463ae3ce assets/fantastikmod/models/item/moonmascot.json
 3cd0b04e41e3c294ed0d6c00abe4d3b9d6df05fe assets/fantastikmod/models/item/moonstone.json
 6bafad07eaa7846f90215cc8b9de7bac4adc4ecf assets/fantastikmod/models/item/moon_axe.json
+54e149595315586c97a88698d93bfc5ad0808128 assets/fantastikmod/models/item/moon_boots.json
+c7aa1786a52393e2a585e0f7a1b63da40c5c4975 assets/fantastikmod/models/item/moon_chestplate.json
 c96d6ad0df883f7df72a8dc3798639ad8cf1e4b4 assets/fantastikmod/models/item/moon_crowberry.json
 1dca049d775148c9fbab34f00a0dd6bde0099feb assets/fantastikmod/models/item/moon_dust.json
 45ec3be5c567c850323f242cfdea0b14eec32958 assets/fantastikmod/models/item/moon_gem_block.json
 5b1d6e306bbe908e00f15cfea77ef09fa2dc6591 assets/fantastikmod/models/item/moon_grass.json
 3a8b59ec5a022928a2cfc8eca674e630dd348454 assets/fantastikmod/models/item/moon_grass_1.json
 e363ef256b6ffb30b9da6b5f1309780c98cb8949 assets/fantastikmod/models/item/moon_heather.json
+f9bf56435805557beccb03ffd4c111065e327970 assets/fantastikmod/models/item/moon_helmet.json
 332734859527fe2edee1648a7db48c473fd20bf5 assets/fantastikmod/models/item/moon_lamp.json
+a65b44e410faadca61c9ace6003bbb683ed56545 assets/fantastikmod/models/item/moon_leggings.json
 54bc70dad414a40110d32ce6aee47dea4ee27580 assets/fantastikmod/models/item/moon_lily.json
 52ecfe0e5c6a82e5f9bd6d12686f63d6044a7d15 assets/fantastikmod/models/item/moon_northern_bluebell.json
 faec50aca54b8af06db1b9bdd3d80067f0136088 assets/fantastikmod/models/item/moon_ore.json

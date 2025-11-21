@@ -69,6 +69,11 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.AURIPIGMENT_CHESTPLATE.get());
                         output.accept(ModItems.AURIPIGMENT_HELMET.get());
 
+                        output.accept(ModItems.MOON_BOOTS.get());
+                        output.accept(ModItems.MOON_LEGGINGS.get());
+                        output.accept(ModItems.MOON_CHESTPLATE.get());
+                        output.accept(ModItems.MOON_HELMET.get());
+
                         output.accept(ModItems.SILVER_HELMET.get());
                         output.accept(ModItems.SILVER_CHESTPLATE.get());
                         output.accept(ModItems.SILVER_LEGGINGS.get());

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "item": "fantastikmod:gem_moon"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "g g",
+    "   "
+  ],
+  "result": {
+    "item": "fantastikmod:moon_helmet"
+  },
+  "show_notification": true
+}

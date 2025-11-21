@@ -13,8 +13,11 @@ public enum ModArmorMaterials implements ArmorMaterial {
     AURIPIGMENT("auripigment", 16, new int[]{ 2, 7, 5, 3}, 11,
             SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, () -> Ingredient.of(ModItems.AURIPIGMENT.get())),
 
-    FUR_ICE_DRAGON("fur_ice_dragon", 30, new int[]{ 4, 8, 7, 4}, 24,
+    FUR_ICE_DRAGON("fur_ice_dragon", 30, new int[]{ 5, 8, 7, 4}, 24,
     SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, () -> Ingredient.of(ModItems.FUR_ICE_DRAGON.get())),
+
+    GEM_MOON("gem_moon", 30, new int[]{ 4, 8, 7, 4}, 24,
+            SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0f, 0.0f, () -> Ingredient.of(ModItems.GEM_MOON.get())),
 
     SILVER("silver", 14, new int[]{  2, 5, 4, 2}, 11,
     SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, () -> Ingredient.of(ModItems.SILVER_INGOT.get()));

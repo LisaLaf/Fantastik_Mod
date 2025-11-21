@@ -31,6 +31,11 @@ public class ModArmorItem extends ArmorItem {
             ModArmorMaterials.FUR_ICE_DRAGON, List.of(
                     new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 0, false, false, true),
                     new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, -1, 0, false, false, true)
+            ),
+
+            ModArmorMaterials.GEM_MOON, List.of(
+                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 1, false, false, true), // Скорость II ночью
+                    new MobEffectInstance(MobEffects.NIGHT_VISION, -1, 1, false, false, true) // Защита II ночью
             )
 
 
@@ -44,28 +49,58 @@ public class ModArmorItem extends ArmorItem {
     }
 
     public void onArmorTick(ItemStack stack, Level world, Player player) {
-        // Явная проверка через instanceof
         if(world instanceof ClientLevel) {
             return;
         }
 
-        // ИЗМЕНИТЬ: теперь работаем со списком эффектов
         for (Map.Entry<ArmorMaterial, List<MobEffectInstance>> entry : MATERIAL_TO_EFFECTS_MAP.entrySet()) {
             ArmorMaterial material = entry.getKey();
-            List<MobEffectInstance> effects = entry.getValue(); // ← теперь List эффектов
+            List<MobEffectInstance> effects = entry.getValue();
 
             if(hasFullSuitOfArmorOn(player) && hasCorrectArmorOn(material, player)) {
-                // Добавляем ВСЕ эффекты из списка
                 for(MobEffectInstance effect : effects) {
                     addStatusEffectForMaterial(player, material, effect);
                 }
 
-                // ДОБАВЛЕНО: эффект ледяной походки только для FUR_ICE_DRAGON
                 if(material == ModArmorMaterials.FUR_ICE_DRAGON) {
                     applyIceWalkEffect(player, world);
                 }
             } else {
-                // Удаляем ВСЕ эффекты из списка
+                for(MobEffectInstance effect : effects) {
+                    removeStatusEffectForMaterial(player, effect);
+                }
+            }
+        }
+
+        for (Map.Entry<ArmorMaterial, List<MobEffectInstance>> entry : MATERIAL_TO_EFFECTS_MAP.entrySet()) {
+            ArmorMaterial material = entry.getKey();
+            List<MobEffectInstance> effects = entry.getValue();
+
+            if(hasFullSuitOfArmorOn(player) && hasCorrectArmorOn(material, player)) {
+
+                // ДОБАВЛЕНО: для лунной брони эффекты работают только ночью
+                if(material == ModArmorMaterials.GEM_MOON) {
+                    if(isNightTime(world)) {
+                        for(MobEffectInstance effect : effects) {
+                            addStatusEffectForMaterial(player, material, effect);
+                        }
+                    } else {
+                        // Днем удаляем эффекты
+                        for(MobEffectInstance effect : effects) {
+                            removeStatusEffectForMaterial(player, effect);
+                        }
+                    }
+                } else {
+                    // Для других материалов эффекты всегда
+                    for(MobEffectInstance effect : effects) {
+                        addStatusEffectForMaterial(player, material, effect);
+                    }
+                }
+
+                if(material == ModArmorMaterials.FUR_ICE_DRAGON) {
+                    applyIceWalkEffect(player, world);
+                }
+            } else {
                 for(MobEffectInstance effect : effects) {
                     removeStatusEffectForMaterial(player, effect);
                 }
@@ -110,6 +145,11 @@ public class ModArmorItem extends ArmorItem {
                 }
             }
         }
+    }
+
+    private boolean isNightTime(Level world) {
+        long time = world.getDayTime();
+        return time >= 13000 && time <= 23000; // С 13:000 до 23:000 - ночь
     }
 
     private boolean isUndead(LivingEntity entity) {

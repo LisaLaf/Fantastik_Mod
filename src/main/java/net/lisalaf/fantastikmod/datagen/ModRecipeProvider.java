@@ -185,6 +185,38 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.MOON_BOOTS.get(), 1)
+                .pattern("g g")
+                .pattern("g g")
+                .pattern("   ")
+                .define('g', ModItems.GEM_MOON.get())
+                .unlockedBy("has_gem_moon", has(ModItems.GEM_MOON.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.MOON_HELMET.get(), 1)
+                .pattern("ggg")
+                .pattern("g g")
+                .pattern("   ")
+                .define('g', ModItems.GEM_MOON.get())
+                .unlockedBy("has_gem_moon", has(ModItems.GEM_MOON.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.MOON_LEGGINGS.get(), 1)
+                .pattern("ggg")
+                .pattern("g g")
+                .pattern("g g")
+                .define('g', ModItems.GEM_MOON.get())
+                .unlockedBy("has_gem_moon", has(ModItems.GEM_MOON.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.MOON_CHESTPLATE.get(), 1)
+                .pattern("g g")
+                .pattern("ggg")
+                .pattern("ggg")
+                .define('g', ModItems.GEM_MOON.get())
+                .unlockedBy("has_gem_moon", has(ModItems.GEM_MOON.get()))
+                .save(pWriter);
+
         // Шлем
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_HELMET.get(), 1)
                 .pattern("sss")

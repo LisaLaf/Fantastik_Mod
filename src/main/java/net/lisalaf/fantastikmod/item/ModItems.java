@@ -157,6 +157,15 @@ public class ModItems {
     public static final RegistryObject<Item> SILVER_BOOTS = ITEMS.register("silver_boots",
             () -> new ModArmorItem(ModArmorMaterials.SILVER, ArmorItem.Type.BOOTS, new Item.Properties()));
 
+    public static final RegistryObject<Item> MOON_HELMET = ITEMS.register("moon_helmet",
+            () -> new ModArmorItem(ModArmorMaterials.GEM_MOON, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> MOON_CHESTPLATE = ITEMS.register("moon_chestplate",
+            () -> new ModArmorItem(ModArmorMaterials.GEM_MOON, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> MOON_LEGGINGS = ITEMS.register("moon_leggings",
+            () -> new ModArmorItem(ModArmorMaterials.GEM_MOON, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> MOON_BOOTS = ITEMS.register("moon_boots",
+            () -> new ModArmorItem(ModArmorMaterials.GEM_MOON, ArmorItem.Type.BOOTS, new Item.Properties()));
+
     public static final RegistryObject<Item> SWORD_AURIPIGMENT = ITEMS.register("sword_auripigment",
             () -> new SwordItem(ModToolTiers.AURIPIGMENT, 3, -2.4f, new Item.Properties()) {
                 @Override
