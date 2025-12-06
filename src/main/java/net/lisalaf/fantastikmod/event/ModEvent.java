@@ -2,35 +2,23 @@ package net.lisalaf.fantastikmod.event;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.lisalaf.fantastikmod.block.ModBlocks;
-import net.lisalaf.fantastikmod.entity.ModEntities;
-import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.BookHelper;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
@@ -190,7 +178,14 @@ public class ModEvent {
         }
     }
 
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        if (event.getSource().getEntity() instanceof Player player) {
+            String mobId = event.getEntity().getEncodeId();
 
-
-
+            net.lisalaf.fantastikmod.dialog.quest.QuestSystem.getActiveQuests()
+                    .forEach((uuid, quest) -> {
+                    });
+        }
+    }
 }

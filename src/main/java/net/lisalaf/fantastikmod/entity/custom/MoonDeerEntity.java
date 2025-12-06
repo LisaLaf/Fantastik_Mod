@@ -1,7 +1,14 @@
 package net.lisalaf.fantastikmod.entity.custom;
 
+import net.lisalaf.fantastikmod.dialog.Dialog;
+import net.lisalaf.fantastikmod.dialog.DialogScreen;
+import net.lisalaf.fantastikmod.dialog.DialogSystem;
+import net.lisalaf.fantastikmod.dialog.mobs.MoonDeerDialog;
+import net.lisalaf.fantastikmod.dialog.mobs.WildMoonDeerDialog;
 import net.lisalaf.fantastikmod.entity.ai.MoonDeerGoal;
+import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,6 +23,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -31,6 +39,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -225,10 +234,8 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
                 this.playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.9F + random.nextFloat() * 0.2F);
 
-
                 Component message = getWildFeedingMessage(player);
                 player.displayClientMessage(message, true);
-
 
                 return InteractionResult.sidedSuccess(level().isClientSide);
 
@@ -259,7 +266,22 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
             }
         }
 
-        // Код приручения и управления
+        // ДИАЛОГ С ПРИРУЧЕННЫМ ОЛЕНЕМ (Shift + ПКМ без предмета)
+        if (itemstack.isEmpty() && hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown()) {
+
+            if (level().isClientSide) {
+                try {
+                    Dialog dialog = DialogSystem.getDialog(this);
+                    if (dialog != null) {
+                        Minecraft.getInstance().setScreen(new DialogScreen(this, dialog));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return InteractionResult.sidedSuccess(level().isClientSide);
+        }
+
         if (!isTamed() && itemstack.is(ModItems.MOONMASCOT.get())) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
@@ -582,8 +604,8 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    private boolean isOwnedBy(Player player) {
-        return player.getUUID().equals(getOwnerUUID());
+    public boolean isOwnedBy(Player player) {
+        return ownerUUID != null && player.getUUID().equals(ownerUUID);
     }
 
     // === АНИМАЦИИ ===
@@ -661,7 +683,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return this.cache;
     }
 
-    // ИСПРАВЛЕНИЕ: Реализация абстрактного метода
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return null;
@@ -696,9 +717,14 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     public void setRunning(boolean running) { entityData.set(DATA_RUNNING, running); }
 
     public void setOwnerUUID(UUID uuid) { ownerUUID = uuid; }
-    public UUID getOwnerUUID() { return ownerUUID; }
+    public UUID getOwnerUUID() {
+        return ownerUUID;
+    }
     public LivingEntity getOwner() {
-        return ownerUUID != null ? level().getPlayerByUUID(ownerUUID) : null;
+        if (ownerUUID != null && level() != null) {
+            return level().getPlayerByUUID(ownerUUID);
+        }
+        return null;
     }
 
     // === АТРИБУТЫ ===
@@ -721,7 +747,10 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         compound.putBoolean("Running", isRunning());
         if (ownerUUID != null) {
             compound.putUUID("Owner", ownerUUID);
+        } else {
+            compound.putUUID("Owner", new UUID(0, 0));
         }
+
     }
 
     @Override
@@ -734,9 +763,27 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         if (compound.contains("Running")) setRunning(compound.getBoolean("Running"));
         if (compound.hasUUID("Owner")) setOwnerUUID(compound.getUUID("Owner"));
 
+        if (compound.hasUUID("Owner")) {
+            UUID savedUUID = compound.getUUID("Owner");
+            if (!savedUUID.equals(new UUID(0, 0))) {
+                setOwnerUUID(savedUUID);
+            }
+        }
+
         if (drinkAnimationTimer > 0) {
             setDrinking(true);
         }
+    }
+
+    @Override
+    public void remove(Entity.RemovalReason reason) {
+        if (level().isClientSide && DialogSystem.hasDialog(this)) {
+            Dialog dialog = DialogSystem.getDialog(this);
+            if (dialog != null) {
+                dialog.reset();
+            }
+        }
+        super.remove(reason);
     }
 
     @Override

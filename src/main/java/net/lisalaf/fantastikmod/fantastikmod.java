@@ -3,40 +3,33 @@ package net.lisalaf.fantastikmod;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import net.lisalaf.fantastikmod.block.ModBlocks;
-import net.lisalaf.fantastikmod.datagen.ModWorldGenProvider;
 import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
+import net.lisalaf.fantastikmod.dialog.DialogSystem;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.client.BlueButterflyRenderer;
 import net.lisalaf.fantastikmod.entity.client.IceDragonRenderer;
 import net.lisalaf.fantastikmod.entity.client.KitsuneLightRenderer;
 import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
-import net.lisalaf.fantastikmod.entity.custom.BlueButterflyEntity;
 import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.sound.ModSounds;
-import net.lisalaf.fantastikmod.util.ModTags;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
 import net.lisalaf.fantastikmod.worldgen.ModFeatures;
 import net.lisalaf.fantastikmod.worldgen.biome.ModTerrablender;
 import net.lisalaf.fantastikmod.worldgen.biome.sunface.ModSurfaceRules;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,21 +43,19 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
 
-import java.io.InputStream;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(fantastikmod.MOD_ID)
 public class fantastikmod {
     public static final String MOD_ID = "fantastikmod";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
+
 
     public fantastikmod(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
-        System.out.println("=== FANTASTIKMOD LOADING ===");
-        System.out.println("MOD ID: " + MOD_ID);
+
+        DialogSystem.registerDialogs();
 
 
         ModCreativeModTabs.register(modEventBus);
@@ -80,7 +71,6 @@ public class fantastikmod {
 
         ModSounds.register(modEventBus);
 
-        //ModTerrablender.registerBiomes();
 
         modEventBus.addListener(this::commonSetup);
 
@@ -91,23 +81,24 @@ public class fantastikmod {
 
         MinecraftForge.EVENT_BUS.register(ModEvent.class);
 
+        modEventBus.addListener(this::commonSetup);
+
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::addFuel);
         LOOT_MODIFIERS.register(modEventBus);
-       // MinecraftForge.EVENT_BUS.register(this);modEventBus.addListener(this::addCreative);
+
 
 
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            System.out.println("=== FINAL STRUCTURE CHECK ===");
-
 
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.MOON_LILY.getId(), ModBlocks.POTTED_MOON_LILY);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.MOON_NORTHERN_BLUEBELL.getId(), ModBlocks.POTTED_MOON_NORTHERN_BLUEBELL);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.MOON_HEATHER.getId(), ModBlocks.POTTED_MOON_HEATHER);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.SPIDER_LILY.getId(), ModBlocks.POTTED_SPIDER_LILY);
 
             ModTerrablender.registerBiomes();
 

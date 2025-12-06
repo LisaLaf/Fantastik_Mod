@@ -7,7 +7,6 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -24,6 +23,8 @@ import static net.lisalaf.fantastikmod.block.ModBlocks.register;
 public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_SILVER_ORE = registerKey("add_silver_ore");
     public static final ResourceKey<BiomeModifier> ADD_AURIPIGMENT_ORE = registerKey("add_auripigment_ore");
+
+    public static final ResourceKey<BiomeModifier> ADD_SPIDER_LILY_TO_CHERRY = registerKey("add_spider_lily_to_cherry");
 
     //public static final ResourceKey<BiomeModifier> ADD_TEA_HOUSE = registerKey("add_tea_house");
 
@@ -61,6 +62,11 @@ public class ModBiomeModifiers {
                         )
                 )
         ));
+
+        context.register(ADD_SPIDER_LILY_TO_CHERRY, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                HolderSet.direct(biomes.getOrThrow(Biomes.CHERRY_GROVE)),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.SPIDER_LILY_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
 
 
     }

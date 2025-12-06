@@ -136,6 +136,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerArmorItem("silver_leggings");
         registerArmorItem("silver_boots");
 
+        registerBlockItemBlockTexture("spider_lily");
         registerBlockItemBlockTexture("moon_lily");
         registerBlockItemBlockTexture("moon_northern_bluebell");
         registerBlockItemBlockTexture("moon_heather");

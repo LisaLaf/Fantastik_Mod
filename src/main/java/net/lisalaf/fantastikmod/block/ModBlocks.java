@@ -28,6 +28,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -110,6 +113,40 @@ public class ModBlocks {
                     BlockSetType.CHERRY
             ));
 
+    public static final RegistryObject<Block> SPIDER_LILY = registerBlock("spider_lily",
+            () -> new FlowerBlock(
+                    MobEffects.POISON,
+                    8,
+                    Block.Properties.of()
+                            .mapColor(MapColor.PLANT)
+                            .noCollission()
+                            .instabreak()
+                            .sound(SoundType.GRASS)
+                            .offsetType(BlockBehaviour.OffsetType.XZ)
+            ) {
+                @Override
+                public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+                    if (!level.isClientSide() && entity instanceof LivingEntity livingEntity) {
+                        if (entity.getBoundingBox().minY <= pos.getY() + 0.8) {
+                            livingEntity.addEffect(new MobEffectInstance(
+                                    MobEffects.POISON,
+                                    60,
+                                    1
+                            ));
+                            if (entity instanceof Player player) {
+                                player.hurt(player.damageSources().cactus(), 1.0F);
+                            }
+                        }
+                    }
+                    super.entityInside(state, level, pos, entity);
+                }
+            });
+
+    public static final RegistryObject<Block> POTTED_SPIDER_LILY = BLOCKS.register("potted_spider_lily",
+            () -> new FlowerPotBlock(
+                    () -> ((FlowerPotBlock) Blocks.FLOWER_POT), ModBlocks.SPIDER_LILY,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM).noOcclusion()));
+
     public static final RegistryObject<Block> MOON_LILY = registerBlock("moon_lily",
             () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5,
                     BlockBehaviour.Properties.copy(Blocks.ALLIUM).sound(SoundType.AMETHYST).noOcclusion().noCollission().lightLevel( state -> 5)));
@@ -169,7 +206,7 @@ public class ModBlocks {
                 {
                     if (random.nextFloat() <0.2f){
                         double x = (double) pos.getX() + random.nextDouble();
-                        double y = (double) pos.getY() + -1.1D;
+                        double y = (double) pos.getY() + -0.1D;
                         double z = (double) pos.getZ() + random.nextDouble();
 
                         level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0D, 0.0D, 0.0D);

@@ -117,6 +117,7 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.MOON_NORTHERN_BLUEBELL.get());
                         output.accept(ModBlocks.MOON_GRASS_1.get());
                         output.accept(ModBlocks.MOON_GRASS.get());
+                        output.accept(ModBlocks.SPIDER_LILY.get());
 
                         output.accept(ModBlocks.MOON_VINE.get());
                         output.accept(ModBlocks.FROST.get());

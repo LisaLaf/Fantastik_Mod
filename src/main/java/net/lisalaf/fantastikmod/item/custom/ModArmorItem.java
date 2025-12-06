@@ -34,8 +34,8 @@ public class ModArmorItem extends ArmorItem {
             ),
 
             ModArmorMaterials.GEM_MOON, List.of(
-                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 1, false, false, true), // Скорость II ночью
-                    new MobEffectInstance(MobEffects.NIGHT_VISION, -1, 1, false, false, true) // Защита II ночью
+                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 1, false, false, true),
+                    new MobEffectInstance(MobEffects.NIGHT_VISION, -1, 1, false, false, true)
             )
 
 
@@ -58,54 +58,38 @@ public class ModArmorItem extends ArmorItem {
             List<MobEffectInstance> effects = entry.getValue();
 
             if(hasFullSuitOfArmorOn(player) && hasCorrectArmorOn(material, player)) {
-                for(MobEffectInstance effect : effects) {
-                    addStatusEffectForMaterial(player, material, effect);
-                }
 
-                if(material == ModArmorMaterials.FUR_ICE_DRAGON) {
-                    applyIceWalkEffect(player, world);
-                }
-            } else {
-                for(MobEffectInstance effect : effects) {
-                    removeStatusEffectForMaterial(player, effect);
-                }
-            }
-        }
-
-        for (Map.Entry<ArmorMaterial, List<MobEffectInstance>> entry : MATERIAL_TO_EFFECTS_MAP.entrySet()) {
-            ArmorMaterial material = entry.getKey();
-            List<MobEffectInstance> effects = entry.getValue();
-
-            if(hasFullSuitOfArmorOn(player) && hasCorrectArmorOn(material, player)) {
-
-                // ДОБАВЛЕНО: для лунной брони эффекты работают только ночью
                 if(material == ModArmorMaterials.GEM_MOON) {
                     if(isNightTime(world)) {
                         for(MobEffectInstance effect : effects) {
                             addStatusEffectForMaterial(player, material, effect);
                         }
                     } else {
-                        // Днем удаляем эффекты
                         for(MobEffectInstance effect : effects) {
                             removeStatusEffectForMaterial(player, effect);
                         }
                     }
-                } else {
-                    // Для других материалов эффекты всегда
+                }
+                else if(material == ModArmorMaterials.FUR_ICE_DRAGON) {
+                    for(MobEffectInstance effect : effects) {
+                        addStatusEffectForMaterial(player, material, effect);
+                    }
+                    applyIceWalkEffect(player, world);
+                }
+
+                else {
                     for(MobEffectInstance effect : effects) {
                         addStatusEffectForMaterial(player, material, effect);
                     }
                 }
-
-                if(material == ModArmorMaterials.FUR_ICE_DRAGON) {
-                    applyIceWalkEffect(player, world);
-                }
             } else {
+
                 for(MobEffectInstance effect : effects) {
                     removeStatusEffectForMaterial(player, effect);
                 }
             }
         }
+
 
         int silverPieces = 0;
         for (ItemStack armor : player.getArmorSlots()) {
@@ -116,29 +100,22 @@ public class ModArmorItem extends ArmorItem {
         }
 
         if (silverPieces > 0) {
-            int radius = silverPieces; // 1 блок за каждый элемент
-
+            int radius = silverPieces;
             List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class,
                     player.getBoundingBox().inflate(radius));
 
             for (LivingEntity entity : entities) {
                 if (entity instanceof Monster || isUndead(entity)) {
-                    // Заставляем моба избегать игрока
                     if (entity instanceof PathfinderMob pathfinderMob) {
-                        // Устанавливаем точку избегания
                         pathfinderMob.getNavigation().stop();
-
-                        // Ищем безопасную позицию подальше от игрока
                         Vec3 awayFromPlayer = entity.position()
                                 .subtract(player.position())
                                 .normalize()
-                                .scale(radius + 1); // +3 блока за радиусом
-
+                                .scale(radius + 1);
                         BlockPos fleePos = BlockPos.containing(entity.position().add(awayFromPlayer));
                         pathfinderMob.getNavigation().moveTo(fleePos.getX(), fleePos.getY(), fleePos.getZ(), 1.2);
                     }
 
-                    // Урон при слишком близком подходе (если прорвутся)
                     if (entity.distanceTo(player) < 1.0) {
                         entity.hurt(player.damageSources().magic(), silverPieces * 0.5F);
                     }

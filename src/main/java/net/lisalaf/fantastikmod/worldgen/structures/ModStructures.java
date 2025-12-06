@@ -30,13 +30,13 @@ public class ModStructures {
         context.register(TEA_HOUSE, new JigsawStructure(
                 new Structure.StructureSettings(
                         context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
-                        Map.of(), // ← ДОБАВЬ java.util.Map.of()
+                        Map.of(),
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_THIN // ← ИЗМЕНИ НА ЭТО
+                        TerrainAdjustment.BEARD_THIN
                 ),
                 context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.TEA_HOUSE_START),
                 7,
-                ConstantHeight.of(VerticalAnchor.absolute(64)), // ← ИЗМЕНИ НА ЭТО
+                ConstantHeight.of(VerticalAnchor.absolute(64)),
                 true
         ));
 
@@ -46,10 +46,10 @@ public class ModStructures {
         context.register(TEA_HOUSE_SET, new StructureSet(
                 context.lookup(Registries.STRUCTURE).getOrThrow(TEA_HOUSE),
                 new RandomSpreadStructurePlacement(
-                        32, // расстояние между структурами
-                        8,  // минимальное расстояние от спавна
+                        32,
+                        8,
                         RandomSpreadType.LINEAR,
-                        123456789 // seed
+                        123456789
                 )
         ));
     }

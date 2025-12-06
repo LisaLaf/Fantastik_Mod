@@ -44,6 +44,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_GRASS_1_KEY = registerKey("moon_grass_1");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_VINE_KEY = registerKey("moon_vine");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BUSH_CROWBERRY_KEY = registerKey("bush_crowberry");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SPIDER_LILY_KEY = registerKey("spider_lily");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOONSTONE_KEY = registerKey("moonstone");
 
@@ -127,6 +128,11 @@ public class ModConfiguredFeatures {
                 ModBlocks.MOONSTONE.get().defaultBlockState(),
                 64
         ));
+
+        register(context, SPIDER_LILY_KEY, Feature.FLOWER,
+                new RandomPatchConfiguration(32, 7, 3,
+                        PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.SPIDER_LILY.get())))));
 
 
 

@@ -124,6 +124,9 @@ public class ModBlockLootTables extends LootTableProvider {
             this.dropSelf(ModBlocks.MOON_LILY.get());
             this.add(ModBlocks.POTTED_MOON_LILY.get(), createPotFlowerItemTable(ModBlocks.MOON_LILY.get()));
 
+            this.dropSelf(ModBlocks.SPIDER_LILY.get());
+            this.add(ModBlocks.POTTED_SPIDER_LILY.get(), createPotFlowerItemTable(ModBlocks.SPIDER_LILY.get()));
+
             this.dropSelf(ModBlocks.MOON_NORTHERN_BLUEBELL.get());
             this.add(ModBlocks.POTTED_MOON_NORTHERN_BLUEBELL.get(), createPotFlowerItemTable(ModBlocks.MOON_NORTHERN_BLUEBELL.get()));
 

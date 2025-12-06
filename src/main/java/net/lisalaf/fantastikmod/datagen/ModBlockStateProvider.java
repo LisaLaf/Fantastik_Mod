@@ -94,7 +94,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         makeCrowberryShrub((CropBlock) ModBlocks.BUSH_CROWBERRY.get(), "shrub_crowberry_", "shrub_crowberry_");
         makeRiceCrop(((CropBlock) ModBlocks.RICE_CROP.get()), "rice_stage_", "rice_stage_");
 
-
+        simpleBlockWithItem(ModBlocks.SPIDER_LILY.get(), models().cross(blockTexture(ModBlocks.SPIDER_LILY.get()).getPath(),
+                blockTexture(ModBlocks.SPIDER_LILY.get())).renderType("cutout"));
+        simpleBlockWithItem(ModBlocks.POTTED_SPIDER_LILY.get(), models().singleTexture("potted_spider_lily", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(ModBlocks.SPIDER_LILY.get())).renderType("cutout"));
 
         simpleBlockWithItem(ModBlocks.MOON_LILY.get(), models().cross(blockTexture(ModBlocks.MOON_LILY.get()).getPath(),
                 blockTexture(ModBlocks.MOON_LILY.get())).renderType("cutout"));

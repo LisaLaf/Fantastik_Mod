@@ -38,6 +38,8 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> MOONSTONE_PLACED_KEY = registerKey("moonstone_placed");
 
+    public static final ResourceKey<PlacedFeature> SPIDER_LILY_PLACED_KEY = registerKey("spider_lily_placed");
+
     public static final ResourceKey<PlacedFeature> DRAGON_CAVE_PLACED_KEY = registerKey("dragon_cave_placed");
 
 
@@ -46,33 +48,33 @@ public class ModPlacedFeatures {
 
         register(context, SILVER_ORE_PLACED_KEI, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_SILVER_ORE_KEY),
                 List.of(
-                        CountPlacement.of(6), // 6 жил на чанк (железо - 9, уголь - 20)
+                        CountPlacement.of(6),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(-16), // Не появляется в глубоком слайме
-                                VerticalAnchor.absolute(88)   // Пик на уровне моря
+                                VerticalAnchor.absolute(-16),
+                                VerticalAnchor.absolute(88)
                         ),
                         BiomeFilter.biome()
                 ));
 
         register(context, AURIPIGMENT_ORE_PLACED_KEI, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_AURIPIGMENT_ORE_KEY),
                 List.of(
-                        CountPlacement.of(3), // жил на чанк (железо - 9, уголь - 20)
+                        CountPlacement.of(3),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(-10), // Не появляется в глубоком слайме
-                                VerticalAnchor.absolute(88)   // Пик на уровне моря
+                                VerticalAnchor.absolute(-10),
+                                VerticalAnchor.absolute(88)
                         ),
                         BiomeFilter.biome()
                 ));
 
         register(context, MOON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_ORE_KEY),
                 List.of(
-                        CountPlacement.of(2), //  жила на чанк
+                        CountPlacement.of(2),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(
-                                VerticalAnchor.absolute(20),  // От высоты 50
-                                VerticalAnchor.absolute(256)  // До верха мира
+                                VerticalAnchor.absolute(20),
+                                VerticalAnchor.absolute(256)
                         ),
                         BiomeFilter.biome()
                 ));
@@ -144,9 +146,9 @@ public class ModPlacedFeatures {
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                         EnvironmentScanPlacement.scanningFor(
                                 Direction.UP,
-                                BlockPredicate.matchesBlocks(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get()), // Ищем под листвой
-                                BlockPredicate.ONLY_IN_AIR_PREDICATE, // Ставим только в воздух
-                                12 // Максимальная дистанция поиска
+                                BlockPredicate.matchesBlocks(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get()),
+                                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                                12
                         ),
                         BiomeFilter.biome()
                 ));
@@ -160,6 +162,14 @@ public class ModPlacedFeatures {
                         )
                 )
         );
+
+        register(context, SPIDER_LILY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SPIDER_LILY_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(2),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                ));
 
         //register(context, DRAGON_CAVE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DRAGON_CAVE_KEY), List.of(
                        // RarityFilter.onAverageOnceEvery(1000),

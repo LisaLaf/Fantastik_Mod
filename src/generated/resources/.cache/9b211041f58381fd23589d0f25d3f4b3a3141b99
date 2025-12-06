@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-21T06:08:37.1283834	Item Models: fantastikmod
+// 1.20.1	2025-11-25T05:06:43.4500324	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -77,6 +77,7 @@ aed13f8b2a6fe2ba0dddfd1b8e7e4f2d26e114de assets/fantastikmod/models/item/silver_
 a781841a181807912607e0f5dca981dbdf51d919 assets/fantastikmod/models/item/silver_stick.json
 870521067b23490db93098020cb72f280ad9cfcb assets/fantastikmod/models/item/silver_sword.json
 9906f10abffddc2977761b98525adaa4737bccb4 assets/fantastikmod/models/item/soul_tamed_kitsune.json
+075cad9cb64b578735594b5f4d5d0c291df46b6f assets/fantastikmod/models/item/spider_lily.json
 96aae2781dc08301436c21da1979fa9b96fa460a assets/fantastikmod/models/item/strawberry.json
 88c5cdc8df0f20028ce4639c5f067725611d9a6b assets/fantastikmod/models/item/strawberry_mochi.json
 81bdcc19dfa6157f6ccc675d92bb98072cae06d3 assets/fantastikmod/models/item/strawberry_seeds.json
