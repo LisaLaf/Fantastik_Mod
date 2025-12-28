@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-25T05:06:43.4500324	Item Models: fantastikmod
+// 1.20.1	2025-12-20T22:05:03.1319299	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -61,6 +61,12 @@ d53b1d41671941d96f0e4b1d6b87b8b6c07a21dd assets/fantastikmod/models/item/moon_sa
 89896f3b0a9388fad062adc6d7203808a3ac02a3 assets/fantastikmod/models/item/moon_sword.json
 9d4d3fc67c76f207e3d7733408a684e2136c0821 assets/fantastikmod/models/item/moon_tree_door.json
 5e92ef079363248f50d461390df4bf342ed5b8f8 assets/fantastikmod/models/item/moon_tree_trapdoor.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_1.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_2.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_3.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_4.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_5.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_6.json
 830fdbc079025f9ca7ee9776a137c0905c217924 assets/fantastikmod/models/item/rice.json
 11d15d283be4939750f9861a73bfcb4b29182d43 assets/fantastikmod/models/item/silver_axe.json
 6430d9721fff97f9ad7b68d01ea04723a11cbcce assets/fantastikmod/models/item/silver_block.json
@@ -88,5 +94,6 @@ dc1549b6eac715c1e4881088666d33780d181a3d assets/fantastikmod/models/item/tea_lea
 17ab0c37220047a8c53b0ac1b3554c909bdb77a7 assets/fantastikmod/models/item/tea_leafs_green.json
 547d0aeb9368f47bb7d4327e8d0bc1feb49eadce assets/fantastikmod/models/item/tea_seeds.json
 66da7d6380cf728689c0c547c2cc589fdc9083a9 assets/fantastikmod/models/item/tofu.json
+c67ae7e390823e23518063215a0e3b5c2ae6d3cc assets/fantastikmod/models/item/totem_blueprint.json
 758f5f39b6b2a35f99cf10eb60838ae012eb9b67 assets/fantastikmod/models/item/tree_moon_foliage_block.json
 2490726fced3f638487c35eca7a28d7981896332 assets/fantastikmod/models/item/tree_moon_log_block.json

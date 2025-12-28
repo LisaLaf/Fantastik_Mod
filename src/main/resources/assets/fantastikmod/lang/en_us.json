@@ -143,6 +143,8 @@
 
   "cretivetab.fantastik_tab": "Fantastik",
 
+  "biome.fantastikmod.blue_moon_forest": "Blue Moon Forest",
+
   "dialog.wild_moon_deer.greeting": "I greet you, traveler",
   "dialog.wild_moon_deer.who_are_you": "I am the spirit of this forest. Part of this forest that has guarded its peace for centuries",
   "dialog.wild_moon_deer.about_place": "This place was born from a shard of the moon. Once, Hati bit off a piece of the luminary shining with blue light, it fell to the earth and gave birth to this forest filled with the powers of the moon",
@@ -328,5 +330,41 @@
   "quest.moondeer.wild.name": "Request of the Moon Spirit",
   "quest.moondeer.wild.desc": "Traveler, could you gather these items for me? I will give you something in return.",
   "quest.moondeer.tamed.name": "Companion's Request",
-  "quest.moondeer.tamed.desc": "Companion, could you bring me these things? I will give you something useful in return."
+  "quest.moondeer.tamed.desc": "Companion, could you bring me these things? I will give you something useful in return.",
+
+
+
+
+  "item.fantastikmod.totem_blueprint": "Totem Blueprint",
+
+  "advancement.fantastikmod.root.title": "Welcome to the Fantasy World",
+  "advancement.fantastikmod.root.description": "Enter the world with Fantastik Mod",
+
+  "advancement.fantastikmod.enter_biome.title": "Fantastical World",
+  "advancement.fantastikmod.enter_biome.description": "Enter one of the mythical biomes",
+
+  "advancement.fantastikmod.get_auripigment.title": "Something's Wrong with Me",
+  "advancement.fantastikmod.get_auripigment.description": "Mine poisonous mineral and survive",
+
+  "advancement.fantastikmod.full_auripigment_armor.title": "Step to Immortality",
+  "advancement.fantastikmod.full_auripigment_armor.description": "Craft full Auripigment armor set and become closer to immortality",
+
+  "advancement.fantastikmod.totem_blueprint.title": "Ancient Secrets",
+  "advancement.fantastikmod.totem_blueprint.description": "Obtain the Totem of Undying blueprint",
+
+  "advancement.fantastikmod.get_moon_gem.title": "Moon's Blessing",
+  "advancement.fantastikmod.get_moon_gem.description": "Mine Moon Gem in the Blue Moon Forest biome",
+
+  "advancement.fantastikmod.full_moon_armor.title": "Blessing of the Moon",
+  "advancement.fantastikmod.full_moon_armor.description": "Craft full Moon armor set and receive blessings every night",
+
+  "advancement.fantastikmod.full_moon_tools.title": "Midnight Explorer",
+  "advancement.fantastikmod.full_moon_tools.description": "Craft Moon tools and make your nights much more effective",
+
+  "advancement.fantastikmod.tame_kitsune.title": "Fox Companion",
+  "advancement.fantastikmod.tame_kitsune.description": "Get a Kitsune as your companion in your journey",
+
+  "advancement.fantastikmod.tame_moon_deer.title": "Lunar Spirit",
+  "advancement.fantastikmod.tame_moon_deer.description": "Give an amulet and ride on the Moon Deer spirit from the forest"
+
 }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "fantastikmod:totem_blueprint"
+    },
+    "p": {
+      "item": "minecraft:paper"
+    },
+    "r": {
+      "item": "fantastikmod:auripigment"
+    }
+  },
+  "pattern": [
+    "prp",
+    "pbp",
+    "prp"
+  ],
+  "result": {
+    "count": 2,
+    "item": "fantastikmod:totem_blueprint"
+  },
+  "show_notification": true
+}

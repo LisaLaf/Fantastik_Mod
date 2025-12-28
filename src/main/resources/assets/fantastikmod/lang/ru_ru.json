@@ -147,6 +147,8 @@
 
   "cretivetab.fantastik_tab": "Фантастик",
 
+  "biome.fantastikmod.blue_moon_forest": "Лес Голубой Луны",
+
   "dialog.wild_moon_deer.greeting": "Приветствую тебя путник",
   "dialog.wild_moon_deer.who_are_you": "Я - дух этого леса. Часть этого леса, что хранит его покой веками",
   "dialog.wild_moon_deer.about_place": "Это место родилось из осколка луны. Когда-то Хати откусил кусок от светила, сиявшего голубым светом, тот упал на землю и породил этот лес наполненый силами луны",
@@ -328,6 +330,42 @@
   "quest.moondeer.tamed.start": "Буду ждать",
   "quest.moondeer.wild.complete": "Благодарю, вот ваша награда",
   "quest.moondeer.tamed.complete": "Благодарю, вот ваша награда",
-  "quest.moondeer.failed": "Время вышло путник"
+  "quest.moondeer.failed": "Время вышло путник",
+
+
+
+
+  "item.fantastikmod.totem_blueprint": "Чертёж тотема",
+
+  "advancement.fantastikmod.root.title": "Добро пожаловать в мир",
+  "advancement.fantastikmod.root.description": "Вы зашли в мир с Фантастик модом",
+
+  "advancement.fantastikmod.enter_biome.title": "Фантастический мир",
+  "advancement.fantastikmod.enter_biome.description": "Войдите в один из мифических биомов",
+
+  "advancement.fantastikmod.get_auripigment.title": "Что-то мне плохо",
+  "advancement.fantastikmod.get_auripigment.description": "Добыть ядовитый минерал и остаться в живых",
+
+  "advancement.fantastikmod.full_auripigment_armor.title": "Шаг к бессмертию",
+  "advancement.fantastikmod.full_auripigment_armor.description": "Создайте сет брони из аурипигмента и станьте ближе к бессмертию",
+
+  "advancement.fantastikmod.totem_blueprint.title": "Древние секреты",
+  "advancement.fantastikmod.totem_blueprint.description": "Получи чертёж тотема бессмертия",
+
+  "advancement.fantastikmod.get_moon_gem.title": "Благословение луны",
+  "advancement.fantastikmod.get_moon_gem.description": "Добудьте в биоме лес Голубого Луны лунный самоцвет",
+
+  "advancement.fantastikmod.full_moon_armor.title": "Благословение луны",
+  "advancement.fantastikmod.full_moon_armor.description": "Создайте сет брони и получайте каждую ночь благословение",
+
+  "advancement.fantastikmod.full_moon_tools.title": "Полночный исследователь",
+  "advancement.fantastikmod.full_moon_tools.description": "Создайте инструменты из лунного самоцвета и ваша ночь станет намного эффективнее",
+
+  "advancement.fantastikmod.tame_kitsune.title": "Лисий спутник",
+  "advancement.fantastikmod.tame_kitsune.description": "Заполучите кицуне в роли своего компаньона в вашем путешествии",
+
+  "advancement.fantastikmod.tame_moon_deer.title": "Лунный дух",
+  "advancement.fantastikmod.tame_moon_deer.description": "Подарите амулет и путешествуйте верхом на лунном духе оленя из леса"
+
 
 }

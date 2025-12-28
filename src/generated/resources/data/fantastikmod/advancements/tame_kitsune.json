@@ -1,0 +1,40 @@
+{
+  "parent": "fantastikmod:root",
+  "criteria": {
+    "tame_kitsune": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "fantastikmod:kitsune_light"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.tame_kitsune.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:soul_tamed_kitsune"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.tame_kitsune.title"
+    }
+  },
+  "requirements": [
+    [
+      "tame_kitsune"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

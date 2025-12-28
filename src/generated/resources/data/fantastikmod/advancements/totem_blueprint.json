@@ -1,0 +1,38 @@
+{
+  "parent": "fantastikmod:get_auripigment",
+  "criteria": {
+    "has_totem_blueprint": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:totem_blueprint"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.totem_blueprint.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:totem_blueprint"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.totem_blueprint.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_totem_blueprint"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

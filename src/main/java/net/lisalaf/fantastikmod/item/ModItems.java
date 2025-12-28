@@ -148,6 +148,9 @@ public class ModItems {
     public static final RegistryObject<Item> BOOTS_FUR_ICE_DRAGON = ITEMS.register("boots_fur_ice_dragon",
             ()-> new ModArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.BOOTS, new Item.Properties()));
 
+    public static final RegistryObject<Item> TOTEM_BLUEPRINT = ITEMS.register("totem_blueprint",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> SILVER_HELMET = ITEMS.register("silver_helmet",
             () -> new ModArmorItem(ModArmorMaterials.SILVER, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<Item> SILVER_CHESTPLATE = ITEMS.register("silver_chestplate",
@@ -211,9 +214,8 @@ public class ModItems {
                 @Override
                 public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
                     super.inventoryTick(stack, level, entity, slot, selected);
-                    // Можно добавить эффект скорости игроку ночью когда инструмент в руках
                     if (entity instanceof Player player && selected && isNightTime(level)) {
-                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0)); // Краткий эффект скорости
+                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0));
                     }
                 }
 
@@ -234,13 +236,10 @@ public class ModItems {
                 @Override
                 public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
                     super.inventoryTick(stack, level, entity, slot, selected);
-                    // Можно добавить эффект скорости игроку ночью когда инструмент в руках
                     if (entity instanceof Player player && selected && isNightTime(level)) {
-                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0)); // Краткий эффект скорости
+                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0));
                     }
                 }
-                // Для инструментов убрана проверка ночи в getDestroySpeed
-                // т.к. сложно получить доступ к Level в этом методе
             });
 
     public static final RegistryObject<Item> MOON_SHOVEL = ITEMS.register("moon_shovel",
@@ -248,21 +247,18 @@ public class ModItems {
                 @Override
                 public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
                     super.inventoryTick(stack, level, entity, slot, selected);
-                    // Можно добавить эффект скорости игроку ночью когда инструмент в руках
                     if (entity instanceof Player player && selected && isNightTime(level)) {
-                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0)); // Краткий эффект скорости
+                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0));
                     }
                 }
-                // Для инструментов убрана проверка ночи в getDestroySpeed
             });
 
     public static final RegistryObject<Item> MOON_SWORD = ITEMS.register("moon_sword",
             () -> new SwordItem(ModToolTiers.GEM_MOON, 3, -2.4f, new Item.Properties()) {
                 @Override
                 public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-                    // Увеличение урона ночью
                     if (isNightTime(attacker.level())) {
-                        target.hurt(attacker.damageSources().mobAttack(attacker), 3.0f); // +2 урона ночью
+                        target.hurt(attacker.damageSources().mobAttack(attacker), 3.0f);
                     }
 
 
@@ -291,7 +287,7 @@ public class ModItems {
     private static boolean isNightTime(Level level) {
         if (level == null) return false;
         long time = level.getDayTime() % 24000;
-        return time >= 13000 && time < 23000; // Ночь с 13:000 до 23:000 игрового времени
+        return time >= 13000 && time < 23000;
     }
 
 

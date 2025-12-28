@@ -21,11 +21,28 @@ public class KitsuneLightRenderer extends GeoEntityRenderer<KitsuneLightEntity> 
         super(renderManager, new KitsuneLightModel());
     }
 
+    private Boolean hasOptifineCache = null;
+
+    private boolean hasOptifine() {
+        if (hasOptifineCache == null) {
+            try {
+                // Простая проверка
+                Class.forName("optifine.Installer");
+                hasOptifineCache = true;
+            } catch (ClassNotFoundException e) {
+                hasOptifineCache = false;
+            }
+        }
+        return hasOptifineCache;
+    }
+
 
     @Override
     public void render(KitsuneLightEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
-        poseStack.pushPose(); // СОХРАНЯЕМ матрицу
+        poseStack.pushPose();
+
+
 
         if(entity.isBaby()) {
             poseStack.scale(1.3f, 1.3f, 1.3f);
@@ -36,11 +53,14 @@ public class KitsuneLightRenderer extends GeoEntityRenderer<KitsuneLightEntity> 
         }
 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-        renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
+        //renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
+
+        if (!hasOptifine()){
+            renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
+        }
 
 
-
-        poseStack.popPose(); // ВОССТАНАВЛИВАЕМ матрицу после рендера модели
+        poseStack.popPose();
     }
     private void renderEyes(KitsuneLightEntity entity, PoseStack poseStack,
                             MultiBufferSource bufferSource, float partialTick, int packedLight) {

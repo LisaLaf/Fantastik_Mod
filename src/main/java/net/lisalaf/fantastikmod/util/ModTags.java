@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class ModTags {
+    @SuppressWarnings("removal")
     public static class Blocks {
         public static final TagKey<Block> NEEDS_AURIPIGMENT_TOOL = tag("needs_auripigment_tool");
         public static final TagKey<Block> NEEDS_SILVER_TOOL = tag("needs_silver_tool");
@@ -18,7 +19,7 @@ public class ModTags {
 
 
         private static TagKey<Block> tag(String name) {
-            return BlockTags.create(ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, name));
+            return BlockTags.create(new ResourceLocation(fantastikmod.MOD_ID, name));
         }
     }
 

@@ -1,0 +1,40 @@
+{
+  "parent": "fantastikmod:root",
+  "criteria": {
+    "tame_moon_deer": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "fantastikmod:moon_deer"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.tame_moon_deer.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:egg_moon_deer"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.tame_moon_deer.title"
+    }
+  },
+  "requirements": [
+    [
+      "tame_moon_deer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

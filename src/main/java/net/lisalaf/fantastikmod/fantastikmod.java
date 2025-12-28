@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
+import net.lisalaf.fantastikmod.datagen.loot.ModLootModfiers;
 import net.lisalaf.fantastikmod.dialog.DialogSystem;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.client.BlueButterflyRenderer;
@@ -54,9 +55,7 @@ public class fantastikmod {
     public fantastikmod(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
-
         DialogSystem.registerDialogs();
-
 
         ModCreativeModTabs.register(modEventBus);
 
@@ -65,17 +64,15 @@ public class fantastikmod {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
-
-
         ModVillagers.register(modEventBus);
 
         ModSounds.register(modEventBus);
 
+        ModLootModfiers.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
         modEventBus.addListener(this::gatherData);
-
 
         ModFeatures.FEATURES.register(modEventBus);
 
@@ -86,7 +83,6 @@ public class fantastikmod {
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::addFuel);
-        LOOT_MODIFIERS.register(modEventBus);
 
 
 
@@ -109,33 +105,22 @@ public class fantastikmod {
 
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
+        if (event.getTabKey().equals(CreativeModeTabs.SPAWN_EGGS)) {
             event.accept(ModItems.EGG_KITSUNE_LIGHT);
-        if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
             event.accept(ModItems.EGG_BLUE_BUTTERFLY);
-        if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
             event.accept(ModItems.EGG_ICE_DRAGON);
-        if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
-            event.accept(ModItems.EGG_MOON_DEER );
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
+            event.accept(ModItems.EGG_MOON_DEER);
+        } else if (event.getTabKey().equals(CreativeModeTabs.FOOD_AND_DRINKS)) {
             event.accept(ModItems.TOFU);
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
             event.accept(ModItems.STRAWBERRY);
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
             event.accept(ModItems.RICE);
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
             event.accept(ModItems.STRAWBERRY_MOCHI);
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
             event.accept(ModItems.MATCHA_MOCHI);
-        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
             event.accept(ModItems.MOCHI);
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+        } else if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
             event.accept(ModItems.GEMKITSUNE);
-
             event.accept(ModItems.MOONMASCOT);
-
-                }
-
+        }
     }
 
 
@@ -189,9 +174,4 @@ public class fantastikmod {
         }
     }
 
-    private static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
-            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MOD_ID);
-
-    public static final RegistryObject<Codec<AddItemModifier>> ADD_ITEM =
-            LOOT_MODIFIERS.register("add_item", AddItemModifier.CODEC);
 }

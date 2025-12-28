@@ -11,7 +11,23 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
+@SuppressWarnings("removal")
 public class BlueButterflyRenderer extends GeoEntityRenderer<BlueButterflyEntity> {
+
+    private Boolean hasOptifineCache = null;
+
+    private boolean hasOptifine() {
+        if (hasOptifineCache == null) {
+            try {
+                // Простая проверка
+                Class.forName("optifine.Installer");
+                hasOptifineCache = true;
+            } catch (ClassNotFoundException e) {
+                hasOptifineCache = false;
+            }
+        }
+        return hasOptifineCache;
+    }
 
     public BlueButterflyRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BlueButterflyModel());
@@ -28,8 +44,11 @@ public class BlueButterflyRenderer extends GeoEntityRenderer<BlueButterflyEntity
         // Основной рендер с максимальным светом
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, 15728880);
 
-        // Светящиеся частицы пыльцы
-        renderGlowingPollen(entity, poseStack, bufferSource, partialTick);
+        if (!hasOptifine()){
+            renderGlowingPollen(entity, poseStack, bufferSource, partialTick);
+        }
+
+       // renderGlowingPollen(entity, poseStack, bufferSource, partialTick);
     }
 
     private void renderGlowingPollen(BlueButterflyEntity entity, PoseStack poseStack,
@@ -118,7 +137,7 @@ public class BlueButterflyRenderer extends GeoEntityRenderer<BlueButterflyEntity
 
     @Override
     public ResourceLocation getTextureLocation(BlueButterflyEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath("fantastikmod", "textures/entity/blue_butterfly.png");
+        return new ResourceLocation("fantastikmod", "textures/entity/blue_butterfly.png");
     }
 
 

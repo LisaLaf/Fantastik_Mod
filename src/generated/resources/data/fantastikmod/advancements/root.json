@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "tick": {
+      "conditions": {},
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "fantastikmod:textures/block/moon_planks.png",
+    "description": {
+      "translate": "advancement.fantastikmod.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:moonmascot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

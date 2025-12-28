@@ -1,0 +1,14 @@
+{
+  "type": "fantastikmod:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/woodland_mansion_cartographer"
+    },
+    {
+      "chance": 0.75,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "fantastikmod:totem_blueprint"
+}

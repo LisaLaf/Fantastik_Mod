@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:totem_blueprint_copy"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_totem_blueprint": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:totem_blueprint"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_totem_blueprint",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:totem_blueprint_copy"
+    ]
+  },
+  "sends_telemetry_event": false
+}

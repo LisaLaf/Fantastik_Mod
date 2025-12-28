@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "item": "fantastikmod:auripigment_block"
+    },
+    "b": {
+      "item": "minecraft:emerald"
+    },
+    "g": {
+      "item": "minecraft:gold_block"
+    },
+    "t": {
+      "item": "fantastikmod:totem_blueprint"
+    }
+  },
+  "pattern": [
+    "btb",
+    "gag",
+    "ggg"
+  ],
+  "result": {
+    "item": "minecraft:totem_of_undying"
+  },
+  "show_notification": true
+}

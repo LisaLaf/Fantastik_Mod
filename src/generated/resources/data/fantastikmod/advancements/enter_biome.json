@@ -1,0 +1,42 @@
+{
+  "parent": "fantastikmod:root",
+  "criteria": {
+    "enter_biome": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "fantastikmod:blue_moon_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.enter_biome.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:gem_moon"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.enter_biome.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_biome"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

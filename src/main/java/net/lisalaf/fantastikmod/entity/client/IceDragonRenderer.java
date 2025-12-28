@@ -20,6 +20,21 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 @SuppressWarnings("removal")
 public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
 
+    private Boolean hasOptifineCache = null;
+
+    private boolean hasOptifine() {
+        if (hasOptifineCache == null) {
+            try {
+                // Простая проверка
+                Class.forName("optifine.Installer");
+                hasOptifineCache = true;
+            } catch (ClassNotFoundException e) {
+                hasOptifineCache = false;
+            }
+        }
+        return hasOptifineCache;
+    }
+
     public IceDragonRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new IceDragonModel());
         this.shadowRadius = 8.0f;
@@ -69,15 +84,16 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
             }
         }
 
-        // Рендерим основную модель
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
 
         poseStack.popPose();
 
+        if (!hasOptifine()){
+            renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
+        }
 
 
-        // Рендерим глаза
-        renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
+       // renderEyes(entity, poseStack, bufferSource, partialTick, packedLight);
     }
 
     private void renderEyes(IceDragonEntity entity, PoseStack poseStack,

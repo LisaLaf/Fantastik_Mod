@@ -8,6 +8,7 @@ import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.lisalaf.fantastikmod.worldgen.tree.MoonTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -45,7 +46,21 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, fantastikmod.MOD_ID);
 
     public static final RegistryObject<Block> ASH_BLOCK = registerBlock("ash_block",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRAVEL).sound(SoundType.SAND)));
+            () -> new FallingBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL).sound(SoundType.SAND)) {
+        
+                @Override
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+                    if (random.nextInt(16) == 0) {
+                        BlockPos blockpos = pos.below();
+                        if (level.isEmptyBlock(blockpos) || (level.getBlockState(blockpos).canBeReplaced() && !level.getBlockState(blockpos).isSolid())) {
+                            double d0 = (double)pos.getX() + random.nextDouble();
+                            double d1 = (double)pos.getY() - 0.05D;
+                            double d2 = (double)pos.getZ() + random.nextDouble();
+                            level.addParticle((ParticleOptions) ParticleTypes.FALLING_DUST, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+                        }
+                    }
+                }
+            });
     public static final RegistryObject<Block> DRYING_BASKET = registerBlock("drying_basket",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 

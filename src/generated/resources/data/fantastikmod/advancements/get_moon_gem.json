@@ -1,0 +1,38 @@
+{
+  "parent": "fantastikmod:enter_biome",
+  "criteria": {
+    "has_gem_moon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:gem_moon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.get_moon_gem.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:gem_moon"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.get_moon_gem.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_gem_moon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

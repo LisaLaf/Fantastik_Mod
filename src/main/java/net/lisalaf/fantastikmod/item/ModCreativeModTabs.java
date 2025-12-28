@@ -121,6 +121,7 @@ public class ModCreativeModTabs {
 
                         output.accept(ModBlocks.MOON_VINE.get());
                         output.accept(ModBlocks.FROST.get());
+                        output.accept(ModItems.TOTEM_BLUEPRINT.get());
                     })
                     .build());
 

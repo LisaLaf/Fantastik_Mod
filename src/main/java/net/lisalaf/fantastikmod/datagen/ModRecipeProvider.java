@@ -27,6 +27,27 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_block", has(ModBlocks.SILVER_BLOCK.get()))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TOTEM_OF_UNDYING, 1)
+                .pattern("btb")
+                .pattern("gag")
+                .pattern("ggg")
+                .define('g', Items.GOLD_BLOCK)
+                .define('b', Items.EMERALD)
+                .define('a', ModBlocks.AURIPIGMENT_BLOCK.get())
+                .define('t', ModItems.TOTEM_BLUEPRINT.get())
+                .unlockedBy("has_totem_blueprint", has(ModItems.TOTEM_BLUEPRINT.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TOTEM_BLUEPRINT.get(), 2)
+                .pattern("prp")
+                .pattern("pbp")
+                .pattern("prp")
+                .define('p', Items.PAPER)
+                .define('r', ModItems.AURIPIGMENT.get())
+                .define('b', ModItems.TOTEM_BLUEPRINT.get())
+                .unlockedBy("has_totem_blueprint", has(ModItems.TOTEM_BLUEPRINT.get()))
+                .save(pWriter, "totem_blueprint_copy");
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.GEM_MOON.get(), 9)
                 .requires(ModBlocks.MOON_GEM_BLOCK.get())
                 .unlockedBy("has_moon_gem_block", has(ModBlocks.MOON_GEM_BLOCK.get()))

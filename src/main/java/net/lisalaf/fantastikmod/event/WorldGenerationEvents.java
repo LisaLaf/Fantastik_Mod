@@ -16,8 +16,6 @@ public class WorldGenerationEvents {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            // Этот код выполнится когда все регистры уже будут готовы
-            System.out.println("[Fantastikmod] Village modification setup complete");
         });
     }
 }

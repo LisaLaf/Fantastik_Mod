@@ -79,6 +79,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerBlockItem("moon_gem_block");
         registerBlockItem("silver_block");
 
+        registerSimpleItem("totem_blueprint");
+
 
         registerBlockItem("moon_planks_stairs");
         registerBlockItem("moon_planks_slab");
@@ -108,7 +110,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         registerArmorItems();
 
-        System.out.println("=== ALL ITEM MODELS REGISTERED SUCCESSFULLY ===");
+        for (int i = 1; i <= 6; i++) {
+            withExistingParent("note_" + i, mcLoc("item/written_book"));
+        }
     }
 
     private void registerArmorItems() {
@@ -154,26 +158,26 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     private void registerBlockItem(String blockName) {
-        withExistingParent(blockName, ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "block/" + blockName));
+        withExistingParent(blockName, new ResourceLocation(fantastikmod.MOD_ID, "block/" + blockName));
     }
 
     private void registerBlockItemBlockTexture(String blockName) {
-        withExistingParent(blockName, ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "block/" + blockName));
+        withExistingParent(blockName, new ResourceLocation(fantastikmod.MOD_ID, "block/" + blockName));
     }
 
     private void registerSimpleItem(String itemName) {
         withExistingParent(itemName, "item/generated")
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "item/" + itemName));
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, "item/" + itemName));
     }
 
     private void registerDoorItem(String doorName) {
         withExistingParent(doorName, "item/generated")
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "item/" + doorName));
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, "item/" + doorName));
     }
 
     private void registerFenceItem(String fenceName, String baseTexture) {
         withExistingParent(fenceName, "block/fence_inventory")
-                .texture("texture", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "block/" + baseTexture));
+                .texture("texture", new ResourceLocation(fantastikmod.MOD_ID, "block/" + baseTexture));
     }
 
     private void registerFenceGateItem(String fenceGateName, String baseTexture) {
@@ -187,7 +191,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private void registerWallItem(String wallName, String baseTexture) {
         withExistingParent(wallName, "block/wall_inventory")
-                .texture("wall", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "block/" + baseTexture));
+                .texture("wall", new ResourceLocation(fantastikmod.MOD_ID, "block/" + baseTexture));
     }
 
     public void trapdoorItem(RegistryObject<Block> block) {
@@ -197,12 +201,12 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private void registerHandheldItem(String itemName) {
         withExistingParent(itemName, "item/handheld")
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "item/" + itemName));
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, "item/" + itemName));
     }
 
     private void registerArmorItem(String armorName) {
         withExistingParent(armorName, "item/generated")
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(fantastikmod.MOD_ID, "item/" + armorName));
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, "item/" + armorName));
     }
 
 }

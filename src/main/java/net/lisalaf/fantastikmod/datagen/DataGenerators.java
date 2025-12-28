@@ -38,7 +38,9 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
 
+        generator.addProvider(event.includeServer(), new ModAdvancementProvider(packOutput, lookupProvider, existingFileHelper));
 
-        System.out.println("=== ALL DATA PROVIDERS REGISTERED SUCCESSFULLY ===");
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
+
     }
 }

@@ -1,0 +1,38 @@
+{
+  "parent": "fantastikmod:root",
+  "criteria": {
+    "has_auripigment": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:auripigment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.get_auripigment.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:auripigment"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.get_auripigment.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_auripigment"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

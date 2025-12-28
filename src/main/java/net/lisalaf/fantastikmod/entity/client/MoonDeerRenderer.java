@@ -15,6 +15,21 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 @SuppressWarnings("removal")
 public class MoonDeerRenderer extends GeoEntityRenderer<MoonDeerEntity> {
 
+    private Boolean hasOptifineCache = null;
+
+    private boolean hasOptifine() {
+        if (hasOptifineCache == null) {
+            try {
+                // Простая проверка
+                Class.forName("optifine.Installer");
+                hasOptifineCache = true;
+            } catch (ClassNotFoundException e) {
+                hasOptifineCache = false;
+            }
+        }
+        return hasOptifineCache;
+    }
+
     private static final ResourceLocation HORNS_TEXTURE =
             new ResourceLocation("fantastikmod", "textures/entity/moon_deer_horns.png");
 
@@ -35,10 +50,15 @@ public class MoonDeerRenderer extends GeoEntityRenderer<MoonDeerEntity> {
 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
 
-        renderHorns(entity, poseStack, bufferSource, partialTick, packedLight);
+        if (!hasOptifine()){
+            renderHorns(entity, poseStack, bufferSource, partialTick, packedLight);
+            renderTamedOverlay(entity, poseStack, bufferSource, partialTick, packedLight);
+        }
+
+       // renderHorns(entity, poseStack, bufferSource, partialTick, packedLight);
 
         // Рендерим текстуру приручения поверх основной текстуры
-        renderTamedOverlay(entity, poseStack, bufferSource, partialTick, packedLight);
+       // renderTamedOverlay(entity, poseStack, bufferSource, partialTick, packedLight);
     }
 
     private void renderHorns(MoonDeerEntity entity, PoseStack poseStack,
