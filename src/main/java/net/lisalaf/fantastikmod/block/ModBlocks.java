@@ -6,8 +6,10 @@ import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.lisalaf.fantastikmod.worldgen.tree.MoonTreeGrower;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,13 +33,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -327,6 +334,166 @@ public class ModBlocks {
                         ));
                     }
                     super.playerDestroy(level, player, pos, state, blockEntity, tool);
+                }
+            });
+
+    public static final RegistryObject<Block> MOON_CRYSTAL_BLOCK = registerBlock("moon_crystal_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK)
+                    .lightLevel(state -> 7)) {
+
+                @Override
+                @OnlyIn(Dist.CLIENT)
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+                    super.animateTick(state, level, pos, random);
+                    if (random.nextInt(3) == 0) {
+                        int side = random.nextInt(6);
+
+                        double x = pos.getX();
+                        double y = pos.getY();
+                        double z = pos.getZ();
+                        double speedX = 0, speedY = 0, speedZ = 0;
+
+                        switch(side) {
+                            case 0:
+                                x += 0.5 + (random.nextDouble() - 0.5);
+                                y += 1.05;
+                                z += 0.5 + (random.nextDouble() - 0.5);
+                                speedY = 0.02;
+                                break;
+                            case 1:
+                                x += 0.5 + (random.nextDouble() - 0.5);
+                                y += -0.05;
+                                z += 0.5 + (random.nextDouble() - 0.5);
+                                speedY = -0.02;
+                                break;
+                            case 2:
+                                x += 0.5 + (random.nextDouble() - 0.5);
+                                y += 0.5 + (random.nextDouble() - 0.5);
+                                z += -0.05;
+                                speedZ = -0.02;
+                                break;
+                            case 3:
+                                x += 0.5 + (random.nextDouble() - 0.5);
+                                y += 0.5 + (random.nextDouble() - 0.5);
+                                z += 1.05;
+                                speedZ = 0.02;
+                                break;
+                            case 4:
+                                x += -0.05;
+                                y += 0.5 + (random.nextDouble() - 0.5);
+                                z += 0.5 + (random.nextDouble() - 0.5);
+                                speedX = -0.02;
+                                break;
+                            case 5:
+                                x += 1.05;
+                                y += 0.5 + (random.nextDouble() - 0.5);
+                                z += 0.5 + (random.nextDouble() - 0.5);
+                                speedX = 0.02;
+                                break;
+                        }
+
+                        level.addParticle(ParticleTypes.SNOWFLAKE,
+                                x, y, z,
+                                speedX + (random.nextDouble() - 0.5) * 0.01,
+                                speedY + (random.nextDouble() - 0.5) * 0.01,
+                                speedZ + (random.nextDouble() - 0.5) * 0.01);
+
+                        for (int i = 0; i < 2; i++) {
+                            level.addParticle(ParticleTypes.WHITE_ASH,
+                                    x, y, z,
+                                    (random.nextDouble() - 0.5) * 0.01,
+                                    (random.nextDouble() - 0.5) * 0.01,
+                                    (random.nextDouble() - 0.5) * 0.01);
+                        }
+                    }
+
+                    if (random.nextInt(8) == 0) {
+                        for (int i = 0; i < 2 + random.nextInt(3); i++) {
+                            double centerX = pos.getX() + 0.5;
+                            double centerY = pos.getY() + 0.5;
+                            double centerZ = pos.getZ() + 0.5;
+
+                            double angle = random.nextDouble() * Math.PI * 2;
+                            double radius = random.nextDouble() * 0.3;
+                            double particleX = centerX + Math.cos(angle) * radius;
+                            double particleZ = centerZ + Math.sin(angle) * radius;
+                            double particleY = centerY + (random.nextDouble() - 0.5) * 0.3;
+
+                            double speedFactor = 0.02 + random.nextDouble() * 0.02;
+                            double speedX = Math.cos(angle) * speedFactor;
+                            double speedZ = Math.sin(angle) * speedFactor;
+                            double speedY = (random.nextDouble() - 0.5) * 0.01;
+
+                            level.addParticle(ParticleTypes.END_ROD,
+                                    particleX, particleY, particleZ,
+                                    speedX, speedY, speedZ);
+                        }
+                    }
+                }
+            });
+
+    public static final RegistryObject<Block> MOON_CRYSTAL_GLASS = registerBlock("moon_crystal_glass",
+            () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
+                    .lightLevel(state -> 5)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, entity) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)));
+
+    public static final RegistryObject<Block> MOON_CRYSTAL_GLASS_PANE = registerBlock("moon_crystal_glass_pane",
+            () -> new IronBarsBlock(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE)
+                    .lightLevel(state -> 5)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, entity) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)));
+
+    public static final RegistryObject<Block> MOON_CRYSTAL = registerBlock("moon_crystal",
+            () -> new AmethystClusterBlock(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)
+                    .lightLevel(state -> 7)
+                    .noOcclusion()
+                    .sound(SoundType.AMETHYST_CLUSTER)
+                    .strength(1.5f)
+                    .pushReaction(PushReaction.DESTROY)) {
+                @Override
+                public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+                    Direction direction = state.getValue(FACING);
+                    BlockPos blockpos = pos.relative(direction.getOpposite());
+                    BlockState blockstate = level.getBlockState(blockpos);
+                    return blockstate.isFaceSturdy(level, blockpos, direction) ||
+                            blockstate.isSolid() ||
+                            blockstate.canOcclude();
+                }
+                @Override
+                @OnlyIn(Dist.CLIENT)
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+                    super.animateTick(state, level, pos, random);
+                    if (random.nextInt(8) == 0) {
+                        Direction direction = state.getValue(FACING);
+
+                        double x = pos.getX() + 0.5;
+                        double y = pos.getY() + 0.5;
+                        double z = pos.getZ() + 0.5;
+                        switch(direction) {
+                            case UP -> y += 0.4;
+                            case DOWN -> y -= 0.4;
+                            case NORTH -> z -= 0.4;
+                            case SOUTH -> z += 0.4;
+                            case WEST -> x -= 0.4;
+                            case EAST -> x += 0.4;
+                        }
+                        x += (random.nextDouble() - 0.5) * 0.3;
+                        y += (random.nextDouble() - 0.5) * 0.3;
+                        z += (random.nextDouble() - 0.5) * 0.3;
+                        double speedX = (random.nextDouble() - 0.5) * 0.02;
+                        double speedY = (random.nextDouble() - 0.5) * 0.02;
+                        double speedZ = (random.nextDouble() - 0.5) * 0.02;
+                        level.addParticle(ParticleTypes.SNOWFLAKE,
+                                x, y, z,
+                                speedX, speedY, speedZ);
+                    }
                 }
             });
 

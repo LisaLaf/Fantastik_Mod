@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "g": {
+      "item": "fantastikmod:moon_crystal_glass"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "ggg"
+  ],
+  "result": {
+    "count": 16,
+    "item": "fantastikmod:moon_crystal_glass_pane"
+  },
+  "show_notification": true
+}

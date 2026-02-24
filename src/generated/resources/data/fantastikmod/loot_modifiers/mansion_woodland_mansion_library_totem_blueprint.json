@@ -6,7 +6,7 @@
       "loot_table_id": "minecraft:chests/woodland_mansion_library"
     },
     {
-      "chance": 0.75,
+      "chance": 0.6,
       "condition": "minecraft:random_chance"
     }
   ],

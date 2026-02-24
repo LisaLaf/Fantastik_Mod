@@ -48,7 +48,9 @@
       "minecraft:ore_copper",
       "minecraft:underwater_magma"
     ],
-    [],
+    [
+      "fantastikmod:moon_crystal_cluster_placed"
+    ],
     [],
     [
       "minecraft:patch_large_fern",

@@ -106,9 +106,14 @@ public class ModItems {
                     0xFFFFFF, // Основной цвет (белый)
                     0xFFA500, // Цвет точек (оранжевый)
                     new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> EGG_BAKENEKO = ITEMS.register("egg_bakeneko",
+            () -> new ForgeSpawnEggItem(ModEntities.BAKENEKO,
+                    0xFFFFFF, // Основной цвет (белый)
+                    0xFFA500, // Цвет точек (оранжевый)
+                    new Item.Properties().stacksTo(64)));
 
 
-    //public static final RegistryObject<Item> EGG_KITSUNE_LIGHT = ITEMS.register("egg_kitsune_light", ()-> new Item( new Item.Properties().stacksTo(64)));
+
 
     public static final RegistryObject<Item> AURIPIGMENT = ITEMS.register("auripigment",
             ()-> new Item( new Item.Properties().stacksTo(64)));

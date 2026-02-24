@@ -7,10 +7,8 @@ import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
 import net.lisalaf.fantastikmod.datagen.loot.ModLootModfiers;
 import net.lisalaf.fantastikmod.dialog.DialogSystem;
 import net.lisalaf.fantastikmod.entity.ModEntities;
-import net.lisalaf.fantastikmod.entity.client.BlueButterflyRenderer;
-import net.lisalaf.fantastikmod.entity.client.IceDragonRenderer;
-import net.lisalaf.fantastikmod.entity.client.KitsuneLightRenderer;
-import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
+import net.lisalaf.fantastikmod.entity.client.*;
+import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
 import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
@@ -22,7 +20,9 @@ import net.lisalaf.fantastikmod.worldgen.biome.sunface.ModSurfaceRules;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,6 +31,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,9 +39,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
 
@@ -123,27 +121,6 @@ public class fantastikmod {
         }
     }
 
-
-
-
-
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            EntityRenderers.register(ModEntities.KITSUNE_LIGHT.get(), KitsuneLightRenderer::new);
-            EntityRenderers.register(ModEntities.ICE_DRAGON.get(), IceDragonRenderer::new);
-            EntityRenderers.register(ModEntities.MOON_DEER.get(), MoonDeerRenderer::new);
-            EntityRenderers.register(ModEntities.BLUE_BUTTERFLY.get(), BlueButterflyRenderer::new);
-
-
-        }
-    }
-
-
     private void gatherData(GatherDataEvent event) {
         net.minecraft.data.DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
@@ -155,10 +132,10 @@ public class fantastikmod {
     }
     public void addFuel(FurnaceFuelBurnTimeEvent event) {
         if(event.getItemStack().getItem() == ModBlocks.MOON_PLANKS.get().asItem()) {
-            event.setBurnTime(300); // 15 секунд
+            event.setBurnTime(300);
         }
         if(event.getItemStack().getItem() == ModBlocks.TREE_MOON_LOG_BLOCK.get().asItem()) {
-            event.setBurnTime(300); // 15 секунд
+            event.setBurnTime(300);
         }
         if(event.getItemStack().getItem() == ModBlocks.MOON_PLANKS_SLAB.get().asItem()) {
             event.setBurnTime(150); // 7.5 секунд
@@ -167,10 +144,10 @@ public class fantastikmod {
             event.setBurnTime(300); // 15 секунд
         }
         if(event.getItemStack().getItem() == ModBlocks.MOON_PLANKS_FENCE.get().asItem()) {
-            event.setBurnTime(300); // 15 секунд
+            event.setBurnTime(300);
         }
         if(event.getItemStack().getItem() == ModBlocks.MOON_PLANKS_FENCE_GATE.get().asItem()) {
-            event.setBurnTime(300); // 15 секунд
+            event.setBurnTime(300);
         }
     }
 

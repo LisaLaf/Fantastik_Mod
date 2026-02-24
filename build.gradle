@@ -14,7 +14,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '0.2.2-Beta'
+version = '0.3.0-Beta'
 group = 'net.lisalaf.fantastikmod'
 
 base {

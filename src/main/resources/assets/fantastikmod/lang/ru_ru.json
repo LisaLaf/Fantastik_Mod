@@ -93,6 +93,11 @@
   "block.fantastikmod.moon_gem_block": "Блок лунного самоцвета",
   "block.fantastikmod.moon_planks_wall": "Стена из лунных досок",
 
+  "block.fantastikmod.moon_crystal_block": "Блок Лунного Кристалла",
+  "block.fantastikmod.moon_crystal_glass": "Лунное кристальное стекло",
+  "block.fantastikmod.moon_crystal_glass_pane": "Лунная кристальная стеклянная панель",
+  "block.fantastikmod.moon_crystal": "Лунный кристалл",
+
   "block.fantastikmod.moon_sapling": "Сажанец Лунного Дерева",
   "block.fantastikmod.moon_lily": "Лунная Лилия",
   "block.fantastikmod.moon_northern_bluebell": "Лунный Синий Зверобой",
@@ -275,8 +280,10 @@
   "dialog.player.too_much": "Не многова-то ли?",
   "dialog.player.ok_bring": "Ладно, я принесу",
 
-  "entity.fantastikmod.kitsune_light": "Китсуне",
+  "entity.fantastikmod.kitsune_light": "Кицуне",
   "entity.fantastikmod.moon_deer": "Лунный Олень",
+  "entity.fantastikmod.blue_butterfly": "Голубая бабочка",
+  "entity.fantastikmod.bakeneko": "Бакенеко",
 
   "gui.mood.title": "Настроение",
   "gui.mood.current": "Текущий уровень:",
@@ -338,7 +345,7 @@
   "item.fantastikmod.totem_blueprint": "Чертёж тотема",
 
   "advancement.fantastikmod.root.title": "Добро пожаловать в мир",
-  "advancement.fantastikmod.root.description": "Вы зашли в мир с Фантастик модом",
+  "advancement.fantastikmod.root.description": "Добро пожаловать в фантастический мир",
 
   "advancement.fantastikmod.enter_biome.title": "Фантастический мир",
   "advancement.fantastikmod.enter_biome.description": "Войдите в один из мифических биомов",

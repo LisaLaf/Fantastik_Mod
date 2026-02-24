@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "fantastikmod:block/moon_crystal_block"
+  }
+}

@@ -47,6 +47,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         (ModBlocks.SILVER_ORE.get()),
                         (ModBlocks.MOON_GEM_BLOCK.get()),
                         (ModBlocks.MOON_ORE.get()),
+                        ModBlocks.MOON_CRYSTAL_BLOCK.get(),
                         ModBlocks.GEMKITSUNE_BLOCK.get());
 
         // Уровень инструментов
@@ -65,6 +66,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.AURIPIGMENT_BLOCK.get())
                 .add(ModBlocks.SILVER_ORE.get())
                 .add(ModBlocks.SILVER_BLOCK.get())
+                .add(ModBlocks.MOON_CRYSTAL_BLOCK.get())
                 .add(ModBlocks.MOONSTONE.get());
 
 

@@ -3,8 +3,10 @@ package net.lisalaf.fantastikmod.datagen;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.block.custom.*;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.datafix.fixes.ChunkPalettedStorageFix;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -31,6 +33,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // ПРОСТЫЕ БЛОКИ (которые дропают себя)
         simpleBlockWithItem(ModBlocks.ASH_BLOCK.get(), cubeAll(ModBlocks.ASH_BLOCK.get()));
+        simpleBlockWithItem(ModBlocks.MOON_CRYSTAL_BLOCK.get(), cubeAll(ModBlocks.MOON_CRYSTAL_BLOCK.get()));
         simpleBlockWithItem(ModBlocks.AURIPIGMENT_BLOCK.get(), cubeAll(ModBlocks.AURIPIGMENT_BLOCK.get()));
         simpleBlockWithItem(ModBlocks.DRYING_BASKET.get(), cubeAll(ModBlocks.DRYING_BASKET.get()));
         simpleBlockWithItem(ModBlocks.GEMKITSUNE_BLOCK.get(), cubeAll(ModBlocks.GEMKITSUNE_BLOCK.get()));
@@ -130,6 +133,89 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 models().cross("moon_vine", modLoc("block/moon_vine"))
                         .renderType("cutout"));
 
+        simpleBlockWithItem(ModBlocks.MOON_CRYSTAL_GLASS.get(),
+                models().cubeAll("moon_crystal_glass",
+                                modLoc("block/moon_crystal_glass"))
+                        .renderType("translucent"));
+
+        ResourceLocation glassTexture = blockTexture(ModBlocks.MOON_CRYSTAL_GLASS.get());
+        ModelFile post = models().withExistingParent("moon_crystal_glass_pane_post",
+                        "block/template_glass_pane_post")
+                .texture("pane", glassTexture)
+                .texture("edge", glassTexture)
+                .renderType("translucent");
+        ModelFile side = models().withExistingParent("moon_crystal_glass_pane_side",
+                        "block/template_glass_pane_side")
+                .texture("pane", glassTexture)
+                .texture("edge", glassTexture)
+                .renderType("translucent");
+        ModelFile sideAlt = models().withExistingParent("moon_crystal_glass_pane_side_alt",
+                        "block/template_glass_pane_side_alt")
+                .texture("pane", glassTexture)
+                .texture("edge", glassTexture)
+                .renderType("translucent");
+        ModelFile noSide = models().withExistingParent("moon_crystal_glass_pane_noside",
+                        "block/template_glass_pane_noside")
+                .texture("pane", glassTexture)
+                .texture("edge", glassTexture)
+                .renderType("translucent");
+        ModelFile noSideAlt = models().withExistingParent("moon_crystal_glass_pane_noside_alt",
+                        "block/template_glass_pane_noside_alt")
+                .texture("pane", glassTexture)
+                .texture("edge", glassTexture)
+                .renderType("translucent");
+        paneBlock((IronBarsBlock) ModBlocks.MOON_CRYSTAL_GLASS_PANE.get(),
+                post, side, sideAlt, noSide, noSideAlt);
+
+        getVariantBuilder(ModBlocks.MOON_CRYSTAL.get()).forAllStates(state -> {
+            Direction dir = state.getValue(AmethystClusterBlock.FACING);
+
+            ModelFile modelFile = models().withExistingParent("moon_crystal_" + dir.getName(), "block/cross")
+                    .texture("cross", modLoc("block/moon_crystal"))
+                    .renderType("cutout");
+
+            int rotationX = 0;
+            int rotationY = 0;
+
+            // Правильные повороты для всех направлений
+            switch(dir) {
+                case DOWN:
+                    rotationX = 180;
+                    rotationY = 0;
+                    break;
+                case UP:
+                    rotationX = 0;
+                    rotationY = 0;
+                    break;
+                case NORTH:
+                    rotationX = 90;
+                    rotationY = 0;
+                    break;
+                case SOUTH:
+                    rotationX = 90;
+                    rotationY = 180;
+                    break;
+                case WEST:
+                    rotationX = 90;
+                    rotationY = 270;
+                    break;
+                case EAST:
+                    rotationX = 90;
+                    rotationY = 90;
+                    break;
+            }
+
+            return ConfiguredModel.builder()
+                    .modelFile(modelFile)
+                    .rotationX(rotationX)
+                    .rotationY(rotationY)
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.MOON_CRYSTAL.get(),
+                models().withExistingParent("moon_crystal", "item/generated")
+                        .texture("layer0", modLoc("block/moon_crystal"))
+                        .renderType("cutout"));
+
         simpleBlockWithItem(ModBlocks.FROST.get(),
                 models().withExistingParent("frost", "block/snow_height2")
                         .texture("particle", modLoc("block/frost"))
@@ -138,17 +224,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
 
-
-        System.out.println("All blocks registered successfully!");
     }
 
     private void frostBlock(RegistryObject<Block> block) {
-        // Модель для отображения
         models().withExistingParent(block.getId().getPath(), "block/snow_height2")
                 .texture("particle", modLoc("block/frost"))
                 .texture("texture", modLoc("block/frost"));
-
-        // Блокстатес с разной высотой
         getVariantBuilder(block.get()).forAllStates(state -> {
             int layers = state.getValue(SnowLayerBlock.LAYERS);
             return new ConfiguredModel[]{
@@ -156,8 +237,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                             modLoc("block/frost_height" + layers * 2)
                     ))
             };
-        });
-    }
+        });}
 
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {
@@ -233,7 +313,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
         return models;
     }
 
+    private int getXRotation(Direction dir) {
+        return switch (dir) {
+            case DOWN -> 180;
+            case UP -> 0;
+            default -> 90; // Для всех горизонтальных
+        };
+    }
 
-
+    private int getYRotation(Direction dir) {
+        if (!dir.getAxis().isHorizontal()) return 0;
+        return switch (dir) {
+            case NORTH -> 0;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            case EAST -> 90;
+            default -> 0;
+        };
+    }
 
 }

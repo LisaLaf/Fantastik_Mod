@@ -3,6 +3,7 @@ package net.lisalaf.fantastikmod.worldgen;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.block.custom.CrowberryShrubBlock;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.worldgen.feature.MoonCrystalClusterFeature;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecora
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
@@ -51,6 +54,8 @@ public class ModConfiguredFeatures {
    // public static final ResourceKey<ConfiguredFeature<?, ?>> TEA_HOUSE_KEY = registerKey("tea_house");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRAGON_CAVE_KEY = registerKey("dragon_cave");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRYSTAL_CLUSTER_KEY =
+            registerKey("moon_crystal_cluster");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest stoneReplaceable = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -134,9 +139,15 @@ public class ModConfiguredFeatures {
                         PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.SPIDER_LILY.get())))));
 
+        context.register(MOON_CRYSTAL_CLUSTER_KEY,
+                new ConfiguredFeature<>(ModFeatures.MOON_CRYSTAL_CLUSTER.get(),
+                        new NoneFeatureConfiguration()));
+
 
 
        // register(context, DRAGON_CAVE_KEY, ModFeatures.DRAGON_CAVE.get(), new NoneFeatureConfiguration());
+
+
 
 
     }

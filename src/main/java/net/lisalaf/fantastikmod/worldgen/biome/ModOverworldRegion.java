@@ -26,7 +26,6 @@ public class ModOverworldRegion extends Region {
 
     @Override
     public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
-        // Просто добавляем наш биом без замены ванильных
         addBiomeSimilar(mapper, Biomes.FOREST, ModBiomes.BLUE_MOON_FOREST_BIOME);
     }
 }

@@ -31,37 +31,37 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         add(name + "_1", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_1.get()));
 
         add(name + "_2", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_2.get()));
 
         add(name + "_3", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_3.get()));
 
         add(name + "_4", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_4.get()));
 
         add(name + "_5", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_5.get()));
 
         add(name + "_6", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(lootTable).build(),
-                        LootItemRandomChanceCondition.randomChance(0.3f).build()
+                        LootItemRandomChanceCondition.randomChance(0.1f).build()
                 }, ModItems.NOTE_6.get()));
     }
 
@@ -77,26 +77,26 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
             add("mansion_" + chest + "_totem_blueprint", new AddItemModifier(
                     new LootItemCondition[] {
                             LootTableIdCondition.builder(new ResourceLocation("chests/" + chest)).build(),
-                            LootItemRandomChanceCondition.randomChance(0.75f).build()
+                            LootItemRandomChanceCondition.randomChance(0.6f).build()
                     }, ModItems.TOTEM_BLUEPRINT.get()));
         }
 
         add("woodland_mansion_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8f).build()
+                        LootItemRandomChanceCondition.randomChance(0.7f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
         add("pillager_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST).build(),
-                        LootItemRandomChanceCondition.randomChance(0.9f).build()
+                        LootItemRandomChanceCondition.randomChance(0.5f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
         add("pillager_outpost_chest_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.6f).build()
+                        LootItemRandomChanceCondition.randomChance(0.4f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
     }

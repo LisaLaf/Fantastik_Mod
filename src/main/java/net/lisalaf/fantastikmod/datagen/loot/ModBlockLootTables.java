@@ -51,6 +51,8 @@ public class ModBlockLootTables extends LootTableProvider {
             this.dropSelf(ModBlocks.TREE_MOON_LOG_BLOCK.get());
 
             this.dropSelf(ModBlocks.ASH_BLOCK.get());
+            this.dropSelf(ModBlocks.MOON_CRYSTAL_BLOCK.get());
+            this.dropSelf(ModBlocks.MOON_CRYSTAL.get());
             this.dropSelf(ModBlocks.AURIPIGMENT_BLOCK.get());
             this.dropSelf(ModBlocks.MOON_PLANKS.get());
             this.dropSelf(ModBlocks.MOONSTONE.get());
@@ -135,6 +137,9 @@ public class ModBlockLootTables extends LootTableProvider {
 
             //Без дропа
             this.add(ModBlocks.MOON_GRASS.get(), noDrop());
+            this.add(ModBlocks.MOON_CRYSTAL_GLASS.get(), noDrop());
+            this.add(ModBlocks.MOON_CRYSTAL_GLASS_PANE.get(), noDrop());
+
 
             this.add(ModBlocks.MOON_VINE.get(), noDrop());
 

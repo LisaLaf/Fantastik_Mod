@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fantastikmod:moon_crystal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "fantastikmod:moon_dust"
+  }
+}

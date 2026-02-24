@@ -52,6 +52,7 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOON_GRASS_1_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOON_VINE_UNDER_TREES);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BUSH_CROWBERRY_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.MOON_CRYSTAL_CLUSTER_PLACED_KEY);
 
 
         BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
@@ -72,7 +73,7 @@ public class ModBiomes {
                         .foliageColorOverride(0x034c52)
                         .fogColor(0xdad7f4)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                        .backgroundMusic(Musics.GAME) // Используйте ванильную музыку
+                        .backgroundMusic(Musics.GAME)
                         .build())
                 .build();
     }

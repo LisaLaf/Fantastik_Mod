@@ -76,6 +76,11 @@
   "block.fantastikmod.frost": "Frost",
   "block.fantastikmod.spider_lily": "Spider Lily",
 
+  "block.fantastikmod.moon_crystal_block": "Moon Crystal Block",
+  "block.fantastikmod.moon_crystal_glass": "Moon Crystal Glass",
+  "block.fantastikmod.moon_crystal_glass_pane": "Moon Crystal Glass Pane",
+  "block.fantastikmod.moon_crystal": "Moon Crystal",
+
   "block.fantastikmod.moon_planks": "Planks Moon Tree",
   "block.fantastikmod.tree_moon_log_block": "Tree moon log",
   "block.fantastikmod.tree_moon_foliage_block": "Tree Moon Roliage",
@@ -281,6 +286,8 @@
 
   "entity.fantastikmod.kitsune_light": "Kitsune",
   "entity.fantastikmod.moon_deer": "Moon Deer",
+  "entity.fantastikmod.blue_butterfly": "Blue Butterfly",
+  "entity.fantastikmod.bakeneko": "Bakeneko",
 
   "gui.mood.title": "Mood",
   "gui.mood.current": "Current Level:",

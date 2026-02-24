@@ -1,10 +1,7 @@
 package net.lisalaf.fantastikmod.entity;
 
 
-import net.lisalaf.fantastikmod.entity.custom.BlueButterflyEntity;
-import net.lisalaf.fantastikmod.entity.custom.IceDragonEntity;
-import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
-import net.lisalaf.fantastikmod.entity.custom.MoonDeerEntity;
+import net.lisalaf.fantastikmod.entity.custom.*;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -20,6 +17,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<KitsuneLightEntity>> KITSUNE_LIGHT =
             ENTITY_TYPES.register("kitsune_light", () -> EntityType.Builder.of(KitsuneLightEntity::new, MobCategory.CREATURE)
                     .sized(0.8f, 1.4f).build("kitsune_light"));
+
+    public static final RegistryObject<EntityType<BakenekoEntity>> BAKENEKO =
+            ENTITY_TYPES.register("bakeneko", () -> EntityType.Builder.of(BakenekoEntity::new, MobCategory.CREATURE)
+                    .sized(0.8f, 1.4f).build("bakeneko"));
 
     public static final RegistryObject<EntityType<IceDragonEntity>> ICE_DRAGON =
             ENTITY_TYPES.register("ice_dragon", () -> EntityType.Builder.of(IceDragonEntity::new, MobCategory.CREATURE)

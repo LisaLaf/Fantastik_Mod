@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-25T06:01:29.4998185	Loot Tables
+// 1.20.1	2026-02-11T06:06:35.8053928	Loot Tables
 b0ac6d05772691c53f71656a660673af83b8589d data/fantastikmod/loot_tables/blocks/ash_block.json
 b1afd71791786b2bd9b446578b0212aad7be94ca data/fantastikmod/loot_tables/blocks/auripigment_block.json
 7bb11a449c0c7b07085beec173c606af5033b406 data/fantastikmod/loot_tables/blocks/auripigment_ore_block.json
@@ -7,6 +7,10 @@ db6e1d1a640e758eee07f8ad32f40226d0d67c88 data/fantastikmod/loot_tables/blocks/bu
 4f50dc8e4c81babb39c06511cdb09c2eada0ab42 data/fantastikmod/loot_tables/blocks/frost.json
 cb03c7cf434694b22e043d5965f05f01ca127aec data/fantastikmod/loot_tables/blocks/gemkitsune_block.json
 467cc8cf82bd80c53a2426ce920f1e886312eecd data/fantastikmod/loot_tables/blocks/moonstone.json
+6ee14f74a825daae1769f9c7bc3a965f2a724cd0 data/fantastikmod/loot_tables/blocks/moon_crystal.json
+012b8db0dff2535b2b073d8ad7a2f75ffcd9b054 data/fantastikmod/loot_tables/blocks/moon_crystal_block.json
+f4a3addce558bc1fc4f47b2e72cc7897be67ad54 data/fantastikmod/loot_tables/blocks/moon_crystal_glass.json
+12d33d7fc2754e962142a7f7182bef60199898fa data/fantastikmod/loot_tables/blocks/moon_crystal_glass_pane.json
 d7b57b0629e112b5c0a4661dd3f0969159c7b767 data/fantastikmod/loot_tables/blocks/moon_gem_block.json
 7916eccf0fdfbdd4398cc0c22697d23d56d7375d data/fantastikmod/loot_tables/blocks/moon_grass.json
 7c211693362df1488b759a96dba6d7716b645cc9 data/fantastikmod/loot_tables/blocks/moon_grass_1.json

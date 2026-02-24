@@ -32,9 +32,12 @@ public class ModBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> ADD_KITSUNE_TO_PLAINS = registerKey("add_kitsune_to_plains");
 
+    public static final ResourceKey<BiomeModifier> ADD_BAKENEKO_TO_VILLAGE_BIOMES = registerKey("add_bakeneko_to_village_biomes");
+
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
+        var structures = context.lookup(Registries.STRUCTURE);
 
         context.register(ADD_SILVER_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
@@ -49,7 +52,7 @@ public class ModBiomeModifiers {
 
        // HolderSet<Biome> snowyBiomes = HolderSet.direct(biomes.getOrThrow(Biomes.SNOWY_TAIGA), biomes.getOrThrow(Biomes.SNOWY_PLAINS), biomes.getOrThrow(Biomes.ICE_SPIKES), biomes.getOrThrow(Biomes.SNOWY_SLOPES), biomes.getOrThrow(Biomes.FROZEN_PEAKS));
 
-       //context.register(ADD_DRAGON_CAVE_TO_SNOWY_BIOMES, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(snowyBiomes, HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DRAGON_CAVE_PLACED_KEY)), // Используем существующий placedFeaturesGenerationStep.Decoration.UNDERGROUND_STRUCTURES));
+       //context.register(ADD_DRAGON_CAVE_TO_SNOWY_BIOMES, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(snowyBiomes, HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DRAGON_CAVE_PLACED_KEY)), placedFeaturesGenerationStep.Decoration.UNDERGROUND_STRUCTURES));
 
         context.register(ADD_KITSUNE_TO_PLAINS, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(BiomeTags.HAS_VILLAGE_PLAINS),
@@ -59,6 +62,25 @@ public class ModBiomeModifiers {
                                 40,
                                 1,
                                 4
+                        )
+                )
+        ));
+
+        context.register(ADD_BAKENEKO_TO_VILLAGE_BIOMES, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
+                HolderSet.direct(
+                        biomes.getOrThrow(Biomes.PLAINS),
+                        biomes.getOrThrow(Biomes.SAVANNA),
+                        biomes.getOrThrow(Biomes.DESERT),
+                        biomes.getOrThrow(Biomes.TAIGA),
+                        biomes.getOrThrow(Biomes.SNOWY_PLAINS),
+                        biomes.getOrThrow(Biomes.MEADOW)
+                ),
+                List.of(
+                        new MobSpawnSettings.SpawnerData(
+                                ModEntities.BAKENEKO.get(),
+                                10,
+                                1,
+                                1
                         )
                 )
         ));

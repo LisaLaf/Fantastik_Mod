@@ -1971,6 +1971,11 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         }
     }
 
+    @Override
+    public boolean fireImmune() {
+        return true; // Кицунэ не горит в огне и лаве
+    }
+
 
 
 }

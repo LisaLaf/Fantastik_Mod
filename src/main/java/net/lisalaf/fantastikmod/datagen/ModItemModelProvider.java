@@ -26,6 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSimpleItem("egg_kitsune_light");
         registerSimpleItem("egg_ice_dragon");
         registerSimpleItem("egg_blue_butterfly");
+        registerSimpleItem("egg_bakeneko");
         registerSimpleItem("fur_ice_dragon");
         registerSimpleItem("heart_ice_dragon");
         registerSimpleItem("egg_moon_deer");
@@ -60,12 +61,17 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSimpleItem("moon_sword");
         registerSimpleItem("moon_crowberry");
 
+        registerBlockItem("moon_crystal_glass");
+        registerSimpleItem("moon_crystal_glass_pane", "block/moon_crystal_glass");
+        registerBlockItem("moon_crystal");
+
         registerSimpleItem("strawberry_seeds");
         registerSimpleItem("tea_seeds");
 
         registerBlockItem("drying_basket");
 
         registerBlockItem("ash_block");
+        registerBlockItem("moon_crystal_block");
         registerBlockItem("auripigment_block");
         registerBlockItem("gemkitsune_block");
         registerBlockItem("tree_moon_log_block");
@@ -207,6 +213,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     private void registerArmorItem(String armorName) {
         withExistingParent(armorName, "item/generated")
                 .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, "item/" + armorName));
+    }
+
+    private void registerSimpleItem(String itemName, String texturePath) {
+        withExistingParent(itemName, "item/generated")
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, texturePath));
     }
 
 }

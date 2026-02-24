@@ -1,5 +1,6 @@
 package net.lisalaf.fantastikmod.entity.ai;
 
+import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
 import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -36,37 +37,55 @@ public class KitsuneLightGoal {
         public boolean canUse() {
             if (!canMoveOrAct()) return false;
 
-            // Прирученные атакуют только в ответ на атаку
-            if (kitsune.isTamed()) {
-                LivingEntity target = kitsune.getTarget();
-                if (target instanceof Player) return false; // Не атакуем игроков
+            LivingEntity target = kitsune.getTarget();
+            if (target == null) return false;
+            if (target instanceof BakenekoEntity) {
+                kitsune.setTarget(null);
+                return false;
+            }
 
-                // Проверяем, была ли атака на владельца или саму кицунэ
+            if (kitsune.isTamed()) {
+                if (target instanceof Player) return false;
                 if (!wasProvoked()) return false;
             }
 
-            if (kitsune.getTarget() instanceof Creeper creeper) {
-                if (creeper.isIgnited() || creeper.getSwellDir() > 0) {
+            // Проверка для криперов - атакуем только рядом с деревней или игроком
+            if (target instanceof Creeper) {
+                if (!isNearVillageOrPlayer()) {
+                    return false;
+                }
+                if (((Creeper) target).isIgnited() || ((Creeper) target).getSwellDir() > 0) {
                     return false;
                 }
             }
 
-            return kitsune.isAngry() && kitsune.getTarget() != null &&
-                    !(kitsune.getTarget() instanceof KitsuneLightEntity) && super.canUse();
+            return kitsune.isAngry() && !(target instanceof KitsuneLightEntity) && super.canUse();
         }
 
         @Override
         public boolean canContinueToUse() {
             if (!canMoveOrAct()) return false;
 
-            if (kitsune.getTarget() instanceof Creeper creeper) {
-                if (creeper.isIgnited() || creeper.getSwellDir() > 0) {
+            LivingEntity target = kitsune.getTarget();
+            if (target == null) return false;
+
+            // НИКОГДА не продолжаем атаковать бакэнэко
+            if (target instanceof BakenekoEntity) {
+                kitsune.setTarget(null);
+                return false;
+            }
+
+            if (target instanceof Creeper) {
+                if (!isNearVillageOrPlayer()) {
+                    kitsune.setTarget(null);
+                    return false;
+                }
+                if (((Creeper) target).isIgnited() || ((Creeper) target).getSwellDir() > 0) {
                     return false;
                 }
             }
 
-            return kitsune.isAngry() && kitsune.getTarget() != null &&
-                    !(kitsune.getTarget() instanceof KitsuneLightEntity) && super.canContinueToUse();
+            return kitsune.isAngry() && !(target instanceof KitsuneLightEntity) && super.canContinueToUse();
         }
 
         private boolean canMoveOrAct() {
@@ -76,7 +95,6 @@ public class KitsuneLightGoal {
         }
 
         private boolean wasProvoked() {
-            // Проверяем, атаковали ли владельца
             LivingEntity owner = kitsune.getOwner();
             if (owner != null) {
                 LivingEntity lastAttacker = owner.getLastHurtByMob();
@@ -85,9 +103,18 @@ public class KitsuneLightGoal {
                 }
             }
 
-            // Проверяем, атаковали ли саму кицунэ
             LivingEntity lastHurt = kitsune.getLastHurtByMob();
             return lastHurt != null && lastHurt == kitsune.getTarget();
+        }
+
+        private boolean isNearVillageOrPlayer() {
+            List<Villager> villagers = kitsune.level().getEntitiesOfClass(Villager.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            if (!villagers.isEmpty()) return true;
+
+            List<Player> players = kitsune.level().getEntitiesOfClass(Player.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            return !players.isEmpty();
         }
     }
 
@@ -113,7 +140,8 @@ public class KitsuneLightGoal {
             this.ownerLastHurt = owner.getLastHurtByMob();
             if (this.ownerLastHurt == null) return false;
 
-            // Не атакуем игроков и других кицунэ
+            // Не защищаем от бакэнэко
+            if (ownerLastHurt instanceof BakenekoEntity) return false;
             if (ownerLastHurt instanceof Player || ownerLastHurt instanceof KitsuneLightEntity) return false;
 
             int lastHurtTimestamp = owner.getLastHurtByMobTimestamp();
@@ -121,14 +149,10 @@ public class KitsuneLightGoal {
         }
 
         private boolean canAttack(LivingEntity target) {
-            return target != null &&
-                    target.isAlive() &&
-                    !(target instanceof Player) &&
-                    !(target instanceof KitsuneLightEntity) &&
-                    this.mob.distanceToSqr(target) < 144.0D; // 12 блоков максимум
+            if (target == null || !target.isAlive()) return false;
+            if (target instanceof Player || target instanceof KitsuneLightEntity || target instanceof BakenekoEntity) return false;
+            return this.mob.distanceToSqr(target) < 144.0D;
         }
-
-
 
         @Override
         public void start() {
@@ -268,6 +292,9 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
+            // Не мстим бакэнэко
+            if (mob.getLastHurtByMob() instanceof BakenekoEntity) return false;
+
             return ((KitsuneLightEntity)this.mob).getHitCount() >= 2 && super.canUse();
         }
     }
@@ -283,7 +310,7 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
-            if (kitsune.isTamed()) return false; // Только дикие защищают жителей
+            if (kitsune.isTamed()) return false;
             if (this.kitsune.getRandom().nextInt(5) != 0) return false;
             if (kitsune.isSitting() || kitsune.isSleeping()) return false;
 
@@ -293,7 +320,8 @@ public class KitsuneLightGoal {
             for (Villager villager : villagers) {
                 LivingEntity attacker = villager.getLastHurtByMob();
                 if (attacker != null && !(attacker instanceof Player) &&
-                        !(attacker instanceof KitsuneLightEntity) && attacker.isAlive()) {
+                        !(attacker instanceof KitsuneLightEntity) &&
+                        !(attacker instanceof BakenekoEntity) && attacker.isAlive()) {
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(attacker);
                     return true;
@@ -303,12 +331,24 @@ public class KitsuneLightGoal {
                         villager.getBoundingBox().inflate(8.0D));
                 if (!nearbyMonsters.isEmpty()) {
                     Monster monster = nearbyMonsters.get(0);
+                    if (monster instanceof Creeper && !isNearVillageOrPlayer()) continue;
+
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(monster);
                     return true;
                 }
             }
             return false;
+        }
+
+        private boolean isNearVillageOrPlayer() {
+            List<Villager> villagers = kitsune.level().getEntitiesOfClass(Villager.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            if (!villagers.isEmpty()) return true;
+
+            List<Player> players = kitsune.level().getEntitiesOfClass(Player.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            return !players.isEmpty();
         }
     }
 
@@ -321,10 +361,9 @@ public class KitsuneLightGoal {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
 
-
         @Override
         public boolean canUse() {
-            if (kitsune.isTamed()) return false; // Только дикие защищают игроков
+            if (kitsune.isTamed()) return false;
             if (this.kitsune.getRandom().nextInt(4) != 0) return false;
             if (kitsune.isSitting() || kitsune.isSleeping()) return false;
 
@@ -334,7 +373,8 @@ public class KitsuneLightGoal {
             for (Player player : players) {
                 LivingEntity attacker = player.getLastHurtByMob();
                 if (attacker != null && !(attacker instanceof Player) &&
-                        !(attacker instanceof KitsuneLightEntity) && attacker.isAlive()) {
+                        !(attacker instanceof KitsuneLightEntity) &&
+                        !(attacker instanceof BakenekoEntity) && attacker.isAlive()) {
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(attacker);
                     return true;
@@ -344,12 +384,24 @@ public class KitsuneLightGoal {
                         player.getBoundingBox().inflate(10.0D));
                 if (!nearbyMonsters.isEmpty()) {
                     Monster monster = nearbyMonsters.get(0);
+                    if (monster instanceof Creeper && !isNearVillageOrPlayer()) continue;
+
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(monster);
                     return true;
                 }
             }
             return false;
+        }
+
+        private boolean isNearVillageOrPlayer() {
+            List<Villager> villagers = kitsune.level().getEntitiesOfClass(Villager.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            if (!villagers.isEmpty()) return true;
+
+            List<Player> players = kitsune.level().getEntitiesOfClass(Player.class,
+                    kitsune.getBoundingBox().inflate(16.0D));
+            return !players.isEmpty();
         }
     }
 
@@ -361,7 +413,21 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
+            Monster target = (Monster) this.target;
+            if (target instanceof Creeper && !isNearVillageOrPlayer()) return false;
+
             return ((KitsuneLightEntity)this.mob).isAngry() && super.canUse();
+        }
+
+        private boolean isNearVillageOrPlayer() {
+            KitsuneLightEntity kitsune = (KitsuneLightEntity)this.mob;
+            List<Villager> villagers = kitsune.level().getEntitiesOfClass(Villager.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            if (!villagers.isEmpty()) return true;
+
+            List<Player> players = kitsune.level().getEntitiesOfClass(Player.class,
+                    kitsune.getBoundingBox().inflate(32.0D));
+            return !players.isEmpty();
         }
     }
 
@@ -375,8 +441,6 @@ public class KitsuneLightGoal {
             this.kitsune = kitsune;
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
-
-
 
         @Override
         public boolean canUse() {
@@ -394,7 +458,6 @@ public class KitsuneLightGoal {
             if (this.socialCheckCooldown > 0) return;
             this.socialCheckCooldown = 50;
 
-            // СМЕХ - только если рядом есть другие кицунэ
             if (this.laughCheckCooldown == 0) {
                 this.laughCheckCooldown = 100 + this.kitsune.getRandom().nextInt(100);
 
@@ -542,7 +605,7 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
-            if (kitsune.isTamed()) return false; // Только дикие взаимодействуют
+            if (kitsune.isTamed()) return false;
             if (kitsune.isSitting() || kitsune.isSleeping()) return false;
             if (!kitsune.level().isDay() || kitsune.isAngry()) return false;
             if (kitsune.getRandom().nextInt(100) != 0) return false;
@@ -607,7 +670,7 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
-            if (kitsune.isTamed()) return false; // Для прирученных - только через взаимодействие
+            if (kitsune.isTamed()) return false;
             if (sitCheckCooldown > 0) {
                 sitCheckCooldown--;
                 return false;
@@ -633,9 +696,7 @@ public class KitsuneLightGoal {
         }
 
         @Override
-        public void stop() {
-            // Для диких - автоматически встают по таймеру в entity
-        }
+        public void stop() {}
     }
 
     // === СОН (для диких) ===
@@ -650,7 +711,7 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
-            if (kitsune.isTamed()) return false; // Для прирученных - автоматически при сидении ночью
+            if (kitsune.isTamed()) return false;
             if (sleepCheckCooldown > 0) {
                 sleepCheckCooldown--;
                 return false;
@@ -677,11 +738,10 @@ public class KitsuneLightGoal {
         }
 
         @Override
-        public void stop() {
-            // Для диких - автоматически просыпаются по таймеру в entity
-        }
+        public void stop() {}
     }
 
+    // === ПОБЕГ ИЗ ВОДЫ ===
     public static class KitsuneEscapeWaterGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private final double speedModifier;
@@ -701,7 +761,6 @@ public class KitsuneLightGoal {
                 return false;
             }
 
-            // Ищем сушу поблизости
             Vec3 landPos = findLandPosition();
             if (landPos == null) {
                 return false;
@@ -725,7 +784,6 @@ public class KitsuneLightGoal {
 
         @Override
         public void tick() {
-            // Если всё ещё в воде, продолжаем искать путь к берегу
             if (this.kitsune.isInWater() && this.kitsune.getNavigation().isDone()) {
                 Vec3 newLandPos = findLandPosition();
                 if (newLandPos != null) {
@@ -742,7 +800,6 @@ public class KitsuneLightGoal {
             RandomSource random = this.kitsune.getRandom();
             BlockPos kitsunePos = this.kitsune.blockPosition();
 
-            // Ищем сушу в радиусе 16 блоков
             for (int i = 0; i < 10; i++) {
                 BlockPos checkPos = kitsunePos.offset(
                         random.nextInt(16) - 8,
@@ -750,13 +807,11 @@ public class KitsuneLightGoal {
                         random.nextInt(16) - 8
                 );
 
-                // Проверяем что позиция безопасна и не в воде
                 if (isDryLand(checkPos) && this.kitsune.getNavigation().isStableDestination(checkPos)) {
                     return Vec3.atBottomCenterOf(checkPos);
                 }
             }
 
-            // Если не нашли подходящую позицию, пробуем найти любую сушу
             BlockPos surfacePos = findAnyLandSurface();
             if (surfacePos != null) {
                 return Vec3.atBottomCenterOf(surfacePos);
@@ -766,7 +821,6 @@ public class KitsuneLightGoal {
         }
 
         private boolean isDryLand(BlockPos pos) {
-            // Проверяем что блок под ногами твёрдый и сам блок не вода
             return !this.kitsune.level().getFluidState(pos).isSource() &&
                     !this.kitsune.level().getFluidState(pos.above()).isSource() &&
                     this.kitsune.level().getBlockState(pos.below()).isSolid();
@@ -776,13 +830,10 @@ public class KitsuneLightGoal {
         private BlockPos findAnyLandSurface() {
             BlockPos kitsunePos = this.kitsune.blockPosition();
 
-            // Ищем ближайшую сухую поверхность
             for (int radius = 1; radius <= 12; radius++) {
                 for (int x = -radius; x <= radius; x++) {
                     for (int z = -radius; z <= radius; z++) {
                         BlockPos checkPos = kitsunePos.offset(x, 0, z);
-
-                        // Поднимаемся от дна вверх, ища сухую поверхность
                         for (int y = -2; y <= 3; y++) {
                             BlockPos verticalPos = checkPos.above(y);
                             if (isDryLand(verticalPos)) {

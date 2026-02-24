@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-20T22:05:03.1319299	Item Models: fantastikmod
+// 1.20.1	2026-02-11T06:06:35.8064067	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -12,6 +12,7 @@ a39b0aa18834c41f76f2d00a70e50968f5e65c7f assets/fantastikmod/models/item/boots_f
 e1532b3b239851f0a5355797fc593563e4574534 assets/fantastikmod/models/item/chestplate_fur_ice_dragon.json
 bc0c94e40fc4b016b5cb44ade34595809333f69d assets/fantastikmod/models/item/dough_mochi.json
 631e3fc0c7a4dc9a6ceb0b9315eb484782a11bae assets/fantastikmod/models/item/drying_basket.json
+40ccc5057e55fdbc210a8501fad826d4e84ebce0 assets/fantastikmod/models/item/egg_bakeneko.json
 d3ec2a1c2afc6231e17f371f224d2bd0192506a6 assets/fantastikmod/models/item/egg_blue_butterfly.json
 6e336ebfe1cdbc087e75d724ba3e608521475711 assets/fantastikmod/models/item/egg_ice_dragon.json
 ef2d7445d1c6abb2d3100819def9808ff3b8e5fb assets/fantastikmod/models/item/egg_kitsune_light.json
@@ -36,6 +37,10 @@ e4a8c216dd9824c7ece34a8c2a6236ab441ef027 assets/fantastikmod/models/item/mochi.j
 54e149595315586c97a88698d93bfc5ad0808128 assets/fantastikmod/models/item/moon_boots.json
 c7aa1786a52393e2a585e0f7a1b63da40c5c4975 assets/fantastikmod/models/item/moon_chestplate.json
 c96d6ad0df883f7df72a8dc3798639ad8cf1e4b4 assets/fantastikmod/models/item/moon_crowberry.json
+dee0ce2f1d7d329eed79d3ce72851e3271776d54 assets/fantastikmod/models/item/moon_crystal.json
+de27dc72ac0815ac42f826c9afef938a439ab428 assets/fantastikmod/models/item/moon_crystal_block.json
+6b0c2970f1f0000b1c58ad9570933e15ec1b1ea7 assets/fantastikmod/models/item/moon_crystal_glass.json
+73b7efae11e4ff257cb415120fd889df4957fe16 assets/fantastikmod/models/item/moon_crystal_glass_pane.json
 1dca049d775148c9fbab34f00a0dd6bde0099feb assets/fantastikmod/models/item/moon_dust.json
 45ec3be5c567c850323f242cfdea0b14eec32958 assets/fantastikmod/models/item/moon_gem_block.json
 5b1d6e306bbe908e00f15cfea77ef09fa2dc6591 assets/fantastikmod/models/item/moon_grass.json

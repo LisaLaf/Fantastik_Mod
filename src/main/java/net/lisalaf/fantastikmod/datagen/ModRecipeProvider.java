@@ -603,5 +603,30 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter, "bowl_from_moon_planks");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_CRYSTAL_GLASS_PANE.get(), 16)
+                .pattern("ggg")
+                .pattern("ggg")
+                .define('g', ModBlocks.MOON_CRYSTAL_GLASS.get())
+                .unlockedBy("has_moon_crystal_glass", has(ModBlocks.MOON_CRYSTAL_GLASS.get()))
+                .save(pWriter, "moon_crystal_glass_pane_from_glass");
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.MOON_DUST.get()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        ModBlocks.MOON_CRYSTAL_GLASS.get().asItem(),
+                        0.2f,
+                        200)
+                .unlockedBy("has_moon_dust", has(ModItems.MOON_DUST.get()))
+                .save(pWriter, "moon_crystal_glass_from_smelting");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.MOON_DUST.get(), 2)
+                .requires(ModBlocks.MOON_CRYSTAL.get())
+                .unlockedBy("has_moon_crystal", has(ModBlocks.MOON_CRYSTAL.get()))
+                .save(pWriter, "moon_dust_from_crystal");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.MOON_DUST.get(), 9)
+                .requires(ModBlocks.MOON_CRYSTAL_BLOCK.get())
+                .unlockedBy("has_moon_crystal_block", has(ModBlocks.MOON_CRYSTAL_BLOCK.get()))
+                .save(pWriter, "moon_dust_from_block");
     }
 }

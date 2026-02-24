@@ -2,6 +2,7 @@ package net.lisalaf.fantastikmod.worldgen;
 
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.worldgen.feature.MoonCrystalClusterFeature;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
+
 
 @SuppressWarnings("removal")
 public class ModPlacedFeatures {
@@ -41,6 +43,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SPIDER_LILY_PLACED_KEY = registerKey("spider_lily_placed");
 
     public static final ResourceKey<PlacedFeature> DRAGON_CAVE_PLACED_KEY = registerKey("dragon_cave_placed");
+    public static final ResourceKey<PlacedFeature> MOON_CRYSTAL_CLUSTER_PLACED_KEY = registerKey("moon_crystal_cluster_placed");
 
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -175,6 +178,14 @@ public class ModPlacedFeatures {
                        // RarityFilter.onAverageOnceEvery(1000),
                        // InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(60)), BiomeFilter.biome() ));
 
+        register(context, MOON_CRYSTAL_CLUSTER_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_CRYSTAL_CLUSTER_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(8),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                ));
 
 
     }

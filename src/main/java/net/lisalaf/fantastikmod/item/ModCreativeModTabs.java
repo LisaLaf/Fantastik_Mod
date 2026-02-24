@@ -34,6 +34,7 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.EGG_ICE_DRAGON.get());
                         output.accept(ModItems.EGG_MOON_DEER.get());
                         output.accept(ModItems.EGG_BLUE_BUTTERFLY.get());
+                        output.accept(ModItems.EGG_BAKENEKO.get());
                         output.accept(ModItems.AURIPIGMENT.get());
                         output.accept(ModItems.SILVER_RAW.get());
                         output.accept(ModItems.GEM_MOON.get());
@@ -54,7 +55,6 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.DOUGH_MOCHI.get());
                         output.accept(ModItems.STRAWBERRY_MOCHI.get());
                         output.accept(ModItems.MOCHI.get());
-                       //output.accept(ModItems.TEA_CEREMONY_MUSIC_DISC.get());
                         output.accept(ModItems.SILVER_STICK.get());
                         output.accept(ModItems.MOON_AXE.get());
                         output.accept(ModItems.MOON_PICKAXE.get());
@@ -106,6 +106,10 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get());
                         output.accept(ModBlocks.MOON_ORE.get());
                         output.accept(ModBlocks.MOONSTONE.get());
+                        output.accept(ModBlocks.MOON_CRYSTAL_BLOCK.get());
+                        output.accept(ModBlocks.MOON_CRYSTAL.get());
+                        output.accept(ModBlocks.MOON_CRYSTAL_GLASS.get());
+                        output.accept(ModBlocks.MOON_CRYSTAL_GLASS_PANE.get());
                         output.accept(ModBlocks.SILVER_ORE.get());
                         output.accept(ModBlocks.MOON_GEM_BLOCK.get());
                         output.accept(ModBlocks.SILVER_BLOCK.get());
