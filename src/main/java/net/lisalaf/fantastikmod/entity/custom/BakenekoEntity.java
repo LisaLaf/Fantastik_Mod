@@ -38,6 +38,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -787,6 +788,12 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         });
 
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, false));
+
+        this.goalSelector.addGoal(3, new TemptGoal(
+                this, 1.2D,
+                Ingredient.of(ModItems.CATNIP.get(), ModItems.DRIED_CATNIP.get()),
+                false)
+        );
 
         /*
             true означает, что кот будет закрывать за собой дверь (если нужно, чтобы оставлял открытой - ставь false)

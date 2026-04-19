@@ -21,5 +21,5 @@ public class ModFeatures {
 
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> MOON_CRYSTAL_CLUSTER =
-            FEATURES.register("moon_crystal_cluster", () -> new MoonCrystalClusterFeature());
+            FEATURES.register("moon_crystal_cluster", MoonCrystalClusterFeature::new);
 }
