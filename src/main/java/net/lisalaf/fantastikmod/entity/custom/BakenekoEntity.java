@@ -587,7 +587,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     public void hitPlayer(Player player) {
         if (!this.level().isClientSide) {
             player.hurt(player.damageSources().mobAttack(this), 3.0F);
-            player.sendSystemMessage(Component.translatable("chat.bakeneko.hurt"));
+            player.sendSystemMessage(BakenekoPhrases.getHurtMessage());
             this.playSound(SoundEvents.CAT_HISS, 1.0F, 0.5F);
         }
     }
@@ -723,9 +723,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         }
 
         if (!this.level().isClientSide) {
-            player.sendSystemMessage(Component.literal(
-                    BakenekoPhrases.getFeedMessage(player)
-            ));
+            player.sendSystemMessage(BakenekoPhrases.getFeedMessage());
         }
 
         playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);

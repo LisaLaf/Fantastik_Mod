@@ -110,7 +110,7 @@ public class BakenekoStealGoal extends MoveToBlockGoal {
                      */
                     Player nearestPlayer = level.getNearestPlayer(this.bakeneko, 10.0D);
                     if (nearestPlayer != null && !nearestPlayer.isSpectator() && !nearestPlayer.isCreative()) {
-                        nearestPlayer.sendSystemMessage(Component.literal(BakenekoPhrases.getStealFromPlayerMessage(nearestPlayer)));
+                        nearestPlayer.sendSystemMessage(BakenekoPhrases.getStealFromPlayerMessage());
                         this.bakeneko.setLastThief(nearestPlayer);
                         this.bakeneko.setAngry(true);
                     }
