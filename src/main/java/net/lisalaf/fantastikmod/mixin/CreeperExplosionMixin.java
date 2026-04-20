@@ -3,6 +3,7 @@ package net.lisalaf.fantastikmod.mixin;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +22,9 @@ public class CreeperExplosionMixin {
             // Создаем взрыв только с уроном по сущностям (без разрушения блоков)
             Level level = creeper.level();
             if (!level.isClientSide) {
-                level.explode(null, creeper.getX(), creeper.getY(), creeper.getZ(), 3.0F, false, Level.ExplosionInteraction.NONE);
+                // Микро оптимизация
+                final Vec3 position = creeper.position();
+                level.explode(null, position.x, position.y, position.z, 3.0F, false, Level.ExplosionInteraction.NONE);
             }
             ci.cancel(); // Отменяем оригинальный взрыв
 

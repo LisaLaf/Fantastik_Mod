@@ -1,11 +1,12 @@
 package net.lisalaf.fantastikmod.worldgen.feature;
 
-import com.mojang.serialization.Codec;
+import net.lisalaf.fantastikmod.FantastikModConstants;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -14,8 +15,13 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration> {
 
+    private final Block moonBlock;
+    private final BlockState moonBlockState;
+
     public MoonCrystalClusterFeature() {
         super(NoneFeatureConfiguration.CODEC);
+        this.moonBlock = ModBlocks.MOON_CRYSTAL_BLOCK.get();
+        this.moonBlockState = moonBlock.defaultBlockState();
     }
 
     @Override
@@ -55,25 +61,25 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
         for (int y = 0; y < height; y++) {
-            // Размер уменьшается к верху
             int size = baseSize - (y * baseSize) / height;
             if (size < 1) size = 1;
 
-            BlockPos layerPos = startPos.above(y);
+            /*
+                Заранее считаем квадрат порога для проверки расстояния
+             */
+            float threshold = (size - 0.5f) * (size - 0.5f);
 
             for (int dx = -size; dx <= size; dx++) {
                 for (int dz = -size; dz <= size; dz++) {
-                    // Не заполняем полностью - оставляем дыры
                     if (random.nextFloat() < 0.3f) continue;
 
-                    // Дальше от центра - меньше шанс
-                    double dist = Math.sqrt(dx * dx + dz * dz);
-                    if (dist > size - 0.5 && random.nextFloat() < 0.5f) continue;
+                    int distSq = dx * dx + dz * dz;
+                    if (distSq > threshold && random.nextFloat() < 0.5f) continue;
 
-                    pos.set(layerPos.getX() + dx, layerPos.getY(), layerPos.getZ() + dz);
+                    pos.set(startPos.getX() + dx, startPos.getY() + y, startPos.getZ() + dz);
 
                     if (level.isEmptyBlock(pos) || canReplace(level.getBlockState(pos))) {
-                        setBlock(level, pos, ModBlocks.MOON_CRYSTAL_BLOCK.get().defaultBlockState());
+                        level.setBlock(pos, moonBlockState, 2);
                     }
                 }
             }
@@ -83,24 +89,30 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     private void fillGaps(WorldGenLevel level, BlockPos startPos, int height, int baseSize, RandomSource random) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-        // Заполняем пустоты под кластером
+        /*
+            Заводим второй MutableBlockPos для проверок соседей, чтобы не создавать новые объекты
+         */
+        BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+
         for (int y = -1; y >= -3; y--) {
-            for (int dx = -baseSize-1; dx <= baseSize+1; dx++) {
-                for (int dz = -baseSize-1; dz <= baseSize+1; dz++) {
+            for (int dx = -baseSize - 1; dx <= baseSize + 1; dx++) {
+                for (int dz = -baseSize - 1; dz <= baseSize + 1; dz++) {
                     pos.set(startPos.getX() + dx, startPos.getY() + y, startPos.getZ() + dz);
 
-                    // Если сверху есть блок кластера
-                    if (level.getBlockState(pos.above()).is(ModBlocks.MOON_CRYSTAL_BLOCK.get())) {
+                    checkPos.setWithOffset(pos, 0, 1, 0); // Проверяем блок сверху
+                    if (level.getBlockState(checkPos).is(moonBlock)) {
                         if (level.isEmptyBlock(pos) && random.nextFloat() < 0.7f) {
-                            setBlock(level, pos, ModBlocks.MOON_CRYSTAL_BLOCK.get().defaultBlockState());
+                            setBlock(level, pos, moonBlockState);
                         }
-                    }
-                    // Если рядом есть земля
-                    else {
-                        for (Direction dir : Direction.values()) {
-                            if (level.getBlockState(pos.relative(dir)).isSolid()) {
+                    } else {
+                        /*
+                            Быстрая итерация по массиву без создания объекта Iterator
+                         */
+                        final Direction[] directions = FantastikModConstants.DIRECTIONS;
+                        for (int i = 0; i < directions.length; i++) {
+                            if (level.getBlockState(checkPos.setWithOffset(pos, directions[i])).isSolid()) {
                                 if (random.nextFloat() < 0.3f) {
-                                    setBlock(level, pos, ModBlocks.MOON_CRYSTAL_BLOCK.get().defaultBlockState());
+                                    setBlock(level, pos, moonBlockState);
                                 }
                                 break;
                             }
@@ -117,13 +129,13 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
         // Кристаллы на основном пике
         for (int y = 0; y < height; y++) {
             BlockPos layerPos = startPos.above(y);
-            float chance = 0.2f + (y / (float)height) * 0.2f; // Больше шанс наверху
+            float chance = 0.2f + (y / (float) height) * 0.2f; // Больше шанс наверху
 
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dz = -2; dz <= 2; dz++) {
                     pos.set(layerPos.getX() + dx, layerPos.getY(), layerPos.getZ() + dz);
 
-                    if (level.getBlockState(pos).is(ModBlocks.MOON_CRYSTAL_BLOCK.get())) {
+                    if (level.getBlockState(pos).is(moonBlock)) {
                         if (random.nextFloat() < chance) {
                             tryPlaceCrystal(level, pos, random);
                         }
@@ -153,15 +165,17 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     }
 
     private void tryPlaceCrystal(WorldGenLevel level, BlockPos blockPos, RandomSource random) {
-        Direction dir = Direction.values()[random.nextInt(6)];
+        Direction dir = Direction.getRandom(random);
         if (dir == Direction.DOWN) return;
 
-        BlockPos crystalPos = blockPos.relative(dir);
+        BlockPos.MutableBlockPos crystalPos = blockPos.mutable().move(dir);
 
         if (level.isEmptyBlock(crystalPos) && !isWaterNearby(level, crystalPos)) {
-            // Простая проверка - не ставить если уже есть кристалл рядом
+            BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+
             for (Direction checkDir : Direction.values()) {
-                if (level.getBlockState(crystalPos.relative(checkDir)).getBlock() == ModBlocks.MOON_CRYSTAL.get()) {
+                checkPos.setWithOffset(crystalPos, checkDir);
+                if (level.getBlockState(checkPos).is(ModBlocks.MOON_CRYSTAL.get())) {
                     return;
                 }
             }
@@ -174,8 +188,10 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     }
 
     private boolean isWaterNearby(WorldGenLevel level, BlockPos pos) {
-        for (Direction dir : Direction.values()) {
-            if (level.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
+        BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+        final Direction[] values = FantastikModConstants.DIRECTIONS;
+        for (int i = 0; i < values.length; i++) {
+            if (level.getBlockState(checkPos.setWithOffset(pos, values[i])).is(Blocks.WATER)) {
                 return true;
             }
         }
@@ -183,6 +199,7 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     }
 
     private boolean canReplace(BlockState state) {
+        // Лучше использовать теги, чтобы мод был совместим с другими генераторами биомов
         return state.isAir() ||
                 state.is(Blocks.GRASS) ||
                 state.is(Blocks.TALL_GRASS) ||
