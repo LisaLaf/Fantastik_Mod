@@ -483,7 +483,7 @@
 
   "": "",
   "═══════════════════════════════════════════════════════": "",
-  "                   DIALOGS - PLAYER                     ": "",
+  "                   DIALOGS - PLAYER                    ": "",
   "═══════════════════════════════════════════════════════": "",
 
   "dialog.player.ask_who": "Who are you?",
@@ -545,9 +545,21 @@
   "dialog.player.too_much": "Isn't that a bit much?",
   "dialog.player.ok_bring": "Alright, I'll bring it",
 
+  "═══════════════════════════════════════════════════════"  : "",
+  "                   DIALOGS - Drying Basket             "  : "",
+  "═══════════════════════════════════════════════════════"  : "",
+  "dialog.fantastikmod.drying.teamaster.1"  : "To make tea, it's not enough to collect tea leaves and pour boiling water over them",
+  "dialog.fantastikmod.drying.teamaster.2"  : "You first need to dry them and only then enjoy the taste of green tea",
+  "dialog.fantastikmod.drying.kitsune.1"    : "Do you like tea?",
+  "dialog.fantastikmod.drying.kitsune.2"    : "In the east, they do. They even hold tea ceremonies among the nobility",
+  "dialog.fantastikmod.drying.kitsune.3"    : "I heard from an older kitsune who lived among people",
+  "dialog.fantastikmod.drying.kitsune.4"    : "I've only seen how tea was dried in such baskets",
+  "dialog.fantastikmod.drying.moon_deer.1"  : "Are these called baskets?",
+  "dialog.fantastikmod.drying.moon_deer.2"  : "Do people store something in them?",
+
   "": "",
   "═══════════════════════════════════════════════════════": "",
-  "                      OTHER (VILLAGER)                  ": "",
+  "                      OTHER (VILLAGER)                 ": "",
   "═══════════════════════════════════════════════════════": "",
 
   "entity.minecraft.villager.fantastikmod.teamaster": "Tea Master"
