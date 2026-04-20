@@ -487,7 +487,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         return !isInventoryFull() || isTreasure(stack) || isFood(stack);
     }
 
-    private boolean isTreasure(ItemStack stack) {
+    public boolean isTreasure(ItemStack stack) {
         return stack.is(Items.EMERALD) || stack.is(Items.DIAMOND) || stack.is(Items.GOLD_INGOT) ||
                 stack.is(Items.IRON_INGOT) || stack.is(Items.LAPIS_LAZULI) || stack.is(Items.REDSTONE) ||
                 stack.is(Items.QUARTZ) || stack.is(Items.AMETHYST_SHARD);
