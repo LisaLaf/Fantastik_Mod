@@ -3,6 +3,7 @@ package net.lisalaf.fantastikmod.dialog.mobs;
 import net.lisalaf.fantastikmod.dialog.Dialog;
 import net.lisalaf.fantastikmod.dialog.DialogNode;
 import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
+import net.lisalaf.fantastikmod.entity.phrases.BakenekoPhrases;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -133,7 +134,7 @@ public class BakenekoDialog extends Dialog {
             if (player.getServer() != null) {
                 player.getServer().execute(() -> {
                     player.hurt(player.damageSources().mobAttack(bakeneko), 3.0F);
-                    player.sendSystemMessage(Component.translatable("chat.bakeneko.hurt"));
+                    player.sendSystemMessage(BakenekoPhrases.getHurtMessage());
                     bakeneko.playSound(net.minecraft.sounds.SoundEvents.CAT_HISS, 1.0F, 0.5F);
                 });
             }
@@ -155,7 +156,7 @@ public class BakenekoDialog extends Dialog {
                             bakeneko.setHeldItem(ItemStack.EMPTY);
                             bakeneko.setHasItem(false);
                             bakeneko.setLastThief(null);
-                            player.sendSystemMessage(Component.translatable("chat.bakeneko.stolen_from_bakeneko"));
+                            player.sendSystemMessage(BakenekoPhrases.getStolenFromBakenekoMessage());
                         }
                     }
                 });

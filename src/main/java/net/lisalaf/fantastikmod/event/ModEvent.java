@@ -13,13 +13,16 @@ import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -186,42 +189,17 @@ public class ModEvent {
         }
     }
 
-    @SubscribeEvent
-    public static void onLivingDeath(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof Player player) {
-            String mobId = event.getEntity().getEncodeId();
-
-            net.lisalaf.fantastikmod.dialog.quest.QuestSystem.getActiveQuests()
-                    .forEach((uuid, quest) -> {
-                    });
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) return;
-
-        Player player = event.player;
-        ItemStack mainHand = player.getMainHandItem();
-        ItemStack offHand = player.getOffhandItem();
-
-        boolean hasCatnip = mainHand.getItem() == ModItems.CATNIP.get() ||
-                offHand.getItem() == ModItems.CATNIP.get() ||
-                mainHand.getItem() == ModItems.DRIED_CATNIP.get() ||
-                offHand.getItem() == ModItems.DRIED_CATNIP.get();
-
-        if (hasCatnip) {
-            for (Cat cat : player.level().getEntitiesOfClass(Cat.class,
-                    player.getBoundingBox().inflate(16))) {
-                cat.getNavigation().moveTo(player, 1.2);
-                cat.getLookControl().setLookAt(player, 30, 30);
-            }
-            for (BakenekoEntity bakeneko : player.level().getEntitiesOfClass(BakenekoEntity.class,
-                    player.getBoundingBox().inflate(16))) {
-                bakeneko.getNavigation().moveTo(player, 1.2);
-            }
-        }
-    }
+    // TODO: Либо удалить либо починить
+//    @SubscribeEvent
+//    public static void onLivingDeath(LivingDeathEvent event) {
+//        if (event.getSource().getEntity() instanceof Player player) {
+//            String mobId = event.getEntity().getEncodeId();
+//
+//            net.lisalaf.fantastikmod.dialog.quest.QuestSystem.getActiveQuests()
+//                    .forEach((uuid, quest) -> {
+//                    });
+//        }
+//    }
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
@@ -249,6 +227,14 @@ public class ModEvent {
                 target.playSound(SoundEvents.CAT_EAT, 1.0F, 1.0F);
             }
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof Cat cat) {
+            Ingredient catnip = Ingredient.of(ModItems.CATNIP.get(), ModItems.DRIED_CATNIP.get());
+            cat.goalSelector.addGoal(3, new TemptGoal(cat, 1.2D, catnip, false));
         }
     }
 }
