@@ -151,22 +151,22 @@ public class ModItems {
             ()-> new Item( new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> AURIPIGMENT_HELMET = ITEMS.register("auripigment_helmet",
-            ()-> new ArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.HELMET, new Item.Properties()));
+            ()-> new ModArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> AURIPIGMENT_CHESTPLATE = ITEMS.register("auripigment_chestplate",
-            ()-> new ArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            ()-> new ModArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
 
     public static final RegistryObject<Item> AURIPIGMENT_LEGGINGS = ITEMS.register("auripigment_leggings",
             ()-> new ModArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 
     public static final RegistryObject<Item> AURIPIGMENT_BOOTS = ITEMS.register("auripigment_boots",
-            ()-> new ArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.BOOTS, new Item.Properties()));
+            ()-> new ModArmorItem(ModArmorMaterials.AURIPIGMENT, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> HELMET_FUR_ICE_DRAGON = ITEMS.register("helmet_fur_ice_dragon",
-            ()-> new ArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.HELMET, new Item.Properties()));
+            ()-> new ModArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> CHESTPLATE_FUR_ICE_DRAGON = ITEMS.register("chestplate_fur_ice_dragon",
-            ()-> new ArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            ()-> new ModArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
 
     public static final RegistryObject<Item> LEGGINGS_FUR_ICE_DRAGON = ITEMS.register("leggings_fur_ice_dragon",
             ()-> new ModArmorItem(ModArmorMaterials.FUR_ICE_DRAGON, ArmorItem.Type.LEGGINGS, new Item.Properties()));
