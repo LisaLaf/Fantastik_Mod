@@ -2,6 +2,7 @@ package net.lisalaf.fantastikmod;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import net.lisalaf.fantastikmod.block.ModBlockEntities;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
 import net.lisalaf.fantastikmod.datagen.loot.ModLootModfiers;
@@ -62,6 +63,7 @@ public class fantastikmod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
 
         ModVillagers.register(modEventBus);
 
