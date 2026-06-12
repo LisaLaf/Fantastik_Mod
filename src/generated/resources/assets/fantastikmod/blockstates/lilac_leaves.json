@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "flowering=false": {
+      "model": "fantastikmod:block/lilac_leaves"
+    },
+    "flowering=true": {
+      "model": "fantastikmod:block/flowering_lilac_leaves"
+    }
+  }
+}

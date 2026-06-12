@@ -1,39 +1,34 @@
 package net.lisalaf.fantastikmod;
 
 import com.mojang.logging.LogUtils;
-import com.mojang.serialization.Codec;
 import net.lisalaf.fantastikmod.block.ModBlockEntities;
 import net.lisalaf.fantastikmod.block.ModBlocks;
-import net.lisalaf.fantastikmod.datagen.loot.AddItemModifier;
 import net.lisalaf.fantastikmod.datagen.loot.ModLootModfiers;
 import net.lisalaf.fantastikmod.dialog.DialogSystem;
 import net.lisalaf.fantastikmod.effect.ModEffects;
 import net.lisalaf.fantastikmod.entity.ModEntities;
-import net.lisalaf.fantastikmod.entity.client.*;
-import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
 import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.lisalaf.fantastikmod.particle.LeavesParticle;
+import net.lisalaf.fantastikmod.particle.ModParticles;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
 import net.lisalaf.fantastikmod.worldgen.ModFeatures;
 import net.lisalaf.fantastikmod.worldgen.biome.ModTerrablender;
 import net.lisalaf.fantastikmod.worldgen.biome.sunface.ModSurfaceRules;
-import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,7 +38,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
+import net.minecraft.world.item.AxeItem;
 
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(fantastikmod.MOD_ID)
@@ -73,6 +70,8 @@ public class fantastikmod {
 
         ModEffects.register(modEventBus);
 
+        ModParticles.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         modEventBus.addListener(this::gatherData);
@@ -81,13 +80,19 @@ public class fantastikmod {
 
         MinecraftForge.EVENT_BUS.register(ModEvent.class);
 
-        modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerParticleProviders);
+
 
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::addFuel);
 
 
+    }
+
+    @SubscribeEvent
+    public void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticles.COLORED_LEAVES_PARTICLE.get(), LeavesParticle.Provider::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -101,6 +106,7 @@ public class fantastikmod {
             ModTerrablender.registerBiomes();
 
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
+
         });
     }
 
@@ -156,6 +162,15 @@ public class fantastikmod {
         if(event.getItemStack().getItem() == ModBlocks.MOON_PLANKS_FENCE_GATE.get().asItem()) {
             event.setBurnTime(300);
         }
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_PLANKS.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_LOG.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_WOOD.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_SLAB.get().asItem()) event.setBurnTime(150);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_STAIRS.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_FENCE.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_FENCE_GATE.get().asItem()) event.setBurnTime(300);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_DOOR.get().asItem()) event.setBurnTime(200);
+        if (event.getItemStack().getItem() == ModBlocks.LILAC_TRAPDOOR.get().asItem()) event.setBurnTime(300);
 
     }
 

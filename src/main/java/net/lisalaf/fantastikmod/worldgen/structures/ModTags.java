@@ -33,5 +33,10 @@ public class ModTags {
                 Registries.BIOME,
                 new ResourceLocation(fantastikmod.MOD_ID, "has_structure/inari_small_shrine")
         );
+
+        public static final TagKey<Biome> HAS_ONSEN_SMALL = TagKey.create(
+                Registries.BIOME,
+                new ResourceLocation(fantastikmod.MOD_ID, "has_structure/onsen_small")
+        );
     }
 }

@@ -1,6 +1,10 @@
 {
   "values": [
     "fantastikmod:tree_moon_log_block",
-    "fantastikmod:tree_moon_wood"
+    "fantastikmod:tree_moon_wood",
+    "fantastikmod:lilac_log",
+    "fantastikmod:lilac_wood",
+    "fantastikmod:stripped_lilac_log",
+    "fantastikmod:stripped_lilac_wood"
   ]
 }

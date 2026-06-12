@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "fantastikmod:block/lilac_slab"
+    },
+    "type=double": {
+      "model": "fantastikmod:block/lilac_planks"
+    },
+    "type=top": {
+      "model": "fantastikmod:block/lilac_slab_top"
+    }
+  }
+}

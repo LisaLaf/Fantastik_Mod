@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -45,18 +46,11 @@ public class KitsuneLightGoal {
             }
 
             if (kitsune.isTamed()) {
-                if (target instanceof Player) return false;
-                if (!wasProvoked()) return false;
+                return false;
             }
 
-            // Проверка для криперов - атакуем только рядом с деревней или игроком
-            if (target instanceof Creeper) {
-                if (!isNearVillageOrPlayer()) {
-                    return false;
-                }
-                if (((Creeper) target).isIgnited() || ((Creeper) target).getSwellDir() > 0) {
-                    return false;
-                }
+            if (target instanceof Creeper || target instanceof EnderMan) {
+                return false;
             }
 
             return kitsune.isAngry() && !(target instanceof KitsuneLightEntity) && super.canUse();
@@ -68,21 +62,13 @@ public class KitsuneLightGoal {
 
             LivingEntity target = kitsune.getTarget();
             if (target == null) return false;
-
-            // НИКОГДА не продолжаем атаковать бакэнэко
             if (target instanceof BakenekoEntity) {
                 kitsune.setTarget(null);
                 return false;
             }
 
-            if (target instanceof Creeper) {
-                if (!isNearVillageOrPlayer()) {
-                    kitsune.setTarget(null);
-                    return false;
-                }
-                if (((Creeper) target).isIgnited() || ((Creeper) target).getSwellDir() > 0) {
-                    return false;
-                }
+            if (target instanceof Creeper || target instanceof EnderMan) {
+                return false;
             }
 
             return kitsune.isAngry() && !(target instanceof KitsuneLightEntity) && super.canContinueToUse();
@@ -132,7 +118,9 @@ public class KitsuneLightGoal {
 
         @Override
         public boolean canUse() {
-            if (!kitsune.isTamed() || kitsune.isSitting() || kitsune.isSleeping()) return false;
+            if (kitsune.isTamed()) return false;
+            if (kitsune.isSitting() || kitsune.isSleeping()) return false;
+
 
             LivingEntity owner = kitsune.getOwner();
             if (owner == null) return false;
@@ -140,12 +128,15 @@ public class KitsuneLightGoal {
             this.ownerLastHurt = owner.getLastHurtByMob();
             if (this.ownerLastHurt == null) return false;
 
-            // Не защищаем от бакэнэко
             if (ownerLastHurt instanceof BakenekoEntity) return false;
-            if (ownerLastHurt instanceof Player || ownerLastHurt instanceof KitsuneLightEntity) return false;
+            if (ownerLastHurt instanceof Player || ownerLastHurt instanceof KitsuneLightEntity
+                    || ownerLastHurt instanceof BakenekoEntity
+                    || ownerLastHurt instanceof EnderMan || ownerLastHurt instanceof Creeper) return false;
 
             int lastHurtTimestamp = owner.getLastHurtByMobTimestamp();
             return lastHurtTimestamp != this.timestamp && this.canAttack(this.ownerLastHurt);
+
+
         }
 
         private boolean canAttack(LivingEntity target) {
@@ -290,10 +281,10 @@ public class KitsuneLightGoal {
             this.setAlertOthers(KitsuneLightEntity.class);
         }
 
-        @Override
         public boolean canUse() {
-            // Не мстим бакэнэко
-            if (mob.getLastHurtByMob() instanceof BakenekoEntity) return false;
+            if (mob.getLastHurtByMob() instanceof BakenekoEntity
+                    || mob.getLastHurtByMob() instanceof EnderMan
+                    || mob.getLastHurtByMob() instanceof Creeper) return false;
 
             return ((KitsuneLightEntity)this.mob).getHitCount() >= 2 && super.canUse();
         }
@@ -331,7 +322,7 @@ public class KitsuneLightGoal {
                         villager.getBoundingBox().inflate(8.0D));
                 if (!nearbyMonsters.isEmpty()) {
                     Monster monster = nearbyMonsters.get(0);
-                    if (monster instanceof Creeper && !isNearVillageOrPlayer()) continue;
+                    if (monster instanceof Creeper || monster instanceof EnderMan) continue;
 
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(monster);
@@ -384,7 +375,7 @@ public class KitsuneLightGoal {
                         player.getBoundingBox().inflate(10.0D));
                 if (!nearbyMonsters.isEmpty()) {
                     Monster monster = nearbyMonsters.get(0);
-                    if (monster instanceof Creeper && !isNearVillageOrPlayer()) continue;
+                    if (monster instanceof Creeper || monster instanceof EnderMan) continue;
 
                     this.kitsune.setAngry(true);
                     this.kitsune.setTarget(monster);
@@ -414,7 +405,7 @@ public class KitsuneLightGoal {
         @Override
         public boolean canUse() {
             Monster target = (Monster) this.target;
-            if (target instanceof Creeper && !isNearVillageOrPlayer()) return false;
+            if (target instanceof Creeper || target instanceof EnderMan) return false;
 
             return ((KitsuneLightEntity)this.mob).isAngry() && super.canUse();
         }

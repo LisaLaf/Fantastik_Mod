@@ -35,6 +35,19 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.MOON_TREE_DOOR.get(),
                         ModBlocks.MOON_TREE_TRAPDOOR.get(),
                         ModBlocks.TREE_MOON_LOG_BLOCK.get(),
+                        ModBlocks.LILAC_LOG.get(),
+                        ModBlocks.LILAC_PLANKS.get(),
+                        ModBlocks.LILAC_STAIRS.get(),
+                        ModBlocks.LILAC_SLAB.get(),
+                        ModBlocks.LILAC_FENCE.get(),
+                        ModBlocks.LILAC_FENCE_GATE.get(),
+                        ModBlocks.LILAC_BUTTON.get(),
+                        ModBlocks.LILAC_PRESSURE_PLATE.get(),
+                        ModBlocks.LILAC_WOOD.get(),
+                        ModBlocks.STRIPPED_LILAC_LOG.get(),
+                        ModBlocks.STRIPPED_LILAC_WOOD.get(),
+                        ModBlocks.LILAC_TRAPDOOR.get(),
+                        ModBlocks.LILAC_DOOR.get(),
                         ModBlocks.TREE_MOON_WOOD.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -71,6 +84,16 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.MOON_CRYSTAL_BLOCK.get())
                 .add(ModBlocks.MOONSTONE.get());
 
+        tag(BlockTags.MINEABLE_WITH_HOE)
+                .add(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get(),
+                        ModBlocks.LILAC_LEAVES.get());
+
+        tag(BlockTags.LOGS)
+                .add(ModBlocks.LILAC_LOG.get(),
+                        ModBlocks.LILAC_WOOD.get(),
+                        ModBlocks.STRIPPED_LILAC_LOG.get(),
+                        ModBlocks.STRIPPED_LILAC_WOOD.get());
+
 
         // Функциональные теги
         tag(BlockTags.FENCES)
@@ -101,6 +124,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.TREE_MOON_LOG_BLOCK.get())
                 .add(ModBlocks.TREE_MOON_WOOD.get());
+
+        tag(BlockTags.PLANKS).add(ModBlocks.LILAC_PLANKS.get());
+        tag(BlockTags.WOODEN_FENCES).add(ModBlocks.LILAC_FENCE.get());
+        tag(BlockTags.FENCES).add(ModBlocks.LILAC_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(ModBlocks.LILAC_FENCE_GATE.get());
+        tag(BlockTags.STAIRS).add(ModBlocks.LILAC_STAIRS.get());
+        tag(BlockTags.SLABS).add(ModBlocks.LILAC_SLAB.get());
+        tag(BlockTags.BUTTONS).add(ModBlocks.LILAC_BUTTON.get());
+        tag(BlockTags.PRESSURE_PLATES).add(ModBlocks.LILAC_PRESSURE_PLATE.get());
+        tag(BlockTags.LOGS_THAT_BURN).add(ModBlocks.LILAC_LOG.get(), ModBlocks.LILAC_WOOD.get(),
+                ModBlocks.STRIPPED_LILAC_LOG.get(), ModBlocks.STRIPPED_LILAC_WOOD.get());
 
 
     }

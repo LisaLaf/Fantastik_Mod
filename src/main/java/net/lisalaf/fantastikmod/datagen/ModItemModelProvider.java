@@ -124,6 +124,22 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         registerBlockItemBlockTexture("moon_vine");
 
+        registerBlockItem("lilac_log");
+        registerBlockItem("lilac_leaves");
+        saplingItem(ModBlocks.LILAC_SAPLING);
+        registerBlockItem("lilac_planks");
+        registerBlockItem("lilac_wood");
+        registerBlockItem("stripped_lilac_log");
+        registerBlockItem("stripped_lilac_wood");
+        registerBlockItem("lilac_stairs");
+        registerBlockItem("lilac_slab");
+        registerFenceItem("lilac_fence", "lilac_planks");
+        registerBlockItem("lilac_fence_gate");
+        registerBlockItem("lilac_button");
+        registerBlockItem("lilac_pressure_plate");
+        registerDoorItem("lilac_door");
+        trapdoorItem(ModBlocks.LILAC_TRAPDOOR);
+
         registerBlockItem("wild_catnip");
         withExistingParent("echo_shard", "item/generated")
                 .texture("layer0", modLoc("item/echo_shard"));

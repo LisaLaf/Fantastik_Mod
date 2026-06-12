@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "fantastikmod:block/lilac_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "fantastikmod:block/lilac_wood"
+    },
+    "axis=z": {
+      "model": "fantastikmod:block/lilac_wood_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -35,6 +35,8 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_BAKENEKO_TO_VILLAGE_BIOMES = registerKey("add_bakeneko_to_village_biomes");
     public static final ResourceKey<BiomeModifier> ADD_KITSUNE_STATUE_TO_CHERRY = registerKey("add_kitsune_statue_to_cherry");
     public static final ResourceKey<BiomeModifier> ADD_WILD_CATNIP = registerKey("add_wild_catnip");
+    public static final ResourceKey<BiomeModifier> ADD_LILAC_TREE = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(fantastikmod.MOD_ID, "add_lilac_tree"));
+
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -115,6 +117,18 @@ public class ModBiomeModifiers {
                 ),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_CATNIP_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
+
+        context.register(ADD_LILAC_TREE,
+                new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                        HolderSet.direct(
+                                biomes.getOrThrow(Biomes.FOREST),
+                                biomes.getOrThrow(Biomes.FLOWER_FOREST),
+                                biomes.getOrThrow(Biomes.PLAINS),
+                                biomes.getOrThrow(Biomes.SUNFLOWER_PLAINS)
+                        ),
+                        HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.LILAC_TREE_PLACED_KEY)),
+                        GenerationStep.Decoration.VEGETAL_DECORATION
+                ));
 
 
     }

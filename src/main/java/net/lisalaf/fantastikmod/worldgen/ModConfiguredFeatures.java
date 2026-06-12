@@ -24,6 +24,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
@@ -55,6 +56,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> KITSUNE_STATUE_KEY = registerKey("kitsune_statue");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_CATNIP_KEY = registerKey("wild_catnip");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BIG_MOON_TREE_KEY = registerKey("big_moon_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LILAC_TREE_KEY =
+            registerKey("lilac_tree");
 
    // public static final ResourceKey<ConfiguredFeature<?, ?>> TEA_HOUSE_KEY = registerKey("tea_house");
 
@@ -157,6 +160,18 @@ public class ModConfiguredFeatures {
                                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_CATNIP.get())))));
 
         register(context, BIG_MOON_TREE_KEY, ModFeatures.BIG_MOON_TREE.get(), new NoneFeatureConfiguration());
+
+        context.register(LILAC_TREE_KEY, new ConfiguredFeature<>(Feature.TREE,
+                new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(ModBlocks.LILAC_LOG.get()),
+                        new FancyTrunkPlacer(5, 8, 0),
+                        BlockStateProvider.simple(ModBlocks.LILAC_LEAVES.get()),
+                        new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), 4),
+                        new TwoLayersFeatureSize(1, 0, 2)
+                )
+                        .decorators(List.of(new BeehiveDecorator(0.05f)))
+                        .build()
+        ));
 
 
 

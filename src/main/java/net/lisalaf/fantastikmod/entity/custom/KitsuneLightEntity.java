@@ -7,6 +7,9 @@ import net.lisalaf.fantastikmod.dialog.mood.MobMood;
 import net.lisalaf.fantastikmod.dialog.mood.MoodSystem;
 import net.lisalaf.fantastikmod.dialog.mood.impl.KitsuneMood;
 import net.lisalaf.fantastikmod.entity.ai.KitsuneLightGoal;
+import net.lisalaf.fantastikmod.entity.ai.kitsune.KitsuneExplodeCreepersGoal;
+import net.lisalaf.fantastikmod.entity.ai.kitsune.KitsuneTofuBlessingGoal;
+import net.lisalaf.fantastikmod.entity.phrases.KitsunePhrases;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.minecraft.client.Minecraft;
@@ -112,6 +115,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
     private int magicCooldown = 0;
     private int regenerationCooldown = 0;
     private int runningFromCreeperTicks = 0;
+    private KitsuneTofuBlessingGoal tofuBlessingGoal;
 
     private UUID ownerUUID;
 
@@ -326,20 +330,17 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
             }
         }
 
-        // Обработка зевков
         if (isYawning() && yawnTimer > 0) {
             yawnTimer--;
             if (yawnTimer <= 0) setYawning(false);
         }
 
-        // Обработка смеха - СБРАСЫВАЕМ ФЛАГ ПО ИСТЕЧЕНИЮ ТАЙМЕРА
         if (isLaughing() && laughCooldown > 0) {
             laughCooldown--;
             if (laughCooldown <= 0) {
-                setLaughing(false); // Важно: сбрасываем флаг!
+                setLaughing(false);
             }
 
-            // Создаем частицы каждые 10 тиков
             if (laughCooldown % 10 == 0 && this.level().isClientSide) {
                 this.spawnLaughParticles();
             }
@@ -579,9 +580,8 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
             if (this.random.nextInt(8) == 0) {
                 sendTofuMessage(player);
             }
-            if (!level().isClientSide) {
-                moodSystem.addMood(2); // +10 к настроению
-                syncMoodToClient();
+            if (tofuBlessingGoal != null) {
+                tofuBlessingGoal.activate();
             }
             spawnTamingParticles();
             return InteractionResult.sidedSuccess(level().isClientSide);
@@ -618,37 +618,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         }
     }
 
-
-
-
-
-    private void sendTofuMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Вкусно! Принесёшь ещё?",
-                    "Ммм, тофу... Мой любимый!",
-                    "Хи-хи, спасибо за угощение!",
-                    "Такого тофу я ещё не пробовала!",
-                    "Ты знаешь, чем меня порадовать.",
-                    "Надеюсь, ты припас ещё немного?",
-                    "От тофу не откажусь никогда!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Yummy! Will you bring more?",
-                    "Mmm, tofu... My favorite!",
-                    "Hehe, thanks for the treat!",
-                    "I've never tasted tofu like this!",
-                    "You know how to make me happy.",
-                    "I hope you saved some more?",
-                    "I'll never say no to tofu!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
 
     private void cycleAIMode() {
         int newMode = (getAIMode() + 1) % 3;
@@ -730,27 +699,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         }
     }
 
-    private Component getTamingMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-        if (isRussian) {
-            String[] messages = {
-                    "Думаю, так уж и быть, я сопровожу тебя в твоих приключениях.",
-                    "Отныне я следую за тобой, странник.",
-                    "Хорошо, я стану твоим спутником.",
-                    "Ты заслужил моё доверие. Я с тобой."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "I suppose I'll accompany you on your adventures.",
-                    "From now on, I follow you, wanderer.",
-                    "Very well, I shall be your companion.",
-                    "You have earned my trust. I'm with you."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
-
 
     @Override
     public void die(DamageSource cause) {
@@ -764,27 +712,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         super.die(cause);
     }
 
-
-    private Component getDeathMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-        if (isRussian) {
-            String[] messages = {
-                    "Кицунэ умерла!",
-                    "Ваша спутница-кицунэ погибла...",
-                    "Кицунэ испустила последний вздох.",
-                    "Ваш верный друг покинул этот мир."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "Kitsune has died!",
-                    "Your kitsune companion has passed away...",
-                    "The kitsune has breathed its last.",
-                    "Your faithful friend has left this world."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
 
     private boolean isRussianPlayer(Player player) {
         if (player.level().isClientSide) {
@@ -886,6 +813,10 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         this.goalSelector.addGoal(1, new KitsuneLightGoal.AvoidCreeperGoal(this, 1.0D, 1.8D));
         this.goalSelector.addGoal(2, new KitsuneLightGoal.KitsuneEscapeGoal(this, 1.8D));
 
+        this.tofuBlessingGoal = new KitsuneTofuBlessingGoal(this);
+        this.goalSelector.addGoal(2, tofuBlessingGoal);
+
+
         // Цели атаки ТОЛЬКО для взрослых
         if (!this.isBaby()) {
             this.goalSelector.addGoal(3, new KitsuneLightGoal.KitsuneAttackGoal(this, 1.2D, true));
@@ -896,6 +827,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         this.goalSelector.addGoal(6, new KitsuneLightGoal.InteractWithVillagersGoal(this));
         this.goalSelector.addGoal(9, new KitsuneLightGoal.SitGoal(this));
         this.goalSelector.addGoal(8, new KitsuneLightGoal.SleepGoal(this));
+        this.goalSelector.addGoal(7, new KitsuneExplodeCreepersGoal(this));
         this.goalSelector.addGoal(9, new KitsuneLightGoal.FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F));
         this.goalSelector.addGoal(8, new KitsuneLightGoal.WanderGoal(this, 1.0D));
         this.goalSelector.addGoal(11, new TemptGoal(this, 1.20, Ingredient.of(ModItems.TOFU.get()), false));
@@ -999,7 +931,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
             laughCooldown = 80; // 4 секунды
             setLaughing(true);
 
-            // Воспроизводим звук сразу при запуске анимации
             if (!level().isClientSide) {
                 playLaughSound();
             }
@@ -1666,222 +1597,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         }
     }
 
-    private void sendMessage(Player player, String message) {
-        String kitsuneName = this.getCustomName() != null ? this.getCustomName().getString() : "Кицуне";
-        String fullMessage = kitsuneName + ": " + message;
-        player.sendSystemMessage(Component.literal(fullMessage));
-        System.out.println("=== ОТЛАДКА: Сообщение отправлено: " + fullMessage + " ===");
-    }
 
-
-
-    private void sendNameTagRejectionMessage(Player player) {
-        System.out.println("=== ОТЛАДКА: sendNameTagRejectionMessage вызван ===");
-
-        if (!this.level().isClientSide) {
-            boolean isRussian = isRussianPlayer(player);
-            System.out.println("Язык русский: " + isRussian);
-
-            Component message;
-            if (this.isTamed()) {
-                String[] messages = isRussian ?
-                        new String[]{
-                                "Моё имя было даровано, а не изменено.",
-                                "Я ношу это имя с гордостью, зачем его менять?",
-                                "Это имя стало частью моей души.",
-                                "Меня назвали так не просто так.",
-                                "Я привыкла к этому имени.",
-                                "Пусть всё остаётся как есть."
-                        } :
-                        new String[]{
-                                "My name was given, not changed.",
-                                "I wear this name with pride, why change it?",
-                                "This name has become part of my soul.",
-                                "I was named this way for a reason.",
-                                "I've grown accustomed to this name.",
-                                "Let things remain as they are."
-                        };
-                message = Component.literal(messages[this.random.nextInt(messages.length)]);
-            } else {
-                String[] messages = isRussian ?
-                        new String[]{
-                                "Смертные не дают имён духам.",
-                                "Ты не имеешь права нарекать меня.",
-                                "Моё имя известно лишь ветру и луне."
-                        } :
-                        new String[]{
-                                "Mortals do not name spirits.",
-                                "You have no right to name me.",
-                                "My name is known only to the wind and moon."
-                        };
-                message = Component.literal(messages[this.random.nextInt(messages.length)]);
-            }
-
-            // Отправляем сообщение игроку
-            player.sendSystemMessage(message);
-            System.out.println("Сообщение отправлено: " + message.getString());
-        }
-    }
-
-    private void sendWakeUpMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Уже утро? Кажется, я проспала всего пару минут...",
-                    "Мне снилось, что я стала великой небесной лисой... Зачем мешаешь?",
-                    "Ай! Я же только прилегла... Ты всегда знаешь, когда меня разбудить.",
-                    "Ты всегда знаешь, когда меня разбудить в самый интересный момент сна...",
-                    "Неужели я так крепко уснула? Кажется, пролетела целая вечность...",
-                    "Кажется, я проспала всё на свете... Спасибо что разбудил!",
-                    "Я так глубоко заснула, что чуть не потерялась в своих снах...",
-                    "Как же хорошо было спать... Жаль, что всё хорошее когда-то кончается."
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Morning already? I feel like I only slept a couple minutes...",
-                    "I dreamed I became a great celestial fox... Why disturb me?",
-                    "Ouch! I just lay down... You always know when to wake me.",
-                    "You always know when to wake me at the most interesting part of my dream...",
-                    "Did I really fall asleep so deeply? Feels like an eternity passed...",
-                    "I think I slept through everything... Thanks for waking me up!",
-                    "I fell so deeply asleep, I almost got lost in my dreams...",
-                    "It was so nice to sleep... Too bad all good things must end."
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
-
-    private void sendWildHurtMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Эй, это невежливо - бить незнакомцев!",
-                    "Ой! А мы разве знакомы настолько близко?",
-                    "Не ожидала такого грубого приветствия...",
-                    "Есть более цивилизованные способы познакомиться!",
-                    "Какой неприятный сюрприз... Я ведь ничего тебе не сделала.",
-                    "Не думала, что наша встреча начнётся с тумака...",
-                    "Вот уж действительно - нежданный комплимент!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Hey, it's not polite to hit strangers!",
-                    "Ouch! Are we really that close already?",
-                    "Didn't expect such a rude greeting...",
-                    "There are more civilized ways to introduce yourself!",
-                    "What an unpleasant surprise... I haven't done anything to you.",
-                    "I didn't think our meeting would start with a punch...",
-                    "Now that's what I call an unexpected compliment!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
-
-    private void sendAngryWildMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Вот и всё! Ты сам напросился на ответный удар!",
-                    "Дважды бить без причины? Теперь ты получишь по заслугам!",
-                    "Хорошо, раз ты настаиваешь... Принимай ответ!",
-                    "Предупреждала же! Теперь не жалуйся на последствия.",
-                    "Ну всё, игра началась! Посмотрим, кто кого...",
-                    "Ты перешёл черту! Теперь я не буду сдерживаться!",
-                    "Два предупреждения достаточно. Готовься к бою!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "That's it! You asked for a fight!",
-                    "Hitting me twice for no reason? Now you'll get what you deserve!",
-                    "Well, since you insist... Take this!",
-                    "I warned you! Don't complain about the consequences now.",
-                    "Alright, game on! Let's see who's tougher...",
-                    "You crossed the line! I won't hold back anymore!",
-                    "Two warnings are enough. Prepare for battle!"
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
-
-    private void sendOwnerHurtMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "За что?.. Я же тебе доверяла...",
-                    "Больно! Разве так поступают с друзьями?",
-                    "Эй, я на твоей стороне, помнишь?",
-                    "В каждом ударе - разбитая частица доверия...",
-                    "Я помню, как ты давал мне тофу, а теперь... это?",
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Why?.. I trusted you...",
-                    "That hurts! Is this how you treat friends?",
-                    "Hey, I'm on your side, remember?",
-                    "In every blow - a broken piece of trust...",
-                    "I remember when you gave me tofu, and now... this?",
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
-
-    private void sendAngryTofuMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Без свежего тофу я даже слушать тебя не буду!",
-                    "Хмф! Мое сердце залечит только самый нежный тофу... И никак иначе!",
-                    "Ты ранил не только меня, но и нашу связь... Тофу может всё исправить, но не сразу.",
-                    "Я приму твои извинения... в виде тофу. И никак иначе!",
-                    "Моя лисья гордость ранена! Потребуется особый тофу чтобы её исцелить.",
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Without fresh tofu, I won't even listen to you!",
-                    "Hmph! Only the most delicate tofu can heal my heart... Nothing else!",
-                    "You hurt not only me but our bond... Tofu can fix everything, but not immediately.",
-                    "I'll accept your apology... in the form of tofu. No other way!",
-                    "My fox pride is wounded! It will take special tofu to heal it.",
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
-
-    private void sendForgivenessMessage(Player player) {
-        boolean isRussian = isRussianPlayer(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Ладно... я тебя прощаю. Но больше так не делай!",
-                    "Этот тофу такой же нежный, как и должен быть... Прощаю.",
-                    "Моя лисья гордость смягчается... Ты искупил свою вину.",
-                    "Вкусно! Всё прощено!",
-                    "Ты помнишь, что важно для меня... Это значит многое. Прощаю.",
-                    "Как же приятно, когда тебя понимают... Спасибо за тофу и извинения."
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        } else {
-            String[] messages = {
-                    "Okay... I forgive you. But don't do it again!",
-                    "This tofu is as delicate as it should be... I forgive you.",
-                    "My fox pride softens... You've redeemed yourself.",
-                    "Delicious! All is forgiven!",
-                    "You remember what's important to me... That means a lot. I forgive you.",
-                    "How nice to be understood... Thank you for the tofu and apologies."
-            };
-            player.sendSystemMessage(Component.literal(messages[random.nextInt(messages.length)]));
-        }
-    }
     @Override
     public MoodSystem getMoodSystem() {
         return moodSystem;
@@ -1922,6 +1638,45 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
         return super.checkSpawnRules(level, spawnType);
     }
+
+    private Component getTamingMessage(Player player) {
+        return KitsunePhrases.getTamedMessage();
+    }
+
+    private void sendTofuMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getFeedMessage());
+    }
+
+    private Component getDeathMessage(Player player) {
+        return KitsunePhrases.getDeathMessage();
+    }
+    private void sendWakeUpMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getWakeUpMessage());
+    }
+    private void sendWildHurtMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getHurtMessage());
+    }
+    private void sendAngryWildMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getAngryMessage());
+    }
+    private void sendOwnerHurtMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getOwnerHurtMessage());
+    }
+    private void sendAngryTofuMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getAngryTofuMessage());
+    }
+    private void sendForgivenessMessage(Player player) {
+        player.sendSystemMessage(KitsunePhrases.getForgivenessMessage());
+    }
+    private void sendNameTagRejectionMessage(Player player) {
+        if (!this.level().isClientSide) {
+            player.sendSystemMessage(this.isTamed()
+                    ? KitsunePhrases.getNameTagRejectionTamed()
+                    : KitsunePhrases.getNameTagRejectionWild());
+        }
+    }
+
+
 
 
 

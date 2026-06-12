@@ -1,20 +1,22 @@
-// 1.20.1	2026-04-10T01:20:35.3568998	Tags for minecraft:block mod id fantastikmod
+// 1.20.1	2026-05-26T03:00:26.2832642	Tags for minecraft:block mod id fantastikmod
 e8cd148fd6f8f6bd5dd219b4a09133953506e863 data/fantastikmod/tags/blocks/needs_auripigment_tool.json
-f6d2d151d72d60b92bcdcb2745cfbc7b383b0edd data/minecraft/tags/blocks/buttons.json
+cc4a90e0ba5409f4049b35f51cba9e11db4890f7 data/minecraft/tags/blocks/buttons.json
 aea2222fef2e6a9bc95001896323d0b57613a965 data/minecraft/tags/blocks/doors.json
-66a1a282a853b2bef2033b59370648650f0d2ff5 data/minecraft/tags/blocks/fences.json
-4f0ffb1d440cb22f7591a77034bf9141a5945c4c data/minecraft/tags/blocks/fence_gates.json
-774373800c695c39933cae23da44d11af1145f07 data/minecraft/tags/blocks/logs_that_burn.json
-6638f5c55d2824fa8d7bf2d8c93802f6b6857c30 data/minecraft/tags/blocks/mineable/axe.json
+65b7b96e6193ab60b910aabd841287679ba7ffea data/minecraft/tags/blocks/fences.json
+bc964e850460e858b616fb4264cb9e6fc83eac52 data/minecraft/tags/blocks/fence_gates.json
+a33ba105e20359cca5399d880d4754818d6d64de data/minecraft/tags/blocks/logs.json
+752db1de95aa537a638754847860365aca3d0555 data/minecraft/tags/blocks/logs_that_burn.json
+d71fd658db979192239c36cd7a558d5b386c7feb data/minecraft/tags/blocks/mineable/axe.json
+d2238120133b3d05fd1abf4005e76a2d698f930f data/minecraft/tags/blocks/mineable/hoe.json
 b073764b6dfd794654408a13f28c9f21f88f8c7d data/minecraft/tags/blocks/mineable/pickaxe.json
 0ea4afa4888c0711a15f1d1d469012ce6e2340f7 data/minecraft/tags/blocks/mineable/shovel.json
 72f0fddb27bc070fd2fa344bc837bb98544d4310 data/minecraft/tags/blocks/needs_diamond_tool.json
 e8cd148fd6f8f6bd5dd219b4a09133953506e863 data/minecraft/tags/blocks/needs_iron_tool.json
 dd5dd372624c4337dc9ee559b0aafb497c22c418 data/minecraft/tags/blocks/needs_stone_tool.json
-633571017c94147a0da0ab342b8679b8439f71fe data/minecraft/tags/blocks/planks.json
-3228e824939e29cbedace943b123d63c7be43052 data/minecraft/tags/blocks/pressure_plates.json
-21bc74d87dfdfdfea80ee0d98b5320ae513d6ed1 data/minecraft/tags/blocks/slabs.json
-509e693413d4b18c46b0c2d9d8b5affa217c3514 data/minecraft/tags/blocks/stairs.json
+516d82e2665541dbbc3c1f6bbdc941fabbced5a2 data/minecraft/tags/blocks/planks.json
+1987b3c5133706b14f863ebc65ed91bb2b9d2d92 data/minecraft/tags/blocks/pressure_plates.json
+4bb8ce9845d411e0299bde7a2c1fd52438e1516b data/minecraft/tags/blocks/slabs.json
+c051d1a1bf8f142ca7cd7cf5d9545685be34cad2 data/minecraft/tags/blocks/stairs.json
 a342d6542ef8f1bab72a2631a5222fbb48e53f64 data/minecraft/tags/blocks/trapdoors.json
 95c9853eeb61fe02720404834276e8e3ee6b4a08 data/minecraft/tags/blocks/walls.json
-66a1a282a853b2bef2033b59370648650f0d2ff5 data/minecraft/tags/blocks/wooden_fences.json
+65b7b96e6193ab60b910aabd841287679ba7ffea data/minecraft/tags/blocks/wooden_fences.json

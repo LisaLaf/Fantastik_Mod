@@ -54,6 +54,12 @@ public class ModStructures {
     public static final ResourceKey<StructureSet> INARI_SMALL_SHRINE_SET = ResourceKey.create(Registries.STRUCTURE_SET,
             new ResourceLocation(fantastikmod.MOD_ID, "inari_small_shrine"));
 
+    public static final ResourceKey<Structure> ONSEN_SMALL = ResourceKey.create(Registries.STRUCTURE,
+            new ResourceLocation(fantastikmod.MOD_ID, "onsen_small"));
+
+    public static final ResourceKey<StructureSet> ONSEN_SMALL_SET = ResourceKey.create(Registries.STRUCTURE_SET,
+            new ResourceLocation(fantastikmod.MOD_ID, "onsen_small"));
+
 
     public static void bootstrap(BootstapContext<Structure> context) {
         context.register(TEA_HOUSE, new JigsawStructure(
@@ -135,6 +141,22 @@ public class ModStructures {
                 Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
                 116
         ));
+
+        context.register(ONSEN_SMALL, new JigsawStructure(
+                new Structure.StructureSettings(
+                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.HAS_ONSEN_SMALL),
+                        Map.of(),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES,
+                        TerrainAdjustment.BEARD_THIN
+                ),
+                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.ONSEN_SMALL_START),
+                Optional.empty(),
+                1,
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
+                true,
+                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
+                116
+        ));
     }
 
 
@@ -170,6 +192,11 @@ public class ModStructures {
         context.register(INARI_SMALL_SHRINE_SET, new StructureSet(
                 context.lookup(Registries.STRUCTURE).getOrThrow(INARI_SMALL_SHRINE),
                 new RandomSpreadStructurePlacement(45, 12, RandomSpreadType.LINEAR, 1122334455)
+        ));
+
+        context.register(ONSEN_SMALL_SET, new StructureSet(
+                context.lookup(Registries.STRUCTURE).getOrThrow(ONSEN_SMALL),
+                new RandomSpreadStructurePlacement(60, 15, RandomSpreadType.LINEAR, 445566778)
         ));
     }
 }

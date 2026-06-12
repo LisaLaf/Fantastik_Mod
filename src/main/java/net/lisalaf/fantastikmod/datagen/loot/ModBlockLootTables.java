@@ -75,12 +75,30 @@ public class ModBlockLootTables extends LootTableProvider {
             this.dropSelf(ModBlocks.CATNIP_WINE.get());
             this.dropSelf(ModBlocks.KITSUNE_STATUE.get());
             this.dropSelf(ModBlocks.SAKE.get());
+            this.dropSelf(ModBlocks.LILAC_LOG.get());
+            this.dropSelf(ModBlocks.LILAC_SAPLING.get());
+            this.dropSelf(ModBlocks.LILAC_PLANKS.get());
+            this.dropSelf(ModBlocks.LILAC_WOOD.get());
+            this.dropSelf(ModBlocks.STRIPPED_LILAC_LOG.get());
+            this.dropSelf(ModBlocks.STRIPPED_LILAC_WOOD.get());
+            this.dropSelf(ModBlocks.LILAC_STAIRS.get());
+            this.dropSelf(ModBlocks.LILAC_FENCE.get());
+            this.dropSelf(ModBlocks.LILAC_FENCE_GATE.get());
+            this.dropSelf(ModBlocks.LILAC_BUTTON.get());
+            this.dropSelf(ModBlocks.LILAC_PRESSURE_PLATE.get());
+
+            this.add(ModBlocks.LILAC_SLAB.get(), block -> createSlabItemTable(ModBlocks.LILAC_SLAB.get()));
+            this.add(ModBlocks.LILAC_DOOR.get(), block -> createDoorTable(ModBlocks.LILAC_DOOR.get()));
+            this.dropSelf(ModBlocks.LILAC_TRAPDOOR.get());
 
             // Специальные блоки
             this.add(ModBlocks.MOON_PLANKS_SLAB.get(),
                     block -> createSlabItemTable(ModBlocks.MOON_PLANKS_SLAB.get()));
             this.add(ModBlocks.MOON_TREE_DOOR.get(),
                     block -> createDoorTable(ModBlocks.MOON_TREE_DOOR.get()));
+
+            this.add(ModBlocks.LILAC_LEAVES.get(), block ->
+                    createLeavesDrops(block, ModBlocks.LILAC_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
             this.add(ModBlocks.AURIPIGMENT_ORE_BLOCK.get(),
                     block -> createCopperLikeOreDrops(ModBlocks.AURIPIGMENT_ORE_BLOCK.get(), ModItems.AURIPIGMENT.get()));

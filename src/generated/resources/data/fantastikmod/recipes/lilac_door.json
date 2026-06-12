@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "p": {
+      "item": "fantastikmod:lilac_planks"
+    }
+  },
+  "pattern": [
+    "pp",
+    "pp",
+    "pp"
+  ],
+  "result": {
+    "count": 3,
+    "item": "fantastikmod:lilac_door"
+  },
+  "show_notification": true
+}

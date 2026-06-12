@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "fantastikmod:block/lilac_planks",
+    "side": "fantastikmod:block/lilac_planks",
+    "top": "fantastikmod:block/lilac_planks"
+  }
+}

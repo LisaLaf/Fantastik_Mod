@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-12T16:23:39.4490522	Item Models: fantastikmod
+// 1.20.1	2026-05-26T03:00:26.2796551	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -32,6 +32,19 @@ c87ba86a9bd3c30cad2c5207a032478967442a22 assets/fantastikmod/models/item/gemkits
 3725322eb8d50d10be0d6d2c2f2c959b9ac80ddc assets/fantastikmod/models/item/helmet_fur_ice_dragon.json
 ef19f4b69e17d1b6154e43a21fbb4e0556853ec4 assets/fantastikmod/models/item/kitsune_statue.json
 660870b3f04cf5a97e25439522a9f1ca571dda92 assets/fantastikmod/models/item/leggings_fur_ice_dragon.json
+f73a7baff5922602ae7c94a453cbfab6898c25cf assets/fantastikmod/models/item/lilac_button.json
+5fa7d87ad48d2843e5a2639dd3971a99828b95bb assets/fantastikmod/models/item/lilac_door.json
+a4e5244f8429cf5faeba2e0100af847ca56d0430 assets/fantastikmod/models/item/lilac_fence.json
+2b0e31e2c731a96211253817edd67852332b931d assets/fantastikmod/models/item/lilac_fence_gate.json
+9bc272e127529d105b094f6699c2ac3fb03432d1 assets/fantastikmod/models/item/lilac_leaves.json
+1c17b5be722b4154cfb53fa3f1e859ed20b87fec assets/fantastikmod/models/item/lilac_log.json
+15af04f04dd6428b55b2d3ef0768b815b49f5677 assets/fantastikmod/models/item/lilac_planks.json
+cc31c6672db93e8ec4f57f7273cd4643be572f23 assets/fantastikmod/models/item/lilac_pressure_plate.json
+1855f87c219541f3fd21689fda925fa0c24f162a assets/fantastikmod/models/item/lilac_sapling.json
+51aee111a0ad12da413ef5c9681bb48338ce95e6 assets/fantastikmod/models/item/lilac_slab.json
+0d56303a9519a1a971f0b388ea8afc69ac2aabaf assets/fantastikmod/models/item/lilac_stairs.json
+b852ae43724a20ec45ef5723b190cfe74fb0963b assets/fantastikmod/models/item/lilac_trapdoor.json
+fead3912c47fc4981df3e59aaaacba6bf2e108fe assets/fantastikmod/models/item/lilac_wood.json
 451bdef11d82535c5d4a490e1475da4bca75d2bb assets/fantastikmod/models/item/lively_soul_tamed_kitsune.json
 5f9f21db59debcaa3d539b98deb34d32215bb301 assets/fantastikmod/models/item/matcha_mochi.json
 5b9fc2df96b3c0a6d716c4c4a4ef6c3f7d810b6e assets/fantastikmod/models/item/matcha_powder.json
@@ -101,6 +114,8 @@ a781841a181807912607e0f5dca981dbdf51d919 assets/fantastikmod/models/item/silver_
 96aae2781dc08301436c21da1979fa9b96fa460a assets/fantastikmod/models/item/strawberry.json
 88c5cdc8df0f20028ce4639c5f067725611d9a6b assets/fantastikmod/models/item/strawberry_mochi.json
 81bdcc19dfa6157f6ccc675d92bb98072cae06d3 assets/fantastikmod/models/item/strawberry_seeds.json
+29f53732671778750d994be09fdd915213b277d6 assets/fantastikmod/models/item/stripped_lilac_log.json
+e1d048d28acc5a0ffaad6324e4f06ce053554c41 assets/fantastikmod/models/item/stripped_lilac_wood.json
 3fdbf795d4f96573fb383e850502d29d8926043c assets/fantastikmod/models/item/sword_auripigment.json
 e168e27a1d886884882b158c73415219d7d9d099 assets/fantastikmod/models/item/tea_ceremony_music_disc.json
 dc1549b6eac715c1e4881088666d33780d181a3d assets/fantastikmod/models/item/tea_leaf.json

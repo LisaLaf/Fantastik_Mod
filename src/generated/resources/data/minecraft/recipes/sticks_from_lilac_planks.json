@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": {
+      "item": "fantastikmod:lilac_planks"
+    }
+  },
+  "pattern": [
+    "p",
+    "p"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:stick"
+  },
+  "show_notification": true
+}

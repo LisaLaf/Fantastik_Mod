@@ -20,6 +20,8 @@ import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
+import static net.lisalaf.fantastikmod.worldgen.ModConfiguredFeatures.LILAC_TREE_KEY;
+
 
 @SuppressWarnings("removal")
 public class ModPlacedFeatures {
@@ -28,6 +30,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> MOON_ORE_PLACED_KEY = registerKey("moon_ore_placed");
 
     public static final ResourceKey<PlacedFeature> MOON_TREE_PLACED_KEY = registerKey("moon_tree_placed");
+    public static final ResourceKey<PlacedFeature> LILAC_TREE_PLACED_KEY =
+            registerKey("lilac_tree_placed");
 
     public static final ResourceKey<PlacedFeature> MOON_LILY_PLACED_KEY = registerKey("moon_lily_placed");
     public static final ResourceKey<PlacedFeature> MOON_HEATHER_PLACED_KEY = registerKey("moon_heather_placed");
@@ -171,7 +175,7 @@ public class ModPlacedFeatures {
 
         register(context, SPIDER_LILY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SPIDER_LILY_KEY),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(2),
+                        RarityFilter.onAverageOnceEvery(10),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                         BiomeFilter.biome()
@@ -193,7 +197,7 @@ public class ModPlacedFeatures {
         register(context, KITSUNE_STATUE_PLACED_KEY,
                 configuredFeatures.getOrThrow(ModConfiguredFeatures.KITSUNE_STATUE_KEY),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(50),
+                        RarityFilter.onAverageOnceEvery(70),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                         SurfaceWaterDepthFilter.forMaxDepth(0),
@@ -203,7 +207,7 @@ public class ModPlacedFeatures {
         register(context, WILD_CATNIP_PLACED_KEY,
                 configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_CATNIP_KEY),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(2),
+                        RarityFilter.onAverageOnceEvery(30),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                         BiomeFilter.biome()
@@ -215,6 +219,15 @@ public class ModPlacedFeatures {
                         RarityFilter.onAverageOnceEvery(3),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                ));
+
+        register(context, LILAC_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LILAC_TREE_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(100),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        PlacementUtils.filteredByBlockSurvival(ModBlocks.LILAC_SAPLING.get()),
                         BiomeFilter.biome()
                 ));
 

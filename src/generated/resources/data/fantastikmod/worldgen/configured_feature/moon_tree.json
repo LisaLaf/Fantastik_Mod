@@ -17,12 +17,7 @@
     "foliage_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "fantastikmod:tree_moon_foliage_block",
-        "Properties": {
-          "distance": "7",
-          "persistent": "false",
-          "waterlogged": "false"
-        }
+        "Name": "fantastikmod:tree_moon_foliage_block"
       }
     },
     "force_dirt": false,

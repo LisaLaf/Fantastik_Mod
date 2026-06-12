@@ -79,26 +79,26 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
             add("mansion_" + chest + "_totem_blueprint", new AddItemModifier(
                     new LootItemCondition[] {
                             LootTableIdCondition.builder(new ResourceLocation("chests/" + chest)).build(),
-                            LootItemRandomChanceCondition.randomChance(0.6f).build()
+                            LootItemRandomChanceCondition.randomChance(0.1f).build()
                     }, ModItems.TOTEM_BLUEPRINT.get()));
         }
 
         add("woodland_mansion_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION).build(),
-                        LootItemRandomChanceCondition.randomChance(0.7f).build()
+                        LootItemRandomChanceCondition.randomChance(0.2f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
         add("pillager_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST).build(),
-                        LootItemRandomChanceCondition.randomChance(0.5f).build()
+                        LootItemRandomChanceCondition.randomChance(0.05f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
         add("pillager_outpost_chest_totem_blueprint", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.4f).build()
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
                 }, ModItems.TOTEM_BLUEPRINT.get()));
 
     }

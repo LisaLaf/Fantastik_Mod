@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "fantastikmod:lilac_planks"
+    }
+  ],
+  "result": {
+    "item": "fantastikmod:lilac_button"
+  }
+}

@@ -104,6 +104,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     @Setter
     @Getter
     private int growthTime = 0;
+    @Getter @Setter
     private int dropCooldown = 0;
     private int angerTime = 0;
     private ItemStack heldItem = ItemStack.EMPTY;
@@ -113,8 +114,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     private int sleepDuration = 0;
     private BlockPos sittingPos = null;
     private BlockPos sleepSpot = null;
-
-    @Getter
     private boolean isSitting = false;
 
     @Getter
@@ -270,14 +269,8 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     // ==================== РОСТ ДЕТЁНЫША ====================
     private void updateGrowth() {
         if (!this.level().isClientSide && isBabyEntity()) {
-            int growth = getGrowthTime() + 1;
-            setGrowthTime(growth);
 
-            if (growth >= GROWTH_TIME) {
-                setBabyEntity(false);
-                setGrowthTime(0);
-                refreshDimensions();
-            }
+
         }
     }
 
@@ -304,7 +297,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         if (baby != null) {
             baby.setMale(level.random.nextBoolean());
             baby.setBabyEntity(true);
-            baby.setGrowthTime(0);
             baby.setVariant(level.random.nextInt(6));
         }
         return baby;
@@ -707,6 +699,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
             setAngry(true);
             lastThief = player;
             angerTime = 600;
+            player.sendSystemMessage(BakenekoPhrases.getHurtMessage());
             if (!isBabyEntity() && !level().isClientSide) {
                 setTarget(player);
             }
@@ -923,7 +916,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         compound.putInt("Variant", getVariant());
         compound.putBoolean("IsMale", isMale());
         compound.putBoolean("IsBaby", isBabyEntity());
-        compound.putInt("GrowthTime", getGrowthTime());
         if (sittingPos != null) compound.putLong("SittingPos", sittingPos.asLong());
         if (sleepSpot != null) compound.putLong("SleepingPos", sleepSpot.asLong());
         if (!this.heldItem.isEmpty()) compound.put("HeldItem", this.heldItem.save(new CompoundTag()));
@@ -950,7 +942,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         if (compound.contains("Variant")) setVariant(compound.getInt("Variant"));
         if (compound.contains("IsMale")) setMale(compound.getBoolean("IsMale"));
         if (compound.contains("IsBaby")) setBabyEntity(compound.getBoolean("IsBaby"));
-        if (compound.contains("GrowthTime")) setGrowthTime(compound.getInt("GrowthTime"));
+
         if (compound.contains("SittingPos")) sittingPos = BlockPos.of(compound.getLong("SittingPos"));
         if (compound.contains("SleepingPos")) sleepSpot = BlockPos.of(compound.getLong("SleepingPos"));
         if (compound.contains("HeldItem")) this.heldItem = ItemStack.of(compound.getCompound("HeldItem"));
@@ -1064,5 +1056,33 @@ public class BakenekoEntity extends Animal implements GeoEntity {
 
     public ItemStack getHeldItem() {
         return heldItem.copy();
+    }
+
+    public int getStealCooldown() {
+        return this.stealCooldown;
+    }
+
+    public void setStealCooldown(int value) {
+        this.stealCooldown = value;
+    }
+
+    public int getDropCooldown() {
+        return this.dropCooldown;
+    }
+
+    public void setDropCooldown(int value) {
+        this.dropCooldown = value;
+    }
+
+    public Player getLastThief() {
+        return this.lastThief;
+    }
+
+    public void setLastThief(Player player) {
+        this.lastThief = player;
+    }
+
+    public boolean isSitting() {
+        return this.isSitting;
     }
 }

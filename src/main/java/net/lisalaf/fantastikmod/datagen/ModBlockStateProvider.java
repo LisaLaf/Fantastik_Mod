@@ -260,6 +260,47 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         makeCatnipCrop((CropBlock) ModBlocks.CATNIP_CROP.get(), "catnip_stage_", "catnip_stage_");
 
+        // Бревно сирени
+        logBlock((RotatedPillarBlock) ModBlocks.LILAC_LOG.get(),
+                modLoc("block/lilac_log"),
+                modLoc("block/lilac_log_top"));
+
+        ModelFile lilacLeavesModel = models().singleTexture("lilac_leaves",
+                        new ResourceLocation("minecraft:block/leaves"),
+                        "all", modLoc("block/lilac_leaves"))
+                .renderType("cutout_mipped");
+
+        ModelFile floweringLilacLeavesModel = models().singleTexture("flowering_lilac_leaves",
+                        new ResourceLocation("minecraft:block/leaves"),
+                        "all", modLoc("block/flowering_lilac_leaves"))
+                .renderType("cutout_mipped");
+
+        getVariantBuilder(ModBlocks.LILAC_LEAVES.get())
+                .partialState().with(LilacLeavesBlock.FLOWERING, false)
+                .modelForState().modelFile(lilacLeavesModel).addModel()
+                .partialState().with(LilacLeavesBlock.FLOWERING, true)
+                .modelForState().modelFile(floweringLilacLeavesModel).addModel();
+
+        saplingBlock(ModBlocks.LILAC_SAPLING);
+
+        simpleBlockWithItem(ModBlocks.LILAC_PLANKS.get(), cubeAll(ModBlocks.LILAC_PLANKS.get()));
+        logBlock((RotatedPillarBlock) ModBlocks.LILAC_WOOD.get(), modLoc("block/lilac_log"), modLoc("block/lilac_log"));
+        logBlock((RotatedPillarBlock) ModBlocks.STRIPPED_LILAC_LOG.get(), modLoc("block/stripped_lilac_log"), modLoc("block/stripped_lilac_log_top"));
+        logBlock((RotatedPillarBlock) ModBlocks.STRIPPED_LILAC_WOOD.get(), modLoc("block/stripped_lilac_log"), modLoc("block/stripped_lilac_log"));
+
+        stairsBlock((StairBlock) ModBlocks.LILAC_STAIRS.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        slabBlock((SlabBlock) ModBlocks.LILAC_SLAB.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        fenceBlock((FenceBlock) ModBlocks.LILAC_FENCE.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        fenceGateBlock((FenceGateBlock) ModBlocks.LILAC_FENCE_GATE.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        buttonBlock((ButtonBlock) ModBlocks.LILAC_BUTTON.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        pressurePlateBlock((PressurePlateBlock) ModBlocks.LILAC_PRESSURE_PLATE.get(), blockTexture(ModBlocks.LILAC_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock) ModBlocks.LILAC_DOOR.get()),
+                modLoc("block/lilac_door_bottom"),
+                modLoc("block/lilac_door_top"), "cutout");
+
+        trapdoorBlockWithRenderType(((TrapDoorBlock) ModBlocks.LILAC_TRAPDOOR.get()),
+                modLoc("block/lilac_trapdoor"), true, "cutout");
+
     }
 
     private void frostBlock(RegistryObject<Block> block) {

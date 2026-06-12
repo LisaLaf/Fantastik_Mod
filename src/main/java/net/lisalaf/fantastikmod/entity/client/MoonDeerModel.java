@@ -9,18 +9,16 @@ import software.bernie.geckolib.model.GeoModel;
 public class MoonDeerModel extends GeoModel<MoonDeerEntity> {
     @Override
     public ResourceLocation getModelResource(MoonDeerEntity entity) {
-        // ИСПРАВЛЕНО: новый метод вместо deprecated
-        return new ResourceLocation("fantastikmod", "geo/moon_deer.geo.json");
+        return new ResourceLocation("fantastikmod", "geo/moon_deer/moon_deer.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(MoonDeerEntity entity) {
-        return new ResourceLocation("fantastikmod", "textures/entity/moon_deer.png");
+        return new ResourceLocation("fantastikmod", "textures/entity/moon_deer/moon_deer.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(MoonDeerEntity entity) {
-        // ИСПРАВЛЕНО: новый метод вместо deprecated
         return new ResourceLocation("fantastikmod", "animations/moon_deer.animation.json");
     }
 }

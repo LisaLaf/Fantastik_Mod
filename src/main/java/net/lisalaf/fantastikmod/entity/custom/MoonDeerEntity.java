@@ -6,6 +6,9 @@ import net.lisalaf.fantastikmod.dialog.DialogSystem;
 import net.lisalaf.fantastikmod.dialog.mobs.MoonDeerDialog;
 import net.lisalaf.fantastikmod.dialog.mobs.WildMoonDeerDialog;
 import net.lisalaf.fantastikmod.entity.ai.MoonDeerGoal;
+import net.lisalaf.fantastikmod.entity.ai.moondeer.MoonDeerAttackGoal;
+import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
+import net.lisalaf.fantastikmod.entity.phrases.MoonDeerPhrases;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.minecraft.client.Minecraft;
@@ -44,7 +47,10 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -291,6 +297,7 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
                 itemstack.shrink(1);
             }
             tame(player);
+            sendTamingMessage(player);
             return InteractionResult.sidedSuccess(level().isClientSide);
         }
 
@@ -323,6 +330,14 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return super.mobInteract(player, hand);
     }
 
+    private void tame(Player player) {
+        setTamed(true);
+        setOwnerUUID(player.getUUID());
+        sendTamingMessage(player);
+        spawnTamingParticles();
+        this.playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.0F);
+    }
+
     private void spawnHealingParticles() {
         if (level().isClientSide) {
             for(int i = 0; i < 12; ++i) {
@@ -342,40 +357,12 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    private void tame(Player player) {
-        setTamed(true);
-        setOwnerUUID(player.getUUID());
-        sendTamingMessage(player);
-        spawnTamingParticles();
-        this.playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.0F);
-    }
-
-
-
-    private Component getTamingMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-        if (isRussian) {
-            String[] messages = {
-                    "Теперь я смогу тебя сопровождать в путешествие.",
-                    "Теперь ты можешь мне показать те края о которых упоминал.",
-                    "Лунный амулет... Теперь я свободен следовать за тобой.",
-                    "Духи леса благословляют нашу встречу. Я буду твоим спутником.",
-                    "Ты заслужил моё доверие. Я буду твоим верным спутником.",
-                    "Сила луны связала нас. Теперь мы вместе в этом путешествии."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "Now I can accompany you on your journey.",
-                    "Now you can show me those lands you mentioned.",
-                    "The Moon Amulet... Now I am free to follow you.",
-                    "The forest spirits bless our meeting. I shall be your companion.",
-                    "You have earned my trust. I will be your faithful companion.",
-                    "The power of the moon has bound us. Now we journey together."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
+    private void sendTamingMessage(Player player) {
+        if (!level().isClientSide) {
+            player.sendSystemMessage(MoonDeerPhrases.getTamedMessage());
         }
     }
+
 
     // === СМЕРТЬ ===
     @Override
@@ -388,27 +375,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
             }
         }
         super.die(cause);
-    }
-
-    private Component getDeathMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-        if (isRussian) {
-            String[] messages = {
-                    "Дух лунного оленя отправился на родину...",
-                    "Лунный олень возвращается в священный лес...",
-                    "Дух оленя растворяется в лунном свете...",
-                    "Защитник леса завершил свой путь..."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "The spirit of the Moon Deer has returned to its homeland...",
-                    "The Moon Deer returns to the sacred forest...",
-                    "The deer's spirit dissolves into the moonlight...",
-                    "The forest guardian has completed its journey..."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
     }
 
     // === AI И РЕЖИМЫ ===
@@ -443,6 +409,7 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new MoonDeerAttackGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
         this.goalSelector.addGoal(2, new MoonDeerGoal(this, 1.0D, 5.0F, 12.0F));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.8D));
@@ -788,89 +755,13 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         super.remove(reason);
     }
 
-    @Override
-    public void setCustomName(@Nullable Component name) {
-        Component oldName = getCustomName();
-        super.setCustomName(name);
-
-        if (name != null && !name.getString().isEmpty() && this.isTamed()) {
-            // Проверяем, что имя действительно изменилось
-            if (oldName == null || !oldName.getString().equals(name.getString())) {
-                LivingEntity owner = getOwner();
-                if (owner instanceof Player player) {
-                    sendNamingMessage(player, name);
-                    spawnNamingParticles();
-                    this.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 0.8F, 0.9F + random.nextFloat() * 0.2F);
-                }
-            }
-        }
-    }
-
     private void sendNamingMessage(Player player, Component name) {
         if (!level().isClientSide && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            Component message = getNamingMessage(player, name.getString());
-
-            // 1. В чат (остается в истории)
+            Component message = MoonDeerPhrases.getNamingMessage(name.getString());
             serverPlayer.sendSystemMessage(message);
-
-            // 2. В actionbar с эмодзи (видно дольше)
-            Component actionbarMessage = Component.literal("🦌 ").append(message).append(" ✨");
-            serverPlayer.sendSystemMessage(actionbarMessage, true);
         }
     }
 
-    // Также обнови другие методы сообщений:
-    private void sendTamingMessage(Player player) {
-        if (!level().isClientSide && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            Component message = getTamingMessage(player);
-
-            serverPlayer.sendSystemMessage(message); // Чат
-            serverPlayer.sendSystemMessage(Component.literal("🌟 ").append(message).append(" 🌟"), true); // Actionbar
-        }
-    }
-
-    private void sendDeathMessage(Player player) {
-        if (!level().isClientSide && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            Component message = getDeathMessage(player);
-
-            serverPlayer.sendSystemMessage(message); // Чат
-            serverPlayer.sendSystemMessage(Component.literal("💫 ").append(message).append(" 💫"), true); // Actionbar
-        }
-    }
-
-    private Component getNamingMessage(Player player, String name) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "\"" + name + "\"... Впервые у меня есть имя. Спасибо, что дал мне его.",
-                    "Имя " + name + "... Звучит как шепот лунного света. Я запомню его.",
-                    name + "? Так меня будут звать отныне... Спасибо за этот дар.",
-                    "Никогда не думал, что у меня будет имя. " + name + " - прекрасный выбор.",
-                    "В лесу у нас не было имён. " + name + " - моё первое имя. Благодарю.",
-                    "Имя " + name + "... Оно наполняет меня новой силой. Спасибо, спутник.",
-                    "За всю свою долгую жизнь в лесу я не имел имени. " + name + " - это новое начало.",
-                    "Лунные духи шепчут, что имя " + name + " подходит мне. Благодарю тебя."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "\"" + name + "\"... I have a name for the first time. Thank you for giving it to me.",
-                    "The name " + name + "... It sounds like a whisper of moonlight. I will remember it.",
-                    name + "? This is what I shall be called from now on... Thank you for this gift.",
-                    "I never thought I would have a name. " + name + " - a wonderful choice.",
-                    "In the forest, we had no names. " + name + " - is my first name. Thank you.",
-                    "The name " + name + "... It fills me with new strength. Thank you, companion.",
-                    "In all my long life in the forest, I had no name. " + name + " - is a new beginning.",
-                    "The moon spirits whisper that the name " + name + " suits me. I thank you."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
-
-
-
-    // Также добавь частицы при получении имени
     private void spawnNamingParticles() {
         if (level().isClientSide) {
             for(int i = 0; i < 12; ++i) {
@@ -887,88 +778,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
                         0.1D,
                         (random.nextDouble() - 0.5) * 0.05D);
             }
-        }
-    }
-    // === СООБЩЕНИЯ ПРИ КОРМЛЕНИИ ДИКОГО ОЛЕНЯ ===
-    private Component getWildFeedingMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Спасибо за угощение.",
-                    "Вкусная ягода...",
-                    "Приятно встретить дружелюбного путника.",
-                    "Я не часто принимаю пищу из чужих рук.",
-                    "Спасибо. Лес делится дарами со всеми.",
-                    "Ты добрый человек.",
-                    "Благодарю за угощение."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "Thanks for the treat.",
-                    "Tasty berry...",
-                    "Nice to meet a friendly traveler.",
-                    "I don't often take food from strangers.",
-                    "Thank you. The forest shares its gifts with everyone.",
-                    "You are a kind person.",
-                    "Thank you for the treat."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
-
-    // === СООБЩЕНИЯ ПРИ ЛЕЧЕНИИ ПРИРУЧЕННОГО ОЛЕНЯ ===
-    private Component getTamedHealingMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Спасибо, я почувствовал себя лучше.",
-                    "Мои силы возвращаются.",
-                    "Спасибо за заботу.",
-                    "Ягоды помогают мне восстановиться.",
-                    "Спасибо, теперь я снова полон сил.",
-                    "Приятно, когда о тебе заботятся.",
-                    "Спасибо за лечение.",
-                    "Я чувствую себя лучше."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "Thanks, I feel better.",
-                    "My strength is returning.",
-                    "Thank you for your care.",
-                    "The berries help me recover.",
-                    "Thanks, now I'm full of energy again.",
-                    "It's nice to be taken care of.",
-                    "Thank you for the healing.",
-                    "I feel better."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
-
-    // === СООБЩЕНИЕ ПРИ ПОЛНОМ ЗДОРОВЬЕ ===
-    private Component getFullHealthMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Мои силы восстановлены. Лунная магия уже течет во мне в полной мере.",
-                    "Я не нуждаюсь в исцелении. Духи леса уже даровали мне свою защиту.",
-                    "Спасибо за заботу, но лунный свет уже наполняет меня энергией.",
-                    "Мое здоровье в порядке. Сила древнего леса оберегает меня."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "My strength is restored. Lunar magic already flows through me fully.",
-                    "I don't need healing. The forest spirits have already granted me their protection.",
-                    "Thank you for your care, but moonlight already fills me with energy.",
-                    "My health is fine. The power of the ancient forest protects me."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
         }
     }
 
@@ -991,64 +800,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return super.hurt(source, amount);
     }
 
-    // === СООБЩЕНИЯ ПРИ УДАРЕ ДИКОГО ОЛЕНЯ ===
-    private Component getHurtWildMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "За что? Я тебе не сделал ничего плохого.",
-                    "Ты нарушаешь покой леса.",
-                    "Лес не прощает таких поступков.",
-                    "Я всего лишь дух этого места. Зачем причинять мне боль?",
-                    "Ты чужеземец, но это не повод для жестокости.",
-                    "Мир леса хрупок. Не разрушай его.",
-                    "Я не твой враг, путник.",
-                    "Боль... Зачем?"
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "Why? I haven't done anything to you.",
-                    "You're disturbing the peace of the forest.",
-                    "The forest doesn't forgive such actions.",
-                    "I'm just a spirit of this place. Why cause me pain?",
-                    "You're a foreigner, but that's no reason for cruelty.",
-                    "The forest world is fragile. Don't destroy it.",
-                    "I'm not your enemy, traveler.",
-                    "Pain... Why?"
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
-
-    // === СООБЩЕНИЯ ПРИ УДАРЕ ПРИРУЧЕННОГО ОЛЕНЯ ===
-    private Component getHurtTamedMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-
-        if (isRussian) {
-            String[] messages = {
-                    "Я думал, мы компаньоны в этом путешествии...",
-                    "Зачем причинять боль тому, кто доверяет тебе?",
-                    "Я последовал за тобой добровольно...",
-                    "Боль от руки спутника ранит сильнее.",
-                    "Я оставил лес ради нашего пути. Не предавай это.",
-                    "Это не тот путь, что мы выбрали вместе."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        } else {
-            String[] messages = {
-                    "I thought we were companions on this journey...",
-                    "The moon amulet bound us, but not for this.",
-                    "Why hurt someone who trusts you?",
-                    "I followed you voluntarily...",
-                    "Pain from a companion's hand hurts more.",
-                    "I left the forest for our path. Don't betray that.",
-                    "This is not the path we chose together."
-            };
-            return Component.literal(messages[random.nextInt(messages.length)]);
-        }
-    }
 
     @Override
     public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnType) {
@@ -1060,5 +811,64 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
 
         return super.checkSpawnRules(level, spawnType);
+    }
+
+    public Vec3 getAntlerMiddlePosition() {
+        Vec3 pos = this.position();
+        float headYaw = this.yHeadRot;
+        float headYawRad = (float) Math.toRadians(headYaw);
+
+        double baseX = 0.0;
+        double baseY = this.getBbHeight() * 1.7;
+        double baseZ = -0.8;
+
+        float cosYaw = (float) Math.cos(headYawRad);
+        float sinYaw = (float) Math.sin(headYawRad);
+
+        return new Vec3(
+                pos.x + baseZ * sinYaw,
+                pos.y + baseY,
+                pos.z + baseZ * cosYaw
+        );
+    }
+
+    // Кормление дикого
+    private Component getWildFeedingMessage(Player player) {
+        return MoonDeerPhrases.getWildFeedingMessage();
+    }
+
+    // Лечение прирученного
+    private Component getTamedHealingMessage(Player player) {
+        return MoonDeerPhrases.getTamedHealingMessage();
+    }
+
+    // Полное здоровье
+    private Component getFullHealthMessage(Player player) {
+        return MoonDeerPhrases.getFullHealthMessage();
+    }
+
+    // Приручение
+    private Component getTamingMessage(Player player) {
+        return MoonDeerPhrases.getTamedMessage();
+    }
+
+    // Смерть
+    private Component getDeathMessage(Player player) {
+        return MoonDeerPhrases.getDeathMessage();
+    }
+
+    // Удар по дикому
+    private Component getHurtWildMessage(Player player) {
+        return MoonDeerPhrases.getHurtWildMessage();
+    }
+
+    // Удар по прирученному
+    private Component getHurtTamedMessage(Player player) {
+        return MoonDeerPhrases.getHurtTamedMessage();
+    }
+
+    // Именование
+    private Component getNamingMessage(Player player, String name) {
+        return MoonDeerPhrases.getNamingMessage(name);
     }
 }

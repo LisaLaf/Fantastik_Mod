@@ -15,6 +15,8 @@ public class ModEffects {
             InariBlessingEffect::new);
     public static final RegistryObject<MobEffect> CATNIP_EFFECT = MOB_EFFECTS.register("catnip_effect",
             () -> new CatnipEffect());
+    public static final RegistryObject<MobEffect> LILAC_AROMA = MOB_EFFECTS.register("lilac_aroma",
+            LilacAromaEffect::new);
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

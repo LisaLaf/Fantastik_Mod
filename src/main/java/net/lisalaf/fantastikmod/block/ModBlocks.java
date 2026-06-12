@@ -5,7 +5,10 @@ import net.lisalaf.fantastikmod.block.custom.*;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.ModFoods;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.lisalaf.fantastikmod.particle.ColoredParticleOptions;
+import net.lisalaf.fantastikmod.particle.ModParticles;
 import net.lisalaf.fantastikmod.sound.ModSounds;
+import net.lisalaf.fantastikmod.worldgen.tree.LilacTreeGrower;
 import net.lisalaf.fantastikmod.worldgen.tree.MoonTreeGrower;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -24,6 +27,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -39,6 +44,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -228,39 +235,148 @@ public class ModBlocks {
             () -> new MoonSaplingBlock(new MoonTreeGrower(), BlockBehaviour.Properties.copy(Blocks.CHERRY_SAPLING)));
 
     public static final RegistryObject<Block> TREE_MOON_FOLIAGE_BLOCK = registerBlock("tree_moon_foliage_block",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_LEAVES)
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .strength(0.2f)
+                    .randomTicks()
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .isSuffocating((state, level, pos) -> false)
+                    .isViewBlocking((state, level, pos) -> false)
                     .lightLevel(state -> 9)) {
-                @Override
-                public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource random)
-                {
-                    if (random.nextFloat() <0.2f){
-                        double x = (double) pos.getX() + random.nextDouble();
-                        double y = (double) pos.getY() + -0.1D;
-                        double z = (double) pos.getZ() + random.nextDouble();
 
+                @Override
+                public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
+                                          @Nullable BlockEntity blockEntity, ItemStack tool) {
+                    super.playerDestroy(level, player, pos, state, blockEntity, tool);
+                    if (!level.isClientSide) {
+                        if (player.getMainHandItem().getItem() == Items.SHEARS ||
+                                player.getOffhandItem().getItem() == Items.SHEARS) {
+                            popResource(level, pos, new ItemStack(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get()));
+                        }
+                    }
+                }
+
+                @Override
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+                    if (random.nextFloat() < 0.2f) {
+                        double x = pos.getX() + random.nextDouble();
+                        double y = pos.getY() - 0.1D;
+                        double z = pos.getZ() + random.nextDouble();
                         level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0D, 0.0D, 0.0D);
                     }
                 }
+            });
+
+    // Бревно сирени
+    public static final RegistryObject<Block> LILAC_LOG = registerBlock("lilac_log",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)) {
                 @Override
-                public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-                    return true;
+                public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context,
+                                                                 ToolAction action, boolean simulate) {
+                    if (action == ToolActions.AXE_STRIP) {
+                        return ModBlocks.STRIPPED_LILAC_LOG.get().defaultBlockState()
+                                .setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS));
+                    }
+                    return super.getToolModifiedState(state, context, action, simulate);
+                }
+            });
+
+    public static final RegistryObject<Block> LILAC_LEAVES = registerBlock("lilac_leaves",
+            () -> new LilacLeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .strength(0.2f)
+                    .randomTicks()
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .isSuffocating((state, level, pos) -> false)
+                    .isViewBlocking((state, level, pos) -> false)
+                    .ignitedByLava()
+                    .lightLevel(state -> state.getValue(LilacLeavesBlock.FLOWERING) ? 4 : 0)) {
+
+                @Override
+                public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
+                                          @Nullable BlockEntity blockEntity, ItemStack tool) {
+                    if (!level.isClientSide) {
+                        if (player.getMainHandItem().getItem() == Items.SHEARS ||
+                                player.getOffhandItem().getItem() == Items.SHEARS) {
+                            popResource(level, pos, new ItemStack(ModBlocks.LILAC_LEAVES.get()));
+                            return;
+                        }
+                    }
+                    super.playerDestroy(level, player, pos, state, blockEntity, tool);
                 }
 
                 @Override
-                public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-                    return 60;
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+                    super.animateTick(state, level, pos, random);
+                    if (state.getValue(LilacLeavesBlock.FLOWERING)) {
+                        if (random.nextFloat() < 0.2f) {
+                            double x = pos.getX() + random.nextDouble();
+                            double y = pos.getY() - 0.3D;
+                            double z = pos.getZ() + random.nextDouble();
+                            level.addParticle(
+                                    new ColoredParticleOptions(0.7f, 0.5f, 0.85f),
+                                    x, y, z, 0.0D, -0.03D, 0.0D
+                            );
+                        }
+                    }
                 }
+            });
 
+    public static final RegistryObject<Block> LILAC_PLANKS = registerBlock("lilac_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)) {
+            });
+
+    public static final RegistryObject<Block> LILAC_WOOD = registerBlock("lilac_wood",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)) {
                 @Override
-                public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-                    return 30;
+                public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context,
+                                                                 ToolAction action, boolean simulate) {
+                    if (action == ToolActions.AXE_STRIP) {
+                        return ModBlocks.STRIPPED_LILAC_WOOD.get().defaultBlockState()
+                                .setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS));
+                    }
+                    return super.getToolModifiedState(state, context, action, simulate);
                 }
-                @Override
-                protected boolean decaying(BlockState state) {
-                    return false; // Полностью отключает исчезновение листвы
-                }
-            }
-    );
+            });
+
+    public static final RegistryObject<Block> LILAC_DOOR = registerBlock("lilac_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> LILAC_TRAPDOOR = registerBlock("lilac_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> STRIPPED_LILAC_LOG = registerBlock("stripped_lilac_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+
+    public static final RegistryObject<Block> STRIPPED_LILAC_WOOD = registerBlock("stripped_lilac_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+
+    public static final RegistryObject<Block> LILAC_STAIRS = registerBlock("lilac_stairs",
+            () -> new StairBlock(() -> ModBlocks.LILAC_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+
+    public static final RegistryObject<Block> LILAC_SLAB = registerBlock("lilac_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+
+    public static final RegistryObject<Block> LILAC_FENCE = registerBlock("lilac_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
+
+    public static final RegistryObject<Block> LILAC_FENCE_GATE = registerBlock("lilac_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE),
+                    SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+
+    public static final RegistryObject<Block> LILAC_BUTTON = registerBlock("lilac_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON),
+                    BlockSetType.OAK, 30, true));
+
+    public static final RegistryObject<Block> LILAC_PRESSURE_PLATE = registerBlock("lilac_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING,
+                    BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> LILAC_SAPLING = registerBlock("lilac_sapling",
+            () -> new LilacSaplingBlock(new LilacTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> MOON_ORE = registerBlock("moon_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE).lightLevel(state -> 7)){

@@ -85,4 +85,20 @@ public class BakenekoSleepGoal extends MoveToBlockGoal {
         this.bakeneko.setSleeping(false, null);
         this.bakeneko.stopSittingSleepingAnimation();
     }
+
+    private boolean isNearHeatSource(LevelReader level, BlockPos pos) {
+
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                for (int z = -1; z <= 1; z++) {
+                    BlockPos checkPos = pos.offset(x, y, z);
+                    BlockState checkState = level.getBlockState(checkPos);
+                    if (checkState.is(Blocks.FIRE) || checkState.is(Blocks.SOUL_FIRE)) return true;
+                    if (checkState.is(Blocks.LAVA)) return true;
+                    if ((checkState.is(Blocks.CAMPFIRE) || checkState.is(Blocks.SOUL_CAMPFIRE))
+                            && checkState.getValue(CampfireBlock.LIT)) return true;
+                }
+            }
+        }
+        return false;}
 }

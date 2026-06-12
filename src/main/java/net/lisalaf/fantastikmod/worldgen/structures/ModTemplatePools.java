@@ -41,6 +41,11 @@ public class ModTemplatePools {
             new ResourceLocation(fantastikmod.MOD_ID, "inari_small_shrine/start")
     );
 
+    public static final ResourceKey<StructureTemplatePool> ONSEN_SMALL_START = ResourceKey.create(
+            Registries.TEMPLATE_POOL,
+            new ResourceLocation(fantastikmod.MOD_ID, "onsen_small/start")
+    );
+
     public static void bootstrap(BootstapContext<StructureTemplatePool> context) {
         HolderGetter<StructureTemplatePool> templatePoolRegistry = context.lookup(Registries.TEMPLATE_POOL);
         HolderGetter<StructureProcessorList> processorListRegistry = context.lookup(Registries.PROCESSOR_LIST);
@@ -111,6 +116,20 @@ public class ModTemplatePools {
                         Pair.of(
                                 SinglePoolElement.single(
                                         fantastikmod.MOD_ID + ":inari_small_shrine",
+                                        processorListRegistry.getOrThrow(ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation("empty")))
+                                ),
+                                1
+                        )
+                ),
+                StructureTemplatePool.Projection.RIGID
+        ));
+
+        context.register(ONSEN_SMALL_START, new StructureTemplatePool(
+                emptyPool,
+                List.of(
+                        Pair.of(
+                                SinglePoolElement.single(
+                                        fantastikmod.MOD_ID + ":onsen_small",
                                         processorListRegistry.getOrThrow(ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation("empty")))
                                 ),
                                 1

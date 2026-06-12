@@ -26,6 +26,95 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_strawberry", has(ModItems.STRAWBERRY.get()))
                 .save(pWriter, "strawberry_seeds_from_strawberry");
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_PLANKS.get(), 4)
+                .requires(ModBlocks.LILAC_LOG.get())
+                .unlockedBy("has_lilac_log", has(ModBlocks.LILAC_LOG.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.CRAFTING_TABLE, 1)
+                .pattern("PP")
+                .pattern("PP")
+                .define('P', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter, "crafting_table_from_lilac_planks");
+
+
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_WOOD.get(), 3)
+                .pattern("ll")
+                .pattern("ll")
+                .define('l', ModBlocks.LILAC_LOG.get())
+                .unlockedBy("has_lilac_log", has(ModBlocks.LILAC_LOG.get()))
+                .save(pWriter);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_LOG.get(), 4)
+                .requires(ModBlocks.LILAC_WOOD.get())
+                .unlockedBy("has_lilac_wood", has(ModBlocks.LILAC_WOOD.get()))
+                .save(pWriter, "lilac_log_from_wood");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_STAIRS.get(), 4)
+                .pattern("p  ")
+                .pattern("pp ")
+                .pattern("ppp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_SLAB.get(), 6)
+                .pattern("ppp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_FENCE.get(), 3)
+                .pattern("psp")
+                .pattern("psp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .define('s', Items.STICK)
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_FENCE_GATE.get())
+                .pattern("sps")
+                .pattern("sps")
+                .define('s', Items.STICK)
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModBlocks.LILAC_BUTTON.get())
+                .requires(ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.LILAC_PRESSURE_PLATE.get())
+                .pattern("pp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICK, 4)
+                .pattern("p")
+                .pattern("p")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter, "sticks_from_lilac_planks");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.LILAC_DOOR.get(), 3)
+                .pattern("pp")
+                .pattern("pp")
+                .pattern("pp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.LILAC_TRAPDOOR.get(), 2)
+                .pattern("ppp")
+                .pattern("ppp")
+                .define('p', ModBlocks.LILAC_PLANKS.get())
+                .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
+                .save(pWriter);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TREE_MOON_WOOD.get(), 3)
                 .pattern("ll")
                 .pattern("ll")

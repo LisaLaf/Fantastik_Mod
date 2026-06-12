@@ -99,7 +99,6 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.AURIPIGMENT_BLOCK.get());
                         output.accept(ModBlocks.TREE_MOON_LOG_BLOCK.get());
                         output.accept(ModBlocks.TREE_MOON_WOOD.get());
-                        output.accept(ModBlocks.MOON_SAPLING.get());
                         output.accept(ModBlocks.MOON_PLANKS.get());
                         output.accept(ModBlocks.MOON_TREE_DOOR.get());
                         output.accept(ModBlocks.MOON_TREE_TRAPDOOR.get());
@@ -111,6 +110,20 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.MOON_PLANKS_STAIRS.get());
                         output.accept(ModBlocks.MOON_PLANKS_SLAB.get());
                         output.accept(ModBlocks.TREE_MOON_FOLIAGE_BLOCK.get());
+                        output.accept(ModBlocks.LILAC_LOG.get());
+                        output.accept(ModBlocks.LILAC_LEAVES.get());
+                        output.accept(ModBlocks.LILAC_PLANKS.get());
+                        output.accept(ModBlocks.LILAC_WOOD.get());
+                        output.accept(ModBlocks.STRIPPED_LILAC_LOG.get());
+                        output.accept(ModBlocks.STRIPPED_LILAC_WOOD.get());
+                        output.accept(ModBlocks.LILAC_STAIRS.get());
+                        output.accept(ModBlocks.LILAC_SLAB.get());
+                        output.accept(ModBlocks.LILAC_FENCE.get());
+                        output.accept(ModBlocks.LILAC_FENCE_GATE.get());
+                        output.accept(ModBlocks.LILAC_BUTTON.get());
+                        output.accept(ModBlocks.LILAC_PRESSURE_PLATE.get());
+                        output.accept(ModBlocks.LILAC_DOOR.get());
+                        output.accept(ModBlocks.LILAC_TRAPDOOR.get());
                         output.accept(ModBlocks.MOON_ORE.get());
                         output.accept(ModBlocks.MOONSTONE.get());
                         output.accept(ModBlocks.MOON_CRYSTAL_BLOCK.get());
@@ -131,6 +144,10 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.MOON_GRASS.get());
                         output.accept(ModBlocks.SPIDER_LILY.get());
                         output.accept(ModBlocks.WILD_CATNIP.get());
+                        output.accept(ModBlocks.MOON_SAPLING.get());
+                        output.accept(ModBlocks.LILAC_SAPLING.get());
+
+
 
                         output.accept(ModBlocks.MOON_VINE.get());
                         output.accept(ModBlocks.FROST.get());
