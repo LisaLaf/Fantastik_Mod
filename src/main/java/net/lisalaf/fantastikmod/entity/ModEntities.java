@@ -38,6 +38,16 @@ public class ModEntities {
                     .clientTrackingRange(10)
                     .build("blue_butterfly"));
 
+    public static final RegistryObject<EntityType<WitchCatEntity>> WITCH_CAT =
+            ENTITY_TYPES.register("witch_cat", () -> EntityType.Builder.of(WitchCatEntity::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.7f).build("witch_cat"));
+
+    public static final RegistryObject<EntityType<SeatEntity>> SEAT = ENTITY_TYPES.register("seat",
+            () -> EntityType.Builder.<SeatEntity>of(SeatEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.4f)
+                    .clientTrackingRange(10)
+                    .build("seat"));
+
 
 
     public static void register(IEventBus eventBus) {

@@ -14,19 +14,16 @@ public class LeavesParticle extends TextureSheetParticle {
                           float red, float green, float blue) {
         super(level, x, y, z);
 
-        // РАЗМЕР маленький: от 0.05 до 0.1
         this.quadSize = 0.05F + random.nextFloat() * 0.05F;
 
         this.lifetime = 40 + random.nextInt(20);
         this.gravity = 0.06F;
         this.rotSpeed = (random.nextFloat() - 0.5f) * 2.0F;
 
-        // ЗАМЕДЛЯЕМ СКОРОСТЬ
-        this.xd = speedX * 0.5;  // в 2 раза медленнее по горизонтали
-        this.yd = speedY * 0.7;  // немного медленнее по вертикали
-        this.zd = speedZ * 0.5;  // в 2 раза медленнее по горизонтали
+        this.xd = speedX * 0.5;
+        this.yd = speedY * 0.7;
+        this.zd = speedZ * 0.5;
 
-        // СЛУЧАЙНОЕ ЗАТЕМНЕНИЕ
         float darken = 0.6F + random.nextFloat() * 0.4F;
         this.rCol = red * darken;
         this.gCol = green * darken;
@@ -40,7 +37,6 @@ public class LeavesParticle extends TextureSheetParticle {
         super.tick();
         this.oRoll = this.roll;
         this.roll += this.rotSpeed * 0.1f;
-        // ЗАТУХАНИЕ в конце жизни
         if (this.age > this.lifetime * 0.7f) {
             this.alpha = 1.0f - (this.age - this.lifetime * 0.7f) / (this.lifetime * 0.3f);
         }

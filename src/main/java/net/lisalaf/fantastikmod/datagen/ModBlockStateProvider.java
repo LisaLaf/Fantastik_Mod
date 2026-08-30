@@ -301,6 +301,226 @@ public class ModBlockStateProvider extends BlockStateProvider {
         trapdoorBlockWithRenderType(((TrapDoorBlock) ModBlocks.LILAC_TRAPDOOR.get()),
                 modLoc("block/lilac_trapdoor"), true, "cutout");
 
+        ModelFile gateClosed = models().getExistingFile(modLoc("block/big_city_gate"));
+        ModelFile gateOpen = models().getExistingFile(modLoc("block/big_city_gate_open"));
+
+        getVariantBuilder(ModBlocks.BIG_CITY_GATE.get()).forAllStates(state -> {
+            boolean open = state.getValue(BigCityGateBlock.OPEN);
+            Direction dir = state.getValue(BigCityGateBlock.FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(open ? gateOpen : gateClosed)
+                    .rotationY((int) dir.toYRot())
+                    .build();
+        });
+
+        simpleBlockItem(ModBlocks.BIG_CITY_GATE.get(), gateClosed);
+
+        simpleBlock(ModBlocks.TAPESTRY.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_0.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_0.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_BURNED_0.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_BURNED_0.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_1.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_1.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_2.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_2.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_3.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_3.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_4.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_4.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_BURNED_1.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_BURNED_1.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_BURNED_2.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_BURNED_2.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_BURNED_3.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_BURNED_3.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlock(ModBlocks.TAPESTRY_CASTLE_BURNED_4.get(), models().getExistingFile(modLoc("block/tapestry")));
+        simpleBlockItem(ModBlocks.TAPESTRY_CASTLE_BURNED_4.get(), models().getExistingFile(modLoc("block/tapestry")));
+
+        simpleBlock(ModBlocks.ROYAL_BED.get(), models().getExistingFile(modLoc("block/royal_bed")));
+        simpleBlockItem(ModBlocks.ROYAL_BED.get(), models().getExistingFile(modLoc("block/royal_bed")));
+
+        // Черепица средневековая глиняная
+        ModelFile roofStraight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged"));
+        ModelFile roofInnerLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_inner_left"));
+        ModelFile roofInnerRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_inner_right"));
+        ModelFile roofOuterLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_outer_left"));
+        ModelFile roofOuterRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_outer_right"));
+
+        getVariantBuilder(ModBlocks.ROOF_TILE_MEDIEVAL_CLAY_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofTileBlock.SHAPE)) {
+                case INNER_LEFT -> roofInnerLeft;
+                case INNER_RIGHT -> roofInnerRight;
+                case OUTER_LEFT -> roofOuterLeft;
+                case OUTER_RIGHT -> roofOuterRight;
+                default -> roofStraight;
+            };
+            int yRot = (int) state.getValue(RoofTileBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+
+        ModelFile ironStraight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_iron_damaged"));
+        ModelFile ironInnerLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_iron_damaged_inner_left"));
+        ModelFile ironInnerRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_iron_damaged_inner_right"));
+        ModelFile ironOuterLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_iron_damaged_outer_left"));
+        ModelFile ironOuterRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_iron_damaged_outer_right"));
+
+        getVariantBuilder(ModBlocks.ROOF_TILE_MEDIEVAL_IRON_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofTileBlock.SHAPE)) {
+                case INNER_LEFT -> ironInnerLeft;
+                case INNER_RIGHT -> ironInnerRight;
+                case OUTER_LEFT -> ironOuterLeft;
+                case OUTER_RIGHT -> ironOuterRight;
+                default -> ironStraight;
+            };
+            int yRot = (int) state.getValue(RoofTileBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+
+        ModelFile copperStraight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_copper_damaged"));
+        ModelFile copperInnerLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_copper_damaged_inner_left"));
+        ModelFile copperInnerRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_copper_damaged_inner_right"));
+        ModelFile copperOuterLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_copper_damaged_outer_left"));
+        ModelFile copperOuterRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_copper_damaged_outer_right"));
+
+        getVariantBuilder(ModBlocks.ROOF_TILE_MEDIEVAL_COPPER_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofTileBlock.SHAPE)) {
+                case INNER_LEFT -> copperInnerLeft;
+                case INNER_RIGHT -> copperInnerRight;
+                case OUTER_LEFT -> copperOuterLeft;
+                case OUTER_RIGHT -> copperOuterRight;
+                default -> copperStraight;
+            };
+            int yRot = (int) state.getValue(RoofTileBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+
+        ModelFile largeTorchModel = models().getExistingFile(modLoc("block/large_torch"));
+        getVariantBuilder(ModBlocks.LARGE_TORCH.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(largeTorchModel)
+                    .rotationY((int) state.getValue(LargeTorchBlock.FACING).toYRot())
+                    .build();
+        });
+
+        ModelFile denseWaterSurface = models().cubeAll("dense_water_surface", modLoc("block/dense_water_surface")).renderType("translucent");
+        simpleBlockWithItem(ModBlocks.DENSE_WATER_SURFACE.get(), denseWaterSurface);
+
+        ModelFile denseWaterMidHigh = models().cubeAll("dense_water_mid_high", modLoc("block/dense_water_mid_high")).renderType("translucent");
+        simpleBlockWithItem(ModBlocks.DENSE_WATER_MID_HIGH.get(), denseWaterMidHigh);
+
+        ModelFile denseWaterMidLow = models().cubeAll("dense_water_mid_low", modLoc("block/dense_water_mid_low")).renderType("translucent");
+        simpleBlockWithItem(ModBlocks.DENSE_WATER_MID_LOW.get(), denseWaterMidLow);
+
+        ModelFile denseWaterDeep = models().cubeAll("dense_water_deep", modLoc("block/dense_water_deep")).renderType("translucent");
+        simpleBlockWithItem(ModBlocks.DENSE_WATER_DEEP.get(), denseWaterDeep);
+        ModelFile capClay0 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_clay_damaged_0"));
+        ModelFile capClay1 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_clay_damaged_1"));
+        ModelFile capClay2 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_clay_damaged_2"));
+
+        getVariantBuilder(ModBlocks.ROOF_CAP_MEDIEVAL_CLAY_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofCapBlock.SHAPE)) {
+                case 0 -> capClay0;
+                case 1 -> capClay1;
+                default -> capClay2;
+            };
+            int yRot = (int) state.getValue(RoofCapBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+        ModelFile capIron0 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_iron_damaged_0"));
+        ModelFile capIron1 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_iron_damaged_1"));
+        ModelFile capIron2 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_iron_damaged_2"));
+
+        getVariantBuilder(ModBlocks.ROOF_CAP_MEDIEVAL_IRON_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofCapBlock.SHAPE)) {
+                case 0 -> capIron0;
+                case 1 -> capIron1;
+                default -> capIron2;
+            };
+            int yRot = (int) state.getValue(RoofCapBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+        ModelFile capCopper0 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_copper_damaged_0"));
+        ModelFile capCopper1 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_copper_damaged_1"));
+        ModelFile capCopper2 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_copper_damaged_2"));
+
+        getVariantBuilder(ModBlocks.ROOF_CAP_MEDIEVAL_COPPER_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofCapBlock.SHAPE)) {
+                case 0 -> capCopper0;
+                case 1 -> capCopper1;
+                default -> capCopper2;
+            };
+            int yRot = (int) state.getValue(RoofCapBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+        ModelFile throneModel = models().getExistingFile(modLoc("block/charred_throne"));
+        getVariantBuilder(ModBlocks.CHARRED_THRONE.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(throneModel)
+                    .rotationY((int) state.getValue(CharredThroneBlock.FACING).toYRot())
+                    .build();
+        });
+
+        ModelFile paperLanternModel = models().getExistingFile(modLoc("block/paper_lantern"));
+        getVariantBuilder(ModBlocks.PAPER_LANTERN.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(paperLanternModel)
+                    .build();
+        });
+
+        ModelFile woodenChairModel = models().getExistingFile(modLoc("block/wooden_chair"));
+        getVariantBuilder(ModBlocks.WOODEN_CHAIR.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(woodenChairModel)
+                    .rotationY((int) state.getValue(WoodenChairBlock.FACING).toYRot())
+                    .build();
+        });
+
+        ModelFile yukimiModel = models().getExistingFile(modLoc("block/yukimi_toro"));
+        getVariantBuilder(ModBlocks.YUKIMI_TORO.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(yukimiModel)
+                    .rotationY((int) state.getValue(YukimiToroBlock.FACING).toYRot())
+                    .build();
+        });
+
+        ModelFile eggModel = models().getExistingFile(modLoc("block/petrified_large_egg"));
+        simpleBlockWithItem(ModBlocks.PETRIFIED_LARGE_EGG.get(), eggModel);
+
+        ModelFile tableclothModel = models().getExistingFile(modLoc("block/tablecloth_white"));
+        simpleBlockWithItem(ModBlocks.TABLECLOTH_WHITE.get(), tableclothModel);
+
+        ModelFile deepslateStraight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_deepslate_damaged"));
+        ModelFile deepslateInnerLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_deepslate_damaged_inner_left"));
+        ModelFile deepslateInnerRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_deepslate_damaged_inner_right"));
+        ModelFile deepslateOuterLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_deepslate_damaged_outer_left"));
+        ModelFile deepslateOuterRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_deepslate_damaged_outer_right"));
+
+        getVariantBuilder(ModBlocks.ROOF_TILE_MEDIEVAL_DEEPSLATE_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofTileBlock.SHAPE)) {
+                case INNER_LEFT -> deepslateInnerLeft;
+                case INNER_RIGHT -> deepslateInnerRight;
+                case OUTER_LEFT -> deepslateOuterLeft;
+                case OUTER_RIGHT -> deepslateOuterRight;
+                default -> deepslateStraight;
+            };
+            int yRot = (int) state.getValue(RoofTileBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+        ModelFile capDeepslate0 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_deepslate_damaged_0"));
+        ModelFile capDeepslate1 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_deepslate_damaged_1"));
+        ModelFile capDeepslate2 = models().getExistingFile(modLoc("block/roof_tile/roof_cap_medieval_deepslate_damaged_2"));
+
+        getVariantBuilder(ModBlocks.ROOF_CAP_MEDIEVAL_DEEPSLATE_DAMAGED.get()).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(RoofCapBlock.SHAPE)) {
+                case 0 -> capDeepslate0;
+                case 1 -> capDeepslate1;
+                default -> capDeepslate2;
+            };
+            int yRot = (int) state.getValue(RoofCapBlock.FACING).toYRot();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
     }
 
     private void frostBlock(RegistryObject<Block> block) {

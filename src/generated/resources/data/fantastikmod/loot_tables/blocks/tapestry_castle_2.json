@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:tapestry_castle_2"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "fantastikmod:blocks/tapestry_castle_2"
+}

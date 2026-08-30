@@ -1,6 +1,7 @@
 package net.lisalaf.fantastikmod.block.custom;
 
 import net.lisalaf.fantastikmod.effect.ModEffects;
+import net.lisalaf.fantastikmod.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -40,6 +41,9 @@ public class LilacLeavesBlock extends LeavesBlock {
         if (tool.getItem() == Items.SHEARS) {
             popResource(level, pos, new ItemStack(this));
         }
+        if (state.getValue(FLOWERING) && !tool.isEmpty()) {
+            popResource(level, pos, new ItemStack(ModItems.LILAC_BRANCH.get()));
+        }
     }
 
     @Override
@@ -67,7 +71,6 @@ public class LilacLeavesBlock extends LeavesBlock {
             level.setBlock(pos, state.setValue(FLOWERING, shouldFlower), 3);
         }
 
-        // Эффект при каждом randomTick'е с долгой длительностью
         if (state.getValue(FLOWERING)) {
             AABB area = new AABB(pos).inflate(7);
             for (Player player : level.getEntitiesOfClass(Player.class, area)) {

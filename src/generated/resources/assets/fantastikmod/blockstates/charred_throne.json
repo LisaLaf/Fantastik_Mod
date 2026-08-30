@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fantastikmod:block/charred_throne",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "fantastikmod:block/charred_throne",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "fantastikmod:block/charred_throne"
+    },
+    "facing=west": {
+      "model": "fantastikmod:block/charred_throne",
+      "y": 90
+    }
+  }
+}

@@ -2,6 +2,7 @@ package net.lisalaf.fantastikmod.entity.custom;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.lisalaf.fantastikmod.dialog.DialogClientHelper;
 import net.lisalaf.fantastikmod.dialog.DialogScreen;
 import net.lisalaf.fantastikmod.dialog.mobs.BakenekoDialog;
 import net.lisalaf.fantastikmod.effect.ModEffects;
@@ -47,6 +48,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -626,10 +629,9 @@ public class BakenekoEntity extends Animal implements GeoEntity {
 
         // Диалог на Shift + ПКМ
         if (player.isShiftKeyDown()) {
-            if (this.level().isClientSide) {
-                BakenekoDialog dialog = new BakenekoDialog(this, player);
-                Minecraft.getInstance().setScreen(new DialogScreen(this, dialog));
-            }
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                DialogClientHelper.openBakenekoDialog(this, player);
+            });
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
 
@@ -1084,5 +1086,8 @@ public class BakenekoEntity extends Animal implements GeoEntity {
 
     public boolean isSitting() {
         return this.isSitting;
+    }
+
+    public void setHeldItem(ItemStack empty) {
     }
 }

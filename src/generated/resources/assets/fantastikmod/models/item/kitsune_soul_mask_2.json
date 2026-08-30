@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fantastikmod:item/kitsune_soul_mask_2"
+  }
+}

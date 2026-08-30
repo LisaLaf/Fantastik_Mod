@@ -3,7 +3,8 @@ package net.lisalaf.fantastikmod.item;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.fantastikmod;
-import net.lisalaf.fantastikmod.item.custom.ModArmorItem;
+import net.lisalaf.fantastikmod.item.custom.*;
+import net.lisalaf.fantastikmod.item.custom.FireDragonArmorItem;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -47,11 +48,53 @@ public class ModItems {
             ()-> new Item( new Item.Properties().stacksTo(64).food(ModFoods.HEART_ICE_DRAGON)));
 
     public static final RegistryObject<Item> TEA_CEREMONY_MUSIC_DISC = ITEMS.register("tea_ceremony_music_disc",
-            () -> new RecordItem(6, ModSounds.TEA_CEREMONY,  // ← обратите внимание
+            () -> new RecordItem(6, ModSounds.TEA_CEREMONY,
                     new Item.Properties().stacksTo(1), 1560));
 
+    public static final RegistryObject<Item> RUSTY_HELMET = ITEMS.register("rusty_helmet",
+            () -> new ArmorItem(ModArmorMaterials.RUSTY, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> RUSTY_CHESTPLATE = ITEMS.register("rusty_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.RUSTY, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> RUSTY_LEGGINGS = ITEMS.register("rusty_leggings",
+            () -> new ArmorItem(ModArmorMaterials.RUSTY, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> RUSTY_BOOTS = ITEMS.register("rusty_boots",
+            () -> new ArmorItem(ModArmorMaterials.RUSTY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-    //public static final RegistryObject<Item> TEA_CEREMORY_MUSIC_DISC = ITEMS.register("tea_ceremony_music_disc", ()-> new RecordItem(6, ModSounds.TEA_CEREMORY, new Item.Properties().stacksTo(1), 1560));
+    public static final RegistryObject<Item> WINGS = ITEMS.register("wings",
+            () -> new WingsItem(ModArmorMaterials.WINGS_MATERIAL, new Item.Properties()));
+
+    public static final RegistryObject<Item> KITSUNE_MASK_0 = ITEMS.register("kitsune_mask_0",
+            () -> new KitsuneMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 0));
+
+    public static final RegistryObject<Item> KITSUNE_MASK_1 = ITEMS.register("kitsune_mask_1",
+            () -> new KitsuneMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 1));
+
+    public static final RegistryObject<Item> KITSUNE_MASK_2 = ITEMS.register("kitsune_mask_2",
+            () -> new KitsuneMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 2));
+
+    public static final RegistryObject<Item> KITSUNE_SOUL_MASK_0 = ITEMS.register("kitsune_soul_mask_0",
+            () -> new KitsuneSoulMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 0));
+
+    public static final RegistryObject<Item> KITSUNE_SOUL_MASK_1 = ITEMS.register("kitsune_soul_mask_1",
+            () -> new KitsuneSoulMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 1));
+
+    public static final RegistryObject<Item> KITSUNE_SOUL_MASK_2 = ITEMS.register("kitsune_soul_mask_2",
+            () -> new KitsuneSoulMaskItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 2));
+
+    public static final RegistryObject<Item> BUILDERS_WAND = ITEMS.register("builders_wand",
+            () -> new BuildersWandItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON = ITEMS.register("withered_scales_fire_dragon",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON_HELMET = ITEMS.register("withered_scales_fire_dragon_helmet",
+            () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON_CHESTPLATE = ITEMS.register("withered_scales_fire_dragon_chestplate",
+            () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON_LEGGINGS = ITEMS.register("withered_scales_fire_dragon_leggings",
+            () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON_BOOTS = ITEMS.register("withered_scales_fire_dragon_boots",
+            () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> TOFU = ITEMS.register("tofu",
             ()-> new Item( new Item.Properties().stacksTo(64).food(ModFoods.TOFU)));
@@ -107,30 +150,33 @@ public class ModItems {
     public static final RegistryObject<Item> TEA_SEEDS = ITEMS.register("tea_seeds",
             ()-> new ItemNameBlockItem(ModBlocks.TEA_CROP.get(), new Item.Properties().stacksTo(64)));
 
+    public static final RegistryObject<Item> LILAC_BRANCH = ITEMS.register("lilac_branch",
+            () -> new LilacBranchItem(new Item.Properties().stacksTo(16)));
+
     public static final RegistryObject<Item> EGG_KITSUNE_LIGHT = ITEMS.register("egg_kitsune_light",
             () -> new ForgeSpawnEggItem(ModEntities.KITSUNE_LIGHT,
-                    0xFFFFFF, // Основной цвет (белый)
-                    0xFFA500, // Цвет точек (оранжевый)
+                    0xFFFFFF,
+                    0xFFA500,
                     new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> EGG_ICE_DRAGON = ITEMS.register("egg_ice_dragon",
             () -> new ForgeSpawnEggItem(ModEntities.ICE_DRAGON,
-                    0xFFFFFF, // Основной цвет (белый)
-                    0xFFA500, // Цвет точек (оранжевый)
+                    0xFFFFFF,
+                    0xFFA500,
                     new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> EGG_MOON_DEER = ITEMS.register("egg_moon_deer",
             () -> new ForgeSpawnEggItem(ModEntities.MOON_DEER,
-                    0xFFFFFF, // Основной цвет (белый)
-                    0xFFA500, // Цвет точек (оранжевый)
+                    0xFFFFFF,
+                    0xFFA500,
                     new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> EGG_BLUE_BUTTERFLY = ITEMS.register("egg_blue_butterfly",
             () -> new ForgeSpawnEggItem(ModEntities.BLUE_BUTTERFLY,
-                    0xFFFFFF, // Основной цвет (белый)
-                    0xFFA500, // Цвет точек (оранжевый)
+                    0xFFFFFF,
+                    0xFFA500,
                     new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> EGG_BAKENEKO = ITEMS.register("egg_bakeneko",
             () -> new ForgeSpawnEggItem(ModEntities.BAKENEKO,
-                    0xFFFFFF, // Основной цвет (белый)
-                    0xFFA500, // Цвет точек (оранжевый)
+                    0xFFFFFF,
+                    0xFFA500,
                     new Item.Properties().stacksTo(64)));
 
 

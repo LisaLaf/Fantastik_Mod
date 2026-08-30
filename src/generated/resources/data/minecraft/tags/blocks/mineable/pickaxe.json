@@ -6,8 +6,18 @@
     "fantastikmod:silver_ore",
     "fantastikmod:moon_gem_block",
     "fantastikmod:moon_ore",
+    "fantastikmod:roof_tile_medieval_clay_damaged",
     "fantastikmod:moon_crystal_block",
     "fantastikmod:gemkitsune_block",
+    "fantastikmod:roof_tile_medieval_iron_damaged",
+    "fantastikmod:roof_tile_medieval_copper_damaged",
+    "fantastikmod:roof_tile_medieval_deepslate_damaged",
+    "fantastikmod:roof_cap_medieval_clay_damaged",
+    "fantastikmod:roof_cap_medieval_iron_damaged",
+    "fantastikmod:roof_cap_medieval_copper_damaged",
+    "fantastikmod:roof_cap_medieval_deepslate_damaged",
+    "fantastikmod:charred_throne",
+    "fantastikmod:petrified_large_egg",
     "fantastikmod:kitsune_statue"
   ]
 }

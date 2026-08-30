@@ -4,6 +4,8 @@ import net.lisalaf.fantastikmod.dialog.Dialog;
 import net.lisalaf.fantastikmod.dialog.DialogNode;
 import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
 import net.lisalaf.fantastikmod.entity.phrases.BakenekoPhrases;
+import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.network.DialogPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -110,70 +112,13 @@ public class BakenekoDialog extends Dialog {
 
         String toNode = node.getOptions().get(optionIndex).getNextNodeId();
 
-        // Согласие дать еду
-        if ("response_follow_1".equals(toNode)) {
-            // Выполняем на сервере
-            if (player.getServer() != null) {
-                player.getServer().execute(() -> {
-                    for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-                        ItemStack stack = player.getInventory().getItem(i);
-                        if (bakeneko.isFood(stack) && !stack.isEmpty()) {
-                            stack.shrink(1);
-                            bakeneko.heal(4.0F);
-                            player.sendSystemMessage(Component.translatable("chat.bakeneko.feed"));
-                            bakeneko.playSound(net.minecraft.sounds.SoundEvents.GENERIC_EAT, 0.5F, 1.0F);
-                            break;
-                        }
-                    }
-                });
-            }
+        if (player.level().isClientSide) {
+            fantastikmod.sendToServer(new DialogPacket(bakeneko.getId(), optionIndex, "bakeneko"));
         }
-
-        // Отказ дать еду - атака
-        if ("response_follow_2".equals(toNode)) {
-            if (player.getServer() != null) {
-                player.getServer().execute(() -> {
-                    player.hurt(player.damageSources().mobAttack(bakeneko), 3.0F);
-                    player.sendSystemMessage(BakenekoPhrases.getHurtMessage());
-                    bakeneko.playSound(net.minecraft.sounds.SoundEvents.CAT_HISS, 1.0F, 0.5F);
-                });
-            }
-            // Закрываем диалог на клиенте
+        if ("response_follow_2".equals(toNode) && player.level().isClientSide) {
             Minecraft.getInstance().setScreen(null);
             return;
         }
-
-        // Возврат украденного
-        if ("response_steal_1".equals(toNode)) {
-            if (player.getServer() != null) {
-                player.getServer().execute(() -> {
-                    if (bakeneko.getLastThief() == player) {
-                        ItemStack stolenItem = bakeneko.getHeldItem();
-                        if (!stolenItem.isEmpty()) {
-                            if (!player.getInventory().add(stolenItem.copy())) {
-                                player.drop(stolenItem.copy(), false);
-                            }
-                            bakeneko.setHeldItem(ItemStack.EMPTY);
-                            bakeneko.setHasItem(false);
-                            bakeneko.setLastThief(null);
-                            player.sendSystemMessage(BakenekoPhrases.getStolenFromBakenekoMessage());
-                        }
-                    }
-                });
-            }
-        }
-
-        // Злость
-        if ("response_steal_2".equals(toNode)) {
-            if (player.getServer() != null) {
-                player.getServer().execute(() -> {
-                    bakeneko.setAngry(true);
-                    bakeneko.setLastThief(player);
-                    player.sendSystemMessage(Component.translatable("chat.bakeneko.angry"));
-                });
-            }
-        }
-
         super.selectOption(optionIndex);
     }
 }

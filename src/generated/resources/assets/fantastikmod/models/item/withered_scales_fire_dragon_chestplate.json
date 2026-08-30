@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fantastikmod:item/withered_scales_fire_dragon_chestplate"
+  }
+}

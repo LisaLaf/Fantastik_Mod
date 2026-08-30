@@ -19,9 +19,77 @@ public enum ModArmorMaterials implements ArmorMaterial {
     GEM_MOON("gem_moon", 30, new int[]{ 4, 8, 7, 4}, 24,
             SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0f, 0.0f, () -> Ingredient.of(ModItems.GEM_MOON.get())),
 
+    RUSTY("rusty", 5, new int[]{ 1, 1, 1, 1}, 0,
+            SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, () -> Ingredient.EMPTY),
+
+    FIRE_DRAGON("withered_scales_fire_dragon", 37, new int[]{3, 8, 6, 3}, 15,
+            SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.1f, () -> Ingredient.of(ModItems.WITHERED_SCALES_FIRE_DRAGON.get())),
+
     SILVER("silver", 14, new int[]{  2, 5, 4, 2}, 11,
     SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, () -> Ingredient.of(ModItems.SILVER_INGOT.get()));
 
+
+
+    public static final ArmorMaterial WINGS_MATERIAL = new ArmorMaterial() {
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) {
+            return 0;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return 0;
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 0;
+        }
+
+        @Override
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_LEATHER;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.EMPTY;
+        }
+
+        @Override
+        public String getName() {
+            return fantastikmod.MOD_ID + ":wings";
+        }
+
+        @Override
+        public float getToughness() {
+            return 0;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0;
+        }
+    };
+
+    public static final ArmorMaterial MASK_MATERIAL = new ArmorMaterial() {
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) { return 0; }
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) { return 0; }
+        @Override
+        public int getEnchantmentValue() { return 0; }
+        @Override
+        public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_LEATHER; }
+        @Override
+        public Ingredient getRepairIngredient() { return Ingredient.EMPTY; }
+        @Override
+        public String getName() { return fantastikmod.MOD_ID + ":kitsune_mask"; }
+        @Override
+        public float getToughness() { return 0; }
+        @Override
+        public float getKnockbackResistance() { return 0; }
+    };
 
 
     private final String name;

@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=east,shape=0": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_0",
+      "y": 270
+    },
+    "facing=east,shape=1": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_1",
+      "y": 270
+    },
+    "facing=east,shape=2": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_2",
+      "y": 270
+    },
+    "facing=north,shape=0": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_0",
+      "y": 180
+    },
+    "facing=north,shape=1": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_1",
+      "y": 180
+    },
+    "facing=north,shape=2": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_2",
+      "y": 180
+    },
+    "facing=south,shape=0": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_0"
+    },
+    "facing=south,shape=1": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_1"
+    },
+    "facing=south,shape=2": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_2"
+    },
+    "facing=west,shape=0": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_0",
+      "y": 90
+    },
+    "facing=west,shape=1": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_1",
+      "y": 90
+    },
+    "facing=west,shape=2": {
+      "model": "fantastikmod:block/roof_tile/roof_cap_medieval_clay_damaged_2",
+      "y": 90
+    }
+  }
+}

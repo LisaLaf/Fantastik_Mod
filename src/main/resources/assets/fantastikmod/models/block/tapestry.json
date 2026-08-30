@@ -1,0 +1,5 @@
+{
+  "loader": "geckolib:geo",
+  "model": "fantastikmod:geo/block/tapestry",
+  "texture": "fantastikmod:block/tapestry/tapestry_0"
+}

@@ -2,6 +2,7 @@ package net.lisalaf.fantastikmod.dialog.quest;
 
 import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.lisalaf.fantastikmod.entity.custom.MoonDeerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import java.util.*;
@@ -10,80 +11,29 @@ public class QuestSystem {
     private static final Map<UUID, Quest> activeQuests = new HashMap<>();
     private static final Map<UUID, Long> lastQuestTimes = new HashMap<>();
 
-    // === ОБЩИЕ МЕТОДЫ ===
+    private static final Map<UUID, UUID> questPlayerMap = new HashMap<>(); // entityUUID -> playerUUID
+
     public static Map<UUID, Quest> getActiveQuests() {
         return Collections.unmodifiableMap(activeQuests);
     }
 
-    private static boolean canGiveNewQuest(UUID uuid) {
-        if (activeQuests.containsKey(uuid)) {
-            Quest quest = activeQuests.get(uuid);
+    public static boolean canGiveNewQuest(UUID entityUUID) {
+        if (activeQuests.containsKey(entityUUID)) {
+            Quest quest = activeQuests.get(entityUUID);
             if (quest.isActive() && !quest.isCompleted()) {
                 return false;
             }
         }
 
-        long lastTime = lastQuestTimes.getOrDefault(uuid, 0L);
+        long lastTime = lastQuestTimes.getOrDefault(entityUUID, 0L);
         long currentTime = System.currentTimeMillis();
         long cooldown = 60 * 1000; // 60 секунд
 
         return (currentTime - lastTime) > cooldown;
     }
 
-    private static boolean completeQuest(UUID entityId, Player player) {
-        Quest quest = activeQuests.get(entityId);
-        if (quest != null && quest.isActive() && quest.canComplete()) {
-            quest.complete();
-            activeQuests.remove(entityId);
-            return true;
-        }
-        return false;
-    }
-
-    private static void cancelQuest(UUID entityId) {
-        Quest quest = activeQuests.get(entityId);
-        if (quest != null) {
-            quest.fail();
-            activeQuests.remove(entityId);
-        }
-    }
-
-    // === МЕТОДЫ ДЛЯ КИЦУНЭ ===
-    public static Quest getQuestForKitsune(KitsuneLightEntity kitsune) {
-        return activeQuests.get(kitsune.getUUID());
-    }
-
-    public static boolean canGiveNewQuest(KitsuneLightEntity kitsune) {
-        return canGiveNewQuest(kitsune.getUUID());
-    }
-
-    public static long getNextQuestTime(KitsuneLightEntity kitsune) {
-        UUID uuid = kitsune.getUUID();
-
-        if (activeQuests.containsKey(uuid)) {
-            Quest quest = activeQuests.get(uuid);
-            if (quest.isActive() && !quest.isCompleted()) {
-                return 0;
-            }
-        }
-
-        long lastTime = lastQuestTimes.getOrDefault(uuid, 0L);
-        long currentTime = System.currentTimeMillis();
-        long minCooldown = 300 * 1000;
-        long maxCooldown = 1500 * 1000;
-
-        long cooldown = minCooldown + (long)(Math.random() * (maxCooldown - minCooldown));
-        long timePassed = currentTime - lastTime;
-
-        if (timePassed > cooldown) {
-            return 0;
-        }
-
-        return cooldown - timePassed;
-    }
-
     public static Quest createNewQuest(KitsuneLightEntity kitsune) {
-        if (!canGiveNewQuest(kitsune)) {
+        if (!canGiveNewQuest(kitsune.getUUID())) {
             return null;
         }
 
@@ -99,42 +49,8 @@ public class QuestSystem {
         return null;
     }
 
-    public static boolean startQuest(KitsuneLightEntity kitsune) {
-        Quest quest = getQuestForKitsune(kitsune);
-        if (quest != null && !quest.isActive()) {
-            quest.start();
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean completeQuest(KitsuneLightEntity kitsune, Player player) {
-        return completeQuest(kitsune.getUUID(), player);
-    }
-
-    public static void cancelQuest(KitsuneLightEntity kitsune) {
-        cancelQuest(kitsune.getUUID());
-    }
-
-    public static void checkQuestTimers(KitsuneLightEntity kitsune) {
-        Quest quest = getQuestForKitsune(kitsune);
-        if (quest != null && quest.isActive() && quest.getTimeLeft() <= 0) {
-            quest.fail();
-            activeQuests.remove(kitsune.getUUID());
-        }
-    }
-
-    // === МЕТОДЫ ДЛЯ ЛУННОГО ОЛЕНЯ ===
-    public static Quest getQuestForMoonDeer(MoonDeerEntity moonDeer) {
-        return activeQuests.get(moonDeer.getUUID());
-    }
-
-    public static boolean canGiveNewQuest(MoonDeerEntity moonDeer) {
-        return canGiveNewQuest(moonDeer.getUUID());
-    }
-
     public static Quest createNewQuest(MoonDeerEntity moonDeer) {
-        if (!canGiveNewQuest(moonDeer)) {
+        if (!canGiveNewQuest(moonDeer.getUUID())) {
             return null;
         }
 
@@ -150,27 +66,63 @@ public class QuestSystem {
         return null;
     }
 
-    public static boolean completeQuest(MoonDeerEntity moonDeer, Player player) {
-        return completeQuest(moonDeer.getUUID(), player);
-    }
+    public static boolean startQuest(Entity entity, ServerPlayer player) {
+        UUID entityUUID = entity.getUUID();
+        Quest quest = activeQuests.get(entityUUID);
 
-    public static void cancelQuest(MoonDeerEntity moonDeer) {
-        cancelQuest(moonDeer.getUUID());
-    }
-
-    public static void updateQuestProgress(Player player) {
-        for (Quest quest : activeQuests.values()) {
-            if (quest.isActive() && player.level() != null) {
-                quest.updateProgress(player, player.level());
-            }
+        if (quest != null && !quest.isActive()) {
+            quest.start();
+            questPlayerMap.put(entityUUID, player.getUUID());
+            return true;
         }
+        return false;
+    }
+
+    public static boolean completeQuest(Entity entity, ServerPlayer player) {
+        UUID entityUUID = entity.getUUID();
+        Quest quest = activeQuests.get(entityUUID);
+
+        if (quest != null && quest.isActive() && quest.canComplete()) {
+            quest.complete();
+            activeQuests.remove(entityUUID);
+            questPlayerMap.remove(entityUUID);
+            return true;
+        }
+        return false;
+    }
+
+    public static void cancelQuest(Entity entity) {
+        UUID entityUUID = entity.getUUID();
+        Quest quest = activeQuests.get(entityUUID);
+
+        if (quest != null) {
+            quest.fail();
+            activeQuests.remove(entityUUID);
+            questPlayerMap.remove(entityUUID);
+        }
+    }
+
+    public static Quest getQuest(UUID entityUUID) {
+        return activeQuests.get(entityUUID);
+    }
+
+    public static Quest getQuestForKitsune(KitsuneLightEntity kitsune) {
+        return getQuest(kitsune.getUUID());
+    }
+
+    public static Quest getQuestForMoonDeer(MoonDeerEntity moonDeer) {
+        return getQuest(moonDeer.getUUID());
+    }
+
+    public static boolean canGiveNewQuest(KitsuneLightEntity kitsune) {
+        return canGiveNewQuest(kitsune.getUUID());
+    }
+
+    public static boolean canGiveNewQuest(MoonDeerEntity moonDeer) {
+        return canGiveNewQuest(moonDeer.getUUID());
     }
 
     public static void cancelQuestForEntity(Entity entity) {
-        if (entity instanceof KitsuneLightEntity kitsune) {
-            cancelQuest(kitsune);
-        } else if (entity instanceof MoonDeerEntity moonDeer) {
-            cancelQuest(moonDeer);
-        }
+        cancelQuest(entity);
     }
 }

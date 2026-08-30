@@ -6,7 +6,6 @@ import net.lisalaf.fantastikmod.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -30,10 +29,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.AURIPIGMENT_HELMET.get(),
                         ModItems.AURIPIGMENT_CHESTPLATE.get(),
                         ModItems.AURIPIGMENT_LEGGINGS.get(),
-                        ModItems.AURIPIGMENT_BOOTS.get());
-
-        this.tag(ItemTags.TRIMMABLE_ARMOR)
-                .add(ModItems.HEART_ICE_DRAGON.get(),
+                        ModItems.AURIPIGMENT_BOOTS.get(),
+                        ModItems.HELMET_FUR_ICE_DRAGON.get(),
                         ModItems.CHESTPLATE_FUR_ICE_DRAGON.get(),
                         ModItems.LEGGINGS_FUR_ICE_DRAGON.get(),
                         ModItems.BOOTS_FUR_ICE_DRAGON.get());
@@ -42,11 +39,11 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.TEA_CEREMONY_MUSIC_DISC.get());
 
         this.tag(ItemTags.PLANKS)
-                .add(ModBlocks.MOON_PLANKS.get().asItem());
+                .add(ModBlocks.MOON_PLANKS.get().asItem())
+                .add(ModBlocks.LILAC_PLANKS.get().asItem());
 
         this.tag(ItemTags.LOGS_THAT_BURN)
-                .add(ModBlocks.TREE_MOON_LOG_BLOCK.get().asItem());
-
-
+                .add(ModBlocks.TREE_MOON_LOG_BLOCK.get().asItem())
+                .add(ModBlocks.LILAC_LOG.get().asItem());
     }
 }

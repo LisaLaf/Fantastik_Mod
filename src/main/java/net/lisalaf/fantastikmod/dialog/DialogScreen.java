@@ -10,6 +10,8 @@ import net.lisalaf.fantastikmod.dialog.quest.QuestSystem;
 import net.lisalaf.fantastikmod.dialog.quest.QuestTabButton;
 import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.lisalaf.fantastikmod.entity.custom.MoonDeerEntity;
+import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.network.QuestPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -22,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.lisalaf.fantastikmod.dialog.quest.ClientQuestData;
 
 @SuppressWarnings("removal")
 public class DialogScreen extends Screen {
@@ -94,6 +97,9 @@ public class DialogScreen extends Screen {
 
         updateOptionButtons();
         updateTabs();
+
+        resetQuestButtons();
+        questCreationChecked = false;
     }
 
     private void updateTabs() {
@@ -198,22 +204,103 @@ public class DialogScreen extends Screen {
     private void renderQuestScreen(GuiGraphics g) {
         int mx = (int)(minecraft.mouseHandler.xpos() * minecraft.getWindow().getGuiScaledWidth() / minecraft.getWindow().getScreenWidth());
         int my = (int)(minecraft.mouseHandler.ypos() * minecraft.getWindow().getGuiScaledHeight() / minecraft.getWindow().getScreenHeight());
-        Quest quest = null;
-        if (entity instanceof KitsuneLightEntity k) {
-            quest = QuestSystem.getQuestForKitsune(k);
-            if (quest == null && !questCreationChecked) { questCreationChecked = true; if (QuestSystem.canGiveNewQuest(k)) quest = QuestSystem.createNewQuest(k); }
-        } else if (entity instanceof MoonDeerEntity d) {
-            quest = QuestSystem.getQuestForMoonDeer(d);
-            if (quest == null && !questCreationChecked) { questCreationChecked = true; if (QuestSystem.canGiveNewQuest(d)) quest = QuestSystem.createNewQuest(d); }
-        }
+        ClientQuestData.ClientQuestInfo questInfo = ClientQuestData.getQuestData(entity.getUUID());
+
         g.fill(contentX, contentY, contentX + CONTENT_WIDTH, contentY + CONTENT_HEIGHT, 0xB3000000);
         g.drawCenteredString(font, Component.translatable("gui.quest.title"), contentX + CONTENT_WIDTH / 2, contentY + 15, 0xFFFFFF);
-        if (quest == null) g.drawCenteredString(font, Component.translatable("gui.quest.none"), contentX + CONTENT_WIDTH / 2, contentY + 60, 0xAAAAAA);
-        else {
-            renderActiveQuest(g, quest);
-            if (!quest.isActive()) renderQuestButtons(g, mx, my, quest);
-            else if (quest.canComplete()) renderCompleteButton(g, mx, my, quest);
-            else renderActiveQuestInfo(g, mx, my, quest);
+
+        if (questInfo == null) {
+            g.drawCenteredString(font, Component.translatable("gui.quest.none"), contentX + CONTENT_WIDTH / 2, contentY + 60, 0xAAAAAA);
+
+            if (acceptQuestButton == null) {
+                int cx = contentX + CONTENT_WIDTH / 2;
+                acceptQuestButton = new DialogButton(cx - 45, contentY + 100, 90, 24,
+                        Component.translatable("gui.quest.request"), 0, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 0));
+                    resetQuestButtons();
+                    questCreationChecked = false;
+                });
+                addRenderableWidget(acceptQuestButton);
+            }
+        } else if (!questInfo.isActive) {
+            renderQuestInfo(g, questInfo);
+
+            if (acceptQuestButton == null) {
+                int cx = contentX + CONTENT_WIDTH / 2;
+                acceptQuestButton = new DialogButton(cx - 100, contentY + 155, 90, 24,
+                        Component.translatable("gui.quest.accept"), 0, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 0));
+                    resetQuestButtons();
+                });
+                addRenderableWidget(acceptQuestButton);
+
+                declineQuestButton = new DialogButton(cx + 10, contentY + 155, 90, 24,
+                        Component.translatable("gui.quest.decline"), 1, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
+                    ClientQuestData.clearData();
+                    resetQuestButtons();
+                });
+                addRenderableWidget(declineQuestButton);
+            }
+        } else {
+            renderQuestInfo(g, questInfo);
+            boolean canComplete = minecraft.player != null &&
+                    minecraft.player.getInventory().countItem(questInfo.requiredItem) >= questInfo.requiredAmount;
+
+            if (canComplete) {
+                if (completeQuestButton == null) {
+                    int cx = contentX + CONTENT_WIDTH / 2;
+                    completeQuestButton = new DialogButton(cx - 45, contentY + 155, 90, 24,
+                            Component.translatable("gui.quest.complete"), 2, b -> {
+                        fantastikmod.sendToServer(new QuestPacket(entity.getId(), 1));
+                        ClientQuestData.clearData();
+                        resetQuestButtons();
+                    });
+                    addRenderableWidget(completeQuestButton);
+                }
+            } else {
+                if (cancelQuestButton == null) {
+                    int cx = contentX + CONTENT_WIDTH / 2;
+                    long tl = questInfo.timeLeft;
+                    Component cancelText = Component.translatable("gui.quest.cancel");
+                    if (tl > 0) {
+                        long m = tl / 60000, s = (tl % 60000) / 1000;
+                        cancelText = cancelText.copy().append(" (" + String.format("%d:%02d", m, s) + ")");
+                    }
+                    cancelQuestButton = new DialogButton(cx - 45, contentY + 155, 90, 24, cancelText, 3, b -> {
+                        fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
+                        ClientQuestData.clearData();
+                        resetQuestButtons();
+                    });
+                    addRenderableWidget(cancelQuestButton);
+                }
+            }
+        }
+    }
+    private void renderQuestInfo(GuiGraphics g, ClientQuestData.ClientQuestInfo questInfo) {
+        int cx = contentX + CONTENT_WIDTH / 2;
+        g.drawCenteredString(font, Component.literal(questInfo.nameKey), cx, contentY + 30, 0xFFFFFF);
+        var descLines = font.split(Component.literal(questInfo.descKey), CONTENT_WIDTH - 40);
+        for (int i = 0; i < Math.min(descLines.size(), 2); i++) {
+            g.drawCenteredString(font, descLines.get(i), cx, contentY + 45 + i * 12, 0xAAAAAA);
+        }
+
+        g.fill(contentX + 30, contentY + 75, contentX + CONTENT_WIDTH - 30, contentY + 76, 0x55FFFFFF);
+        int lx = contentX + 60, rx = contentX + CONTENT_WIDTH - 80, iy = contentY + 90;
+        g.drawString(font, Component.translatable("gui.quest.requires"), lx - 40, iy - 15, 0xFFFFFF);
+        g.drawString(font, Component.translatable("gui.quest.reward"), rx - 30, iy - 15, 0xFFFFFF);
+
+        if (questInfo.requiredItem != null) {
+            renderItemInFrame(g, questInfo.requiredItem, questInfo.requiredAmount, lx, iy, false);
+        }
+        if (questInfo.rewardItem != null) {
+            renderItemInFrame(g, questInfo.rewardItem, questInfo.rewardAmount, rx, iy, true);
+        }
+        if (questInfo.isActive && minecraft.player != null) {
+            int cc = minecraft.player.getInventory().countItem(questInfo.requiredItem);
+            int rq = questInfo.requiredAmount;
+            int tc = cc >= rq ? 0xFF00FF00 : 0xFFFFFF;
+            g.drawCenteredString(font, Component.literal("Progress: " + cc + "/" + rq), cx, contentY + 135, tc);
         }
     }
 
@@ -222,15 +309,36 @@ public class DialogScreen extends Screen {
     private void renderQuestButtons(GuiGraphics g, int mx, int my, Quest quest) {
         int cx = contentX + CONTENT_WIDTH / 2, by = contentY + 160;
         if (quest != null && !quest.isActive()) {
-            if (acceptQuestButton == null) { acceptQuestButton = new DialogButton(cx - 100, by, 90, 24, Component.translatable("gui.quest.accept"), 0, b -> { quest.start(); resetQuestButtons(); }); addRenderableWidget(acceptQuestButton); }
-            if (declineQuestButton == null) { declineQuestButton = new DialogButton(cx + 10, by, 90, 24, Component.translatable("gui.quest.decline"), 1, b -> { QuestSystem.cancelQuestForEntity(entity); resetQuestButtons(); resetQuestCreationCheck(); }); addRenderableWidget(declineQuestButton); }
+            if (acceptQuestButton == null) {
+                acceptQuestButton = new DialogButton(cx - 100, by, 90, 24, Component.translatable("gui.quest.accept"), 0, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 0));
+                    System.out.println("CLIENT: Sent accept quest packet for entity " + entity.getId());
+                    resetQuestButtons();
+                });
+                addRenderableWidget(acceptQuestButton);
+            }
+            if (declineQuestButton == null) {
+                declineQuestButton = new DialogButton(cx + 10, by, 90, 24, Component.translatable("gui.quest.decline"), 1, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
+                    System.out.println("CLIENT: Sent decline quest packet for entity " + entity.getId());
+                    resetQuestButtons();
+                    resetQuestCreationCheck();
+                });
+                addRenderableWidget(declineQuestButton);
+            }
         }
     }
 
     private void renderCompleteButton(GuiGraphics g, int mx, int my, Quest quest) {
         int cx = contentX + CONTENT_WIDTH / 2, by = contentY + 180;
         if (quest != null && quest.isActive() && quest.canComplete() && minecraft.player != null && minecraft.player.getInventory().countItem(quest.getRequiredItem()) >= quest.getRequiredAmount()) {
-            if (completeQuestButton == null) { completeQuestButton = new DialogButton(cx - 45, by, 90, 24, Component.translatable("gui.quest.complete"), 2, b -> { if (minecraft.player != null) { boolean s = false; if (entity instanceof KitsuneLightEntity k) s = QuestSystem.completeQuest(k, minecraft.player); else if (entity instanceof MoonDeerEntity d) s = QuestSystem.completeQuest(d, minecraft.player); if (s) resetQuestButtons(); } }); addRenderableWidget(completeQuestButton); }
+            if (completeQuestButton == null) {
+                completeQuestButton = new DialogButton(cx - 45, by, 90, 24, Component.translatable("gui.quest.complete"), 2, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 1));
+                    resetQuestButtons();
+                });
+                addRenderableWidget(completeQuestButton);
+            }
         }
     }
 
@@ -238,7 +346,14 @@ public class DialogScreen extends Screen {
         int cx = contentX + CONTENT_WIDTH / 2, by = contentY + 180;
         if (quest != null && quest.isActive()) {
             long tl = quest.getTimeLeft();
-            if (cancelQuestButton == null) { cancelQuestButton = new DialogButton(cx - 45, by, 90, 24, Component.translatable("gui.quest.cancel"), 3, b -> { QuestSystem.cancelQuestForEntity(entity); resetQuestButtons(); resetQuestCreationCheck(); }); addRenderableWidget(cancelQuestButton); }
+            if (cancelQuestButton == null) {
+                cancelQuestButton = new DialogButton(cx - 45, by, 90, 24, Component.translatable("gui.quest.cancel"), 3, b -> {
+                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
+                    resetQuestButtons();
+                    resetQuestCreationCheck();
+                });
+                addRenderableWidget(cancelQuestButton);
+            }
             if (tl > 0) { long m = tl / 60000, s = (tl % 60000) / 1000; cancelQuestButton.setMessage(Component.translatable("gui.quest.cancel").copy().append(" (" + String.format("%d:%02d", m, s) + ")")); }
             else cancelQuestButton.setMessage(Component.translatable("gui.quest.cancel"));
             if (cancelQuestButton != null) cancelQuestButton.render(g, mx, my, 0);

@@ -7,10 +7,10 @@ import net.lisalaf.fantastikmod.item.ModFoods;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.lisalaf.fantastikmod.particle.ColoredParticleOptions;
 import net.lisalaf.fantastikmod.particle.ModParticles;
+import net.lisalaf.fantastikmod.particle.WaterRippleOptions;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.lisalaf.fantastikmod.worldgen.tree.LilacTreeGrower;
 import net.lisalaf.fantastikmod.worldgen.tree.MoonTreeGrower;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -391,6 +391,16 @@ public class ModBlocks {
                     }
                 }});
 
+    public static final RegistryObject<Block> BIG_CITY_GATE = registerBlock("big_city_gate",
+            () -> new BigCityGateBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(5.0f, 10.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()
+                    .isViewBlocking((state, level, pos) -> false)
+                    .requiresCorrectToolForDrops()
+            ));
+
     public static final RegistryObject<Block> MOONSTONE = registerBlock("moonstone",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE).lightLevel(state -> 4)));
 
@@ -655,6 +665,202 @@ public class ModBlocks {
     public static final RegistryObject<Block> FROST = registerBlock("frost",
             () -> new FrostLayerBlock(BlockBehaviour.Properties.copy(Blocks.SNOW).lightLevel(state -> 2)));
 
+    public static final RegistryObject<Block> TAPESTRY = registerBlock("tapestry",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL)
+                    .strength(0.5f)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+                    .noCollission()
+            ));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_0 = registerBlock("tapestry_castle_0",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL)
+                    .strength(0.5f)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+                    .noCollission()
+            ));
+
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_BURNED_0 = registerBlock("tapestry_castle_burned_0",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL)
+                    .strength(0.5f)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+                    .noCollission()
+            ));
+
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_1 = registerBlock("tapestry_castle_1",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_2 = registerBlock("tapestry_castle_2",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_3 = registerBlock("tapestry_castle_3",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_4 = registerBlock("tapestry_castle_4",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_BURNED_1 = registerBlock("tapestry_castle_burned_1",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_BURNED_2 = registerBlock("tapestry_castle_burned_2",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_BURNED_3 = registerBlock("tapestry_castle_burned_3",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TAPESTRY_CASTLE_BURNED_4 = registerBlock("tapestry_castle_burned_4",
+            () -> new TapestryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL).noOcclusion().noCollission()));
+
+    public static final RegistryObject<Block> ROYAL_BED = registerBlock("royal_bed",
+            () -> new RoyalBedBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.0f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            ));
+
+    public static final RegistryObject<Block> ROOF_TILE_MEDIEVAL_CLAY_DAMAGED = registerBlock("roof_tile_medieval_clay_damaged",
+            () -> new RoofTileBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(1.5f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_TILE_MEDIEVAL_IRON_DAMAGED = registerBlock("roof_tile_medieval_iron_damaged",
+            () -> new RoofTileBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.METAL).noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_TILE_MEDIEVAL_COPPER_DAMAGED = registerBlock("roof_tile_medieval_copper_damaged",
+            () -> new RoofTileBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.COPPER).noOcclusion()));
+
+
+    public static final RegistryObject<Block> LARGE_TORCH = registerBlock("large_torch",
+            () -> new LargeTorchBlock(BlockBehaviour.Properties.copy(Blocks.TORCH)
+                    .lightLevel(state -> 15)
+                    .sound(SoundType.WOOD)
+            ));
+
+    public static final RegistryObject<Block> DENSE_WATER_SURFACE = registerBlock("dense_water_surface",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WATER).strength(100f).sound(SoundType.WOOL).noOcclusion()) {
+                @Override
+                public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+                    if (level.isClientSide) {
+                        spawnWaterRipple(level, pos, entity);
+                    }
+                    super.stepOn(level, pos, state, entity);
+                }
+                @Override
+                public boolean skipRendering(BlockState state, BlockState neighbor, Direction dir) {
+                    return neighbor.is(this) ? true : super.skipRendering(state, neighbor, dir);
+                }
+            });
+
+    public static final RegistryObject<Block> ROOF_CAP_MEDIEVAL_CLAY_DAMAGED = registerBlock("roof_cap_medieval_clay_damaged",
+            () -> new RoofCapBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(1.5f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_CAP_MEDIEVAL_IRON_DAMAGED = registerBlock("roof_cap_medieval_iron_damaged",
+            () -> new RoofCapBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.METAL).noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_CAP_MEDIEVAL_COPPER_DAMAGED = registerBlock("roof_cap_medieval_copper_damaged",
+            () -> new RoofCapBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.COPPER).noOcclusion()));
+
+    public static final RegistryObject<Block> CHARRED_THRONE = registerBlock("charred_throne",
+            () -> new CharredThroneBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(3.0f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> DENSE_WATER_MID_HIGH = registerBlock("dense_water_mid_high",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WATER).strength(100f).sound(SoundType.WOOL).noOcclusion()) {
+                @Override
+                public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+                    if (level.isClientSide) {
+                        spawnWaterRipple(level, pos, entity);
+                    }
+                    super.stepOn(level, pos, state, entity);
+                }
+                @Override
+                public boolean skipRendering(BlockState state, BlockState neighbor, Direction dir) {
+                    return neighbor.is(this) ? true : super.skipRendering(state, neighbor, dir);
+                }
+            });
+
+    public static final RegistryObject<Block> DENSE_WATER_MID_LOW = registerBlock("dense_water_mid_low",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WATER).strength(100f).sound(SoundType.WOOL).noOcclusion()) {
+                @Override
+                public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+                    if (level.isClientSide) {
+                        spawnWaterRipple(level, pos, entity);
+                    }
+                    super.stepOn(level, pos, state, entity);
+                }
+                @Override
+                public boolean skipRendering(BlockState state, BlockState neighbor, Direction dir) {
+                    return neighbor.is(this) ? true : super.skipRendering(state, neighbor, dir);
+                }
+            });
+
+    public static final RegistryObject<Block> DENSE_WATER_DEEP = registerBlock("dense_water_deep",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WATER).strength(100f).sound(SoundType.WOOL).noOcclusion()) {
+                @Override
+                public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+                    if (level.isClientSide) {
+                        spawnWaterRipple(level, pos, entity);
+                    }
+                    super.stepOn(level, pos, state, entity);
+                }
+                @Override
+                public boolean skipRendering(BlockState state, BlockState neighbor, Direction dir) {
+                    return neighbor.is(this) ? true : super.skipRendering(state, neighbor, dir);
+                }
+            });
+
+    public static final RegistryObject<Block> PAPER_LANTERN = registerBlock("paper_lantern",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.LANTERN)
+                    .lightLevel(state -> 15)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_TILE_MEDIEVAL_DEEPSLATE_DAMAGED = registerBlock("roof_tile_medieval_deepslate_damaged",
+            () -> new RoofTileBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.DEEPSLATE_TILES).noOcclusion()));
+
+    public static final RegistryObject<Block> ROOF_CAP_MEDIEVAL_DEEPSLATE_DAMAGED = registerBlock("roof_cap_medieval_deepslate_damaged",
+            () -> new RoofCapBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)
+                    .strength(2.5f).sound(SoundType.DEEPSLATE_TILES).noOcclusion()));
+
+    public static final RegistryObject<Block> WOODEN_CHAIR = registerBlock("wooden_chair",
+            () -> new WoodenChairBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
+                    .noOcclusion()));
+    public static final RegistryObject<Block> TABLECLOTH_WHITE = registerBlock("tablecloth_white",
+            () -> new TableclothBlock(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL)
+                    .noOcclusion()
+                    .noCollission()
+                    .instabreak()));
+
+    public static final RegistryObject<Block> YUKIMI_TORO = registerBlock("yukimi_toro",
+            () -> new YukimiToroBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .lightLevel(state -> 12)
+                    .noOcclusion()
+                    .sound(SoundType.STONE)));
+    public static final RegistryObject<Block> PETRIFIED_LARGE_EGG = registerBlock("petrified_large_egg",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(3.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
@@ -667,5 +873,19 @@ public class ModBlocks {
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
+    }
+
+    private static void spawnWaterRipple(Level level, BlockPos pos, Entity entity) {
+        if (entity.getDeltaMovement().horizontalDistanceSqr() < 0.001) return;
+
+        float entityWidth = entity.getBbWidth();
+        float scale = 0.3f + entityWidth * 0.15f;
+        scale = Math.min(scale, 1.5f);
+
+        if (entity.tickCount % 5 != 0) return;
+
+        double x = pos.getX() + 0.5 + (level.random.nextDouble() - 0.5) * entityWidth;
+        double z = pos.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * entityWidth;
+        level.addParticle(new WaterRippleOptions(scale), x, pos.getY() + 1.0, z, 0, 0, 0);
     }
 }

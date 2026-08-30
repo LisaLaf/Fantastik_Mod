@@ -58,6 +58,54 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSimpleItem("moon_shovel");
         registerSimpleItem("moon_sword");
         registerSimpleItem("moon_crowberry");
+        registerSimpleItem("big_city_gate");
+        registerSimpleItem("wings");
+        registerSimpleItem("kitsune_mask_0");
+        registerSimpleItem("kitsune_mask_1");
+        registerSimpleItem("kitsune_mask_2");
+        registerSimpleItem("kitsune_soul_mask_0");
+        registerSimpleItem("kitsune_soul_mask_1");
+        registerSimpleItem("kitsune_soul_mask_2");
+        registerSimpleItem("tapestry");
+        registerSimpleItem("tapestry_castle_0");
+        registerSimpleItem("tapestry_castle_1");
+        registerSimpleItem("tapestry_castle_2");
+        registerSimpleItem("tapestry_castle_3");
+        registerSimpleItem("tapestry_castle_4");
+        registerSimpleItem("tapestry_castle_burned_0");
+        registerSimpleItem("tapestry_castle_burned_1");
+        registerSimpleItem("tapestry_castle_burned_2");
+        registerSimpleItem("tapestry_castle_burned_3");
+        registerSimpleItem("tapestry_castle_burned_4");
+        registerSimpleItem("royal_bed");
+        registerSimpleItem("roof_tile_medieval_clay_damaged");
+        registerSimpleItem("builders_wand");
+        registerSimpleItem("roof_tile_medieval_iron_damaged");
+        registerSimpleItem("roof_tile_medieval_copper_damaged");
+        registerSimpleItem("roof_cap_medieval_iron_damaged");
+        registerSimpleItem("roof_cap_medieval_copper_damaged");
+        registerSimpleItem("roof_cap_medieval_clay_damaged");
+        registerSimpleItem("charred_throne");
+        registerSimpleItem("large_torch");
+        registerSimpleItem("paper_lantern");
+        registerSimpleItem("roof_tile_medieval_deepslate_damaged");
+        registerSimpleItem("roof_cap_medieval_deepslate_damaged");
+        registerSimpleItem("wooden_chair");
+        registerArmorItem("rusty_helmet");
+        registerArmorItem("rusty_chestplate");
+        registerArmorItem("rusty_leggings");
+        registerArmorItem("rusty_boots");
+        registerArmorItem("tablecloth_white");
+        registerArmorItem("yukimi_toro");
+        registerSimpleItem("withered_scales_fire_dragon");
+        registerArmorItem("withered_scales_fire_dragon_helmet");
+        registerArmorItem("withered_scales_fire_dragon_chestplate");
+        registerArmorItem("withered_scales_fire_dragon_leggings");
+        registerArmorItem("withered_scales_fire_dragon_boots");
+        registerSimpleItem("lilac_branch");
+        registerSimpleItem("petrified_large_egg");
+
+
 
         registerBlockItem("moon_crystal_glass");
         registerSimpleItem("moon_crystal_glass_pane", "block/moon_crystal_glass");
@@ -95,8 +143,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerFenceItem("moon_planks_fence", "moon_planks");
         registerWallItem("moon_planks_wall", "moon_planks");
         trapdoorItem(ModBlocks.MOON_TREE_TRAPDOOR);
-        fenceGateItem(ModBlocks.MOON_PLANKS_FENCE_GATE, ModBlocks.MOON_PLANKS);
-        
+        registerBlockItem("moon_planks_fence_gate");
+
         registerHandheldItem("sword_auripigment");
         registerHandheldItem("silver_sword");
         registerHandheldItem("silver_pickaxe");
@@ -239,7 +287,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private void registerSimpleItem(String itemName, String texturePath) {
         withExistingParent(itemName, "item/generated")
-                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, texturePath));
+                .texture("layer0", new ResourceLocation(fantastikmod.MOD_ID, texturePath))
+                .renderType("translucent");
     }
 
 }

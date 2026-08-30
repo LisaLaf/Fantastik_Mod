@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "P H",
+    "PPP",
+    "P P"
+  ],
+  "result": {
+    "item": "fantastikmod:wooden_chair"
+  },
+  "show_notification": true
+}

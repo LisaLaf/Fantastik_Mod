@@ -10,11 +10,13 @@ import net.minecraft.world.level.block.Block;
 
 public class ModTags {
     public static class Blocks {
+        @SuppressWarnings("removal")
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(fantastikmod.MOD_ID, name));
         }
     }
 
+    @SuppressWarnings("removal")
     public static class Items {
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(fantastikmod.MOD_ID, name));

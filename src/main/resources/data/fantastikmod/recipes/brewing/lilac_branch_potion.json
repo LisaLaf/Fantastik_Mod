@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:brewing",
+  "base": "minecraft:mundane",
+  "ingredient": {
+    "item": "fantastikmod:lilac_branch"
+  },
+  "result": {
+    "potion": "fantastikmod:lilac_branch"
+  }
+}

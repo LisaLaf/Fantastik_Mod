@@ -1,0 +1,7 @@
+{
+  "parent": "fantastikmod:block/roof_tile/roof_cap_2",
+  "textures": {
+    "2": "fantastikmod:block/roof_tile/roof_tile_medieval_deepslate_damaged",
+    "particle": "fantastikmod:block/roof_tile/roof_tile_medieval_deepslate_damaged"
+  }
+}

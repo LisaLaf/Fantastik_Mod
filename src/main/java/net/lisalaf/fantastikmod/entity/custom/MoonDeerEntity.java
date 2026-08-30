@@ -1,15 +1,12 @@
 package net.lisalaf.fantastikmod.entity.custom;
 
 import net.lisalaf.fantastikmod.dialog.Dialog;
+import net.lisalaf.fantastikmod.dialog.DialogClientHelper;
 import net.lisalaf.fantastikmod.dialog.DialogScreen;
 import net.lisalaf.fantastikmod.dialog.DialogSystem;
-import net.lisalaf.fantastikmod.dialog.mobs.MoonDeerDialog;
-import net.lisalaf.fantastikmod.dialog.mobs.WildMoonDeerDialog;
 import net.lisalaf.fantastikmod.entity.ai.MoonDeerGoal;
 import net.lisalaf.fantastikmod.entity.ai.moondeer.MoonDeerAttackGoal;
-import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
 import net.lisalaf.fantastikmod.entity.phrases.MoonDeerPhrases;
-import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -24,13 +21,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -45,12 +38,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -58,7 +49,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import net.minecraft.world.entity.ai.control.LookControl;
 
 
 import java.util.UUID;
@@ -278,17 +268,16 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
         // ДИАЛОГ С ПРИРУЧЕННЫМ ОЛЕНЕМ (Shift + ПКМ без предмета)
         if (itemstack.isEmpty() && hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown()) {
-
-            if (level().isClientSide) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 try {
                     Dialog dialog = DialogSystem.getDialog(this);
                     if (dialog != null) {
-                        Minecraft.getInstance().setScreen(new DialogScreen(this, dialog));
+                        DialogClientHelper.openDialog(this, dialog);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+            });
             return InteractionResult.sidedSuccess(level().isClientSide);
         }
 
@@ -303,23 +292,21 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
         if (isTamed() && player.getUUID().equals(getOwnerUUID()) && itemstack.is(net.minecraft.world.item.Items.STICK)) {
             cycleAIMode();
-            player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
+            player.displayClientMessage(Component.translatable(getAIModeKey()), true);
             this.playSound(SoundEvents.ITEM_FRAME_ROTATE_ITEM, 0.7F, 1.0F);
             return InteractionResult.sidedSuccess(level().isClientSide);
         }
 
         if (isTamed() && player.getUUID().equals(getOwnerUUID())) {
             if (player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
-                player.displayClientMessage(Component.literal(getAIModeMessage(player)), true);
+                player.displayClientMessage(Component.translatable(getAIModeKey()), true);
                 return InteractionResult.sidedSuccess(level().isClientSide);
             }
 
             if (!player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
                 if (this.isVehicle()) {
                     toggleRunning();
-                    player.displayClientMessage(Component.literal(isRunning() ?
-                            (isRussianLanguage(player) ? "Режим: Бег" : "Mode: Running") :
-                            (isRussianLanguage(player) ? "Режим: Ходьба" : "Mode: Walking")), true);
+                    player.displayClientMessage(Component.translatable(isRunning() ? "moondeer.running" : "moondeer.walking"), true);
                 } else {
                     player.startRiding(this);
                 }
@@ -328,6 +315,14 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
 
         return super.mobInteract(player, hand);
+    }
+
+    private String getAIModeKey() {
+        switch (getAIMode()) {
+            case AI_FOLLOW: return "moondeer.mode.follow";
+            case AI_WANDER: return "moondeer.mode.wander";
+            default: return "moondeer.mode.unknown";
+        }
     }
 
     private void tame(Player player) {
@@ -388,22 +383,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     }
 
     private void playSound(Holder.Reference<SoundEvent> uiButtonClick, float volume, float pitch) {
-    }
-
-
-    private String getAIModeMessage(Player player) {
-        boolean isRussian = isRussianLanguage(player);
-        switch (getAIMode()) {
-            case AI_FOLLOW -> {
-                return isRussian ? "Режим: Следование" : "Mode: Following";
-            }
-            case AI_WANDER -> {
-                return isRussian ? "Режим: Бродить" : "Mode: Wandering";
-            }
-            default -> {
-                return isRussian ? "Режим: Неизвестно" : "Mode: Unknown";
-            }
-        }
     }
 
     @Override
@@ -611,14 +590,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
     // === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ===
     private boolean isPanicking() {
         return this.getDeltaMovement().horizontalDistanceSqr() > 0.03D;
-    }
-
-    private boolean isRussianLanguage(Player player) {
-        if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-            String language = serverPlayer.getLanguage();
-            return language != null && (language.startsWith("ru_") || language.equals("ru_ru") || language.contains("russian"));
-        }
-        return false;
     }
 
     private void spawnTamingParticles() {

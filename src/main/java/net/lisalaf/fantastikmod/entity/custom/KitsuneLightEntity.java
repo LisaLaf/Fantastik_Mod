@@ -1,7 +1,6 @@
 package net.lisalaf.fantastikmod.entity.custom;
 
-import net.lisalaf.fantastikmod.dialog.DialogScreen;
-import net.lisalaf.fantastikmod.dialog.DialogSystem;
+import net.lisalaf.fantastikmod.dialog.*;
 import net.lisalaf.fantastikmod.dialog.mobs.KitsuneDialog;
 import net.lisalaf.fantastikmod.dialog.mood.MobMood;
 import net.lisalaf.fantastikmod.dialog.mood.MoodSystem;
@@ -48,6 +47,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -56,7 +57,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import net.lisalaf.fantastikmod.dialog.Dialog;
 import net.lisalaf.fantastikmod.dialog.DialogScreen;
 import net.lisalaf.fantastikmod.dialog.mobs.KitsuneDialog;
 
@@ -446,6 +446,7 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
     public void startSitAnimation() {
         if (!isSitAnimPlaying() && !isStandAnimPlaying() && !isSitting()) {
+            setSleeping(false);
             setSitAnimPlaying(true);
             animationTimer = 20;
             getNavigation().stop();
@@ -454,8 +455,9 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
     public void startStandAnimation() {
         if (isSitting()) {
+            setSleeping(false);
             setStandAnimPlaying(true);
-            setSitting(false); // СРАЗУ сбрасываем сидение
+            setSitting(false);
             animationTimer = 20;
             getNavigation().stop();
         }
@@ -481,9 +483,8 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
     public void startSleep() {
         if (!isSleeping() && !isSleepAnimPlaying()) {
             if (isSitting() && !isSitAnimPlaying() && !isStandAnimPlaying()) {
-                startSleepAnimation(); // Спим из сидячего положения
+                startSleepAnimation();
             } else if (!isSitting() && !isSitAnimPlaying()) {
-                // Если не сидит, сначала садится, потом спит
                 startSitAnimation();
                 sleepTimer = 1200 + random.nextInt(1200);
             }
@@ -517,16 +518,18 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
             boolean canTalk = true;
 
+            // В методе mobInteract:
             if (level().isClientSide) {
-                try {
-                    Dialog dialog = DialogSystem.getDialog(this);
-                    if (dialog != null && dialog.canStart()) {
-                        Minecraft.getInstance().setScreen(new DialogScreen(this, dialog));
-                    } else {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                    try {
+                        Dialog dialog = DialogSystem.getDialog(this);
+                        if (dialog != null && dialog.canStart()) {
+                            DialogClientHelper.openDialog(this, dialog);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             return InteractionResult.sidedSuccess(level().isClientSide);
@@ -673,7 +676,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
         if (!level().isClientSide) {
             moodSystem.setMood(50);
-            syncMoodToClient();
         }
 
         sendTamingMessage(player);
@@ -682,14 +684,8 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
         if (!level().isClientSide) {
             this.setTamed(true); // Дублируем для надежности
-            this.syncMoodToClient(); // Новый метод (см. ниже)
         }
 
-    }
-
-    private void syncMoodToClient() {
-        CompoundTag data = new CompoundTag();
-        data.putInt("MoodValue", moodSystem.getMood());
     }
 
     private void sendTamingMessage(Player player) {
@@ -724,14 +720,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
             return false;
         }
     }
-
-    private boolean isRussianLanguage(Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            String language = serverPlayer.getLanguage();
-            return language != null && (language.startsWith("ru_") || language.equals("ru_ru") || language.contains("russian"));
-        }
-        return false;
-    }
     // === АНИМАЦИОННЫЙ КОНТРОЛЛЕР ===
 
     @Override
@@ -741,25 +729,13 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
     private PlayState predicate(AnimationState<KitsuneLightEntity> event) {
 
-        if (isWakeAnimPlaying()) {
-            event.getController().setAnimation(RawAnimation.begin().thenPlay("wake_up"));
-            return PlayState.CONTINUE;
-        }
+        //if (isWakeAnimPlaying()) {event.getController().setAnimation(RawAnimation.begin().thenPlay("wake_up"));return PlayState.CONTINUE;}
 
-        if (isSleepAnimPlaying()) {
-            event.getController().setAnimation(RawAnimation.begin().thenPlay("go_to_sleep"));
-            return PlayState.CONTINUE;
-        }
+       // if (isSleepAnimPlaying()) {event.getController().setAnimation(RawAnimation.begin().thenPlay("go_to_sleep"));return PlayState.CONTINUE;}
 
-        if (isStandAnimPlaying()) {
-            event.getController().setAnimation(RawAnimation.begin().thenPlay("sit_end"));
-            return PlayState.CONTINUE;
-        }
+        //if (isStandAnimPlaying()) {event.getController().setAnimation(RawAnimation.begin().thenPlay("sit_end"));return PlayState.CONTINUE;}
 
-        if (isSitAnimPlaying()) {
-            event.getController().setAnimation(RawAnimation.begin().thenPlay("sit"));
-            return PlayState.CONTINUE;
-        }
+        //if (isSitAnimPlaying()) {event.getController().setAnimation(RawAnimation.begin().thenPlay("sit"));return PlayState.CONTINUE;}
 
         if (isSleeping()) {
             event.getController().setAnimation(RawAnimation.begin().thenPlay("sleep_idle"));
@@ -816,8 +792,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         this.tofuBlessingGoal = new KitsuneTofuBlessingGoal(this);
         this.goalSelector.addGoal(2, tofuBlessingGoal);
 
-
-        // Цели атаки ТОЛЬКО для взрослых
         if (!this.isBaby()) {
             this.goalSelector.addGoal(3, new KitsuneLightGoal.KitsuneAttackGoal(this, 1.2D, true));
             this.goalSelector.addGoal(4, new KitsuneLightGoal.DefendVillagersGoal(this));
@@ -994,7 +968,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        // Всегда можно кормить тофу
         if (stack.is(ModItems.TOFU.get())) {
             return true;
         }
@@ -1022,11 +995,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
         if (reason != MobSpawnType.BREEDING) {
             setVariant(level.getRandom().nextInt(6));
             setEyeVariant(level.getRandom().nextInt(8));
-
-            // Шанс 20% спавна детёнышем из яйца призыва
-            if (reason == MobSpawnType.SPAWN_EGG && level.getRandom().nextFloat() < 0.2f) {
-                this.setBaby(true);
-            }
         }
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
@@ -1324,8 +1292,6 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
             }
         }
     }
-
-
 
     private void spawnDodgeParticles() {
         if (this.level().isClientSide) {
@@ -1677,7 +1643,13 @@ public class KitsuneLightEntity extends Animal implements GeoEntity, MobMood {
     }
 
 
-
-
+    public void sayToPlayer(Player player, Component message) {
+        if (!level().isClientSide) {
+            player.sendSystemMessage(
+                    Component.literal("<" + this.getDisplayName().getString() + "> ").append(message)
+            );
+        }
+    }
+    private int confusedIndex = 0;
 
 }

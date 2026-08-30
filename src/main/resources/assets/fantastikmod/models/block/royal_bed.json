@@ -1,0 +1,6 @@
+{
+  "loader": "geckolib:geo",
+  "model": "fantastikmod:geo/block/royal_bed",
+  "texture": "fantastikmod:block/royal_bed",
+  "render_type": "translucent"
+}

@@ -38,5 +38,17 @@ public class ModTags {
                 Registries.BIOME,
                 new ResourceLocation(fantastikmod.MOD_ID, "has_structure/onsen_small")
         );
+
+        public static final TagKey<Biome> NONE = TagKey.create(Registries.BIOME, new ResourceLocation("none"));
+
+        public static final TagKey<Biome> HAS_INARI_SHRINE = TagKey.create(
+                Registries.BIOME,
+                new ResourceLocation(fantastikmod.MOD_ID, "has_structure/inari_shrine")
+        );
+
+        public static final TagKey<Biome> HAS_CASTLE_PLAINS = TagKey.create(
+                Registries.BIOME,
+                new ResourceLocation(fantastikmod.MOD_ID, "has_structure/castle_plains_0")
+        );
     }
 }

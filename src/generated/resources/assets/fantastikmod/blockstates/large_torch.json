@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fantastikmod:block/large_torch",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "fantastikmod:block/large_torch",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "fantastikmod:block/large_torch"
+    },
+    "facing=west": {
+      "model": "fantastikmod:block/large_torch",
+      "y": 90
+    }
+  }
+}

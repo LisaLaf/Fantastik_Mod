@@ -1,5 +1,6 @@
 package net.lisalaf.fantastikmod.particle;
 
+import com.mojang.serialization.Codec;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +19,21 @@ public class ModParticles {
                         public com.mojang.serialization.Codec<ColoredParticleOptions> codec() {
                             return ColoredParticleOptions.CODEC;
                         }
+                    });
+
+    public static final RegistryObject<ParticleType<WaterRippleOptions>> WATER_RIPPLE =
+            PARTICLE_TYPES.register("water_ripple",
+                    () -> new ParticleType<>(false, WaterRippleOptions.DESERIALIZER) {
+                        @Override
+                        public Codec<WaterRippleOptions> codec() {
+                            return WaterRippleOptions.CODEC;
+                        }
+                    });
+    public static final RegistryObject<ParticleType<HeatParticleOptions>> HEAT =
+            PARTICLE_TYPES.register("heat",
+                    () -> new ParticleType<>(false, HeatParticleOptions.DESERIALIZER) {
+                        @Override
+                        public Codec<HeatParticleOptions> codec() { return HeatParticleOptions.CODEC; }
                     });
 
     public static void register(IEventBus eventBus) {

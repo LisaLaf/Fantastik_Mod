@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fantastikmod:item/roof_cap_medieval_iron_damaged"
+  }
+}

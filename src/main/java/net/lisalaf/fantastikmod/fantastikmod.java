@@ -10,22 +10,35 @@ import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.lisalaf.fantastikmod.network.DialogPacket;
+import net.lisalaf.fantastikmod.network.QuestPacket;
+import net.lisalaf.fantastikmod.network.SyncQuestPacket;
+import net.lisalaf.fantastikmod.particle.HeatParticle;
 import net.lisalaf.fantastikmod.particle.LeavesParticle;
 import net.lisalaf.fantastikmod.particle.ModParticles;
+import net.lisalaf.fantastikmod.particle.WaterRippleParticle;
+import net.lisalaf.fantastikmod.potion.ModPotions;
 import net.lisalaf.fantastikmod.sound.ModSounds;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
 import net.lisalaf.fantastikmod.worldgen.ModFeatures;
 import net.lisalaf.fantastikmod.worldgen.biome.ModTerrablender;
 import net.lisalaf.fantastikmod.worldgen.biome.sunface.ModSurfaceRules;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -33,20 +46,31 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
-import net.minecraft.world.item.AxeItem;
 
-import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(fantastikmod.MOD_ID)
 public class fantastikmod {
     public static final String MOD_ID = "fantastikmod";
     public static final Logger LOGGER = LogUtils.getLogger();
+
+    private static final String PROTOCOL_VERSION = "1";
+
+    @SuppressWarnings("removal")
+    public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MOD_ID, "main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
 
 
     public fantastikmod(FMLJavaModLoadingContext context) {
@@ -76,23 +100,37 @@ public class fantastikmod {
 
         modEventBus.addListener(this::gatherData);
 
+        ModPotions.register(modEventBus);
+
+        modEventBus.addListener(this::registerPackets);
+
         ModFeatures.FEATURES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(ModEvent.class);
-
-        modEventBus.addListener(this::registerParticleProviders);
-
 
         modEventBus.addListener(this::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::addFuel);
 
-
+        if (FMLEnvironment.dist.isClient()) {
+            modEventBus.addListener(this::registerParticleProviders);
+        }
     }
 
-    @SubscribeEvent
+    private void registerPackets(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            int id = 0;
+            NETWORK.registerMessage(id++, DialogPacket.class, DialogPacket::encode, DialogPacket::decode, DialogPacket::handle);
+            NETWORK.registerMessage(id++, QuestPacket.class, QuestPacket::encode, QuestPacket::decode, QuestPacket::handle);
+            NETWORK.registerMessage(id++, SyncQuestPacket.class, SyncQuestPacket::encode, SyncQuestPacket::decode, SyncQuestPacket::handle);
+            LOGGER.info("Packets registered successfully");
+        });
+    }
+
     public void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.COLORED_LEAVES_PARTICLE.get(), LeavesParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.WATER_RIPPLE.get(), WaterRippleParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.HEAT.get(), HeatParticle.Provider::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -106,6 +144,23 @@ public class fantastikmod {
             ModTerrablender.registerBiomes();
 
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());
+
+            event.enqueueWork(() -> {
+                BrewingRecipeRegistry.addRecipe(
+                        new BrewingRecipe(
+                                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.MUNDANE)),
+                                Ingredient.of(ModItems.LILAC_BRANCH.get()),
+                                PotionUtils.setPotion(new ItemStack(Items.POTION), ModPotions.LILAC_BRANCH.get())
+                        )
+                );
+                BrewingRecipeRegistry.addRecipe(
+                        new BrewingRecipe(
+                                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                                Ingredient.of(ModItems.LILAC_BRANCH.get()),
+                                PotionUtils.setPotion(new ItemStack(Items.POTION), ModPotions.LILAC_BRANCH.get())
+                        )
+                );
+            });
 
         });
     }
@@ -172,6 +227,13 @@ public class fantastikmod {
         if (event.getItemStack().getItem() == ModBlocks.LILAC_DOOR.get().asItem()) event.setBurnTime(200);
         if (event.getItemStack().getItem() == ModBlocks.LILAC_TRAPDOOR.get().asItem()) event.setBurnTime(300);
 
+    }
+    public static void sendToServer(Object packet) {
+        NETWORK.sendToServer(packet);
+    }
+
+    public static void sendToPlayer(Object packet, ServerPlayer player) {
+        NETWORK.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
 }

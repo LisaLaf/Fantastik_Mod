@@ -48,6 +48,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.STRIPPED_LILAC_WOOD.get(),
                         ModBlocks.LILAC_TRAPDOOR.get(),
                         ModBlocks.LILAC_DOOR.get(),
+                        ModBlocks.BIG_CITY_GATE.get(),
+                        ModBlocks.ROYAL_BED.get(),
+                        ModBlocks.WOODEN_CHAIR.get(),
+                        ModBlocks.YUKIMI_TORO.get(),
                         ModBlocks.TREE_MOON_WOOD.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -61,8 +65,18 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         (ModBlocks.SILVER_ORE.get()),
                         (ModBlocks.MOON_GEM_BLOCK.get()),
                         (ModBlocks.MOON_ORE.get()),
+                        (ModBlocks.ROOF_TILE_MEDIEVAL_CLAY_DAMAGED.get()),
                         ModBlocks.MOON_CRYSTAL_BLOCK.get(),
                         ModBlocks.GEMKITSUNE_BLOCK.get(),
+                        ModBlocks.ROOF_TILE_MEDIEVAL_IRON_DAMAGED.get(),
+                        ModBlocks.ROOF_TILE_MEDIEVAL_COPPER_DAMAGED.get(),
+                        ModBlocks.ROOF_TILE_MEDIEVAL_DEEPSLATE_DAMAGED.get(),
+                        ModBlocks.ROOF_CAP_MEDIEVAL_CLAY_DAMAGED.get(),
+                        ModBlocks.ROOF_CAP_MEDIEVAL_IRON_DAMAGED.get(),
+                        ModBlocks.ROOF_CAP_MEDIEVAL_COPPER_DAMAGED.get(),
+                        ModBlocks.ROOF_CAP_MEDIEVAL_DEEPSLATE_DAMAGED.get(),
+                        ModBlocks.CHARRED_THRONE.get(),
+                        ModBlocks.PETRIFIED_LARGE_EGG.get(),
                         ModBlocks.KITSUNE_STATUE.get());
 
         // Уровень инструментов

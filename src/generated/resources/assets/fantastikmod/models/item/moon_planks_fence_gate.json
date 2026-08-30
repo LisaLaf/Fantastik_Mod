@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:block/fence_inventory",
-  "textures": {
-    "texture": "fantastikmod:block/moon_planks"
-  }
+  "parent": "fantastikmod:block/moon_planks_fence_gate"
 }

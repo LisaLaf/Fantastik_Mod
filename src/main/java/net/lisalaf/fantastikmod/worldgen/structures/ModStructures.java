@@ -21,6 +21,8 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import java.util.Map;
 import java.util.Optional;
 
+import static net.lisalaf.fantastikmod.worldgen.structures.ModTemplatePools.*;
+
 @SuppressWarnings("removal")
 public class ModStructures {
     // Старая структура
@@ -59,6 +61,30 @@ public class ModStructures {
 
     public static final ResourceKey<StructureSet> ONSEN_SMALL_SET = ResourceKey.create(Registries.STRUCTURE_SET,
             new ResourceLocation(fantastikmod.MOD_ID, "onsen_small"));
+
+    public static final ResourceKey<Structure> CASTLE_PLAINS = ResourceKey.create(Registries.STRUCTURE,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains"));
+
+    public static final ResourceKey<StructureSet> CASTLE_PLAINS_SET = ResourceKey.create(Registries.STRUCTURE_SET,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains"));
+
+    public static final ResourceKey<Structure> CASTLE_TEST = ResourceKey.create(Registries.STRUCTURE,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_test"));
+
+    public static final ResourceKey<StructureSet> CASTLE_TEST_SET = ResourceKey.create(Registries.STRUCTURE_SET,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_test"));
+
+    public static final ResourceKey<Structure> INARI_SHRINE_VILLAGE = ResourceKey.create(Registries.STRUCTURE,
+            new ResourceLocation(fantastikmod.MOD_ID, "inari_shrine_village"));
+
+    public static final ResourceKey<StructureSet> INARI_SHRINE_VILLAGE_SET = ResourceKey.create(Registries.STRUCTURE_SET,
+            new ResourceLocation(fantastikmod.MOD_ID, "inari_shrine_village"));
+
+    public static final ResourceKey<Structure> CASTLE_PLAINS_0 = ResourceKey.create(Registries.STRUCTURE,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains_0"));
+
+    public static final ResourceKey<StructureSet> CASTLE_PLAINS_0_SET = ResourceKey.create(Registries.STRUCTURE_SET,
+            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains_0"));
 
 
     public static void bootstrap(BootstapContext<Structure> context) {
@@ -157,6 +183,64 @@ public class ModStructures {
                 Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
                 116
         ));
+        context.register(CASTLE_PLAINS, new JigsawStructure(
+                new Structure.StructureSettings(
+                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.NONE),
+                        Map.of(),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES,
+                        TerrainAdjustment.BEARD_THIN
+                ),
+                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(CASTLE_PLAINS_START),
+                Optional.empty(),
+                7,
+                ConstantHeight.of(VerticalAnchor.absolute(1)),
+                true,
+                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
+                116
+        ));
+
+        context.register(CASTLE_TEST, new JigsawStructure(
+                new Structure.StructureSettings(
+                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.NONE),
+                        Map.of(),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES,
+                        TerrainAdjustment.BEARD_THIN
+                ),
+                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(CASTLE_TEST_START),
+                Optional.empty(),
+                1,
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
+                true,
+                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
+                116
+        ));
+
+        context.register(INARI_SHRINE_VILLAGE, new JigsawStructure(
+                new Structure.StructureSettings(
+                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.HAS_INARI_SHRINE),
+                        Map.of(),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES,
+                        TerrainAdjustment.BEARD_THIN
+                ),
+                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(INARI_SHRINE_VILLAGE_PLAINS),
+                Optional.empty(),
+                1,
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
+                true,
+                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
+                116
+        ));
+
+        context.register(CASTLE_PLAINS_0, new JigsawStructure(
+                new Structure.StructureSettings(
+                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.HAS_CASTLE_PLAINS),
+                        Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN
+                ),
+                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(CASTLE_PLAINS_0_START),
+                Optional.empty(), 7,
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
+                true, Optional.of(Heightmap.Types.WORLD_SURFACE_WG), 116
+        ));
     }
 
 
@@ -197,6 +281,16 @@ public class ModStructures {
         context.register(ONSEN_SMALL_SET, new StructureSet(
                 context.lookup(Registries.STRUCTURE).getOrThrow(ONSEN_SMALL),
                 new RandomSpreadStructurePlacement(60, 15, RandomSpreadType.LINEAR, 445566778)
+        ));
+
+        context.register(INARI_SHRINE_VILLAGE_SET, new StructureSet(
+                context.lookup(Registries.STRUCTURE).getOrThrow(INARI_SHRINE_VILLAGE),
+                new RandomSpreadStructurePlacement(60, 25, RandomSpreadType.LINEAR, 555444333)
+        ));
+
+        context.register(CASTLE_PLAINS_0_SET, new StructureSet(
+                context.lookup(Registries.STRUCTURE).getOrThrow(CASTLE_PLAINS_0),
+                new RandomSpreadStructurePlacement(80, 40, RandomSpreadType.LINEAR, 123987456)
         ));
     }
 }

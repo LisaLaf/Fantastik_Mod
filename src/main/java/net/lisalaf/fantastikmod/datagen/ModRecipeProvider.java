@@ -2,8 +2,11 @@ package net.lisalaf.fantastikmod.datagen;
 
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.lisalaf.fantastikmod.potion.ModPotions;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
@@ -38,7 +41,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_lilac_planks", has(ModBlocks.LILAC_PLANKS.get()))
                 .save(pWriter, "crafting_table_from_lilac_planks");
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOODEN_CHAIR.get(), 1)
+                .pattern("P H")
+                .pattern("PPP")
+                .pattern("P P")
+                .define('P', Ingredient.of(ItemTags.PLANKS))
+                .define('H', Items.HONEYCOMB)
+                .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
+                .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.TABLECLOTH_WHITE.get(), 6)
+                .pattern("WWW")
+                .pattern("NNN")
+                .pattern("   ")
+                .define('W', Items.WHITE_WOOL)
+                .define('N', Items.GOLD_NUGGET)
+                .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
+                .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LILAC_WOOD.get(), 3)
                 .pattern("ll")

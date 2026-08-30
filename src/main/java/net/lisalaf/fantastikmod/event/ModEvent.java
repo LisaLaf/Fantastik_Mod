@@ -1,5 +1,6 @@
 package net.lisalaf.fantastikmod.event;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.lisalaf.fantastikmod.effect.ModEffects;
@@ -7,10 +8,15 @@ import net.lisalaf.fantastikmod.entity.custom.BakenekoEntity;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.BookHelper;
 import net.lisalaf.fantastikmod.item.ModItems;
+import net.lisalaf.fantastikmod.item.custom.FireDragonArmorItem;
+import net.lisalaf.fantastikmod.particle.HeatParticleOptions;
+import net.lisalaf.fantastikmod.potion.ModPotions;
 import net.lisalaf.fantastikmod.villager.ModVillagers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.OutgoingChatMessage;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,17 +24,17 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
@@ -38,6 +44,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid = fantastikmod.MOD_ID)
 public class ModEvent {
 
@@ -242,4 +249,38 @@ public class ModEvent {
             cat.goalSelector.addGoal(3, new TemptGoal(cat, 1.2D, catnip, false));
         }
     }
+
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+        if (event.getSource().getEntity() instanceof Player player) {
+            if (player.hasEffect(ModEffects.FIRE_DRAGON_SCALES.get())) {
+                if (player.getRandom().nextFloat() < 0.3f) {
+                    int level = player.getEffect(ModEffects.FIRE_DRAGON_SCALES.get()).getAmplifier() + 1;
+                    event.getEntity().setSecondsOnFire(level + 1);
+                    event.setAmount(event.getAmount() + level);
+                }
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        if (!player.level().isClientSide) {
+            int pieces = FireDragonArmorItem.countArmorPieces(player);
+            if (pieces == 0 && player.hasEffect(ModEffects.FIRE_DRAGON_SCALES.get())) {
+                player.removeEffect(ModEffects.FIRE_DRAGON_SCALES.get());
+            }
+        }
+        if (player.hasEffect(ModEffects.FIRE_DRAGON_SCALES.get()) && player.level().isClientSide) {
+            int pieces = FireDragonArmorItem.countArmorPieces(player);
+            float scale = pieces * 0.01f + 0.01f;
+            if (player.tickCount % 3 == 0) {
+                double x = player.getX() + (player.getRandom().nextDouble() - 0.5) * 0.6;
+                double y = player.getY() + 0.5 + player.getRandom().nextDouble() * 1.8;
+                double z = player.getZ() + (player.getRandom().nextDouble() - 0.5) * 0.6;
+                player.level().addParticle(new HeatParticleOptions(scale), x, y, z, 0, 0.03, 0);
+            }
+        }
+    }
+
 }

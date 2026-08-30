@@ -2,6 +2,11 @@ package net.lisalaf.fantastikmod.effect;
 
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,6 +22,8 @@ public class ModEffects {
             () -> new CatnipEffect());
     public static final RegistryObject<MobEffect> LILAC_AROMA = MOB_EFFECTS.register("lilac_aroma",
             LilacAromaEffect::new);
+    public static final RegistryObject<MobEffect> FIRE_DRAGON_SCALES = MOB_EFFECTS.register("fire_dragon_scales",
+            FireDragonScalesEffect::new);
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

@@ -17,5 +17,6 @@ public class ModEventBusEvents {
         event.put(ModEntities.MOON_DEER.get(), MoonDeerEntity.createAttributes().build());
         event.put(ModEntities.BLUE_BUTTERFLY.get(), BlueButterflyEntity.createAttributes().build());
         event.put(ModEntities.BAKENEKO.get(), BakenekoEntity.createAttributes().build());
+        event.put(ModEntities.WITCH_CAT.get(), WitchCatEntity.createAttributes().build());
     }
 }

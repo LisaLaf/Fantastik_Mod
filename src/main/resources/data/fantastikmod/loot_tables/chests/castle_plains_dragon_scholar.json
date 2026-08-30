@@ -1,0 +1,49 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:withered_scales_fire_dragon",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": { "min": 8, "max": 18 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 2,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:withered_scales_fire_dragon_helmet",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:withered_scales_fire_dragon_chestplate",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:withered_scales_fire_dragon_leggings",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:withered_scales_fire_dragon_boots",
+          "weight": 70
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 30
+        }
+      ]
+    }
+  ]
+}

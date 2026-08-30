@@ -1,0 +1,7 @@
+{
+  "parent": "fantastikmod:block/roof_tile/roof_tile",
+  "textures": {
+    "0": "fantastikmod:block/roof_tile/roof_tile_medieval_iron_damaged",
+    "particle": "fantastikmod:block/roof_tile/roof_tile_medieval_iron_damaged"
+  }
+}

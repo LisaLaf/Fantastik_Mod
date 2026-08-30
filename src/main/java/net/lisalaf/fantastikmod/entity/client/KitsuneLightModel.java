@@ -11,19 +11,19 @@ public class KitsuneLightModel extends GeoModel<KitsuneLightEntity> {
 
     @Override
     public ResourceLocation getModelResource(KitsuneLightEntity entity) {
-        return new ResourceLocation("fantastikmod", "geo/kitsune_light.geo.json");
+        return new ResourceLocation("fantastikmod", "geo/entity/kitsune/kitsune_1.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(KitsuneLightEntity entity) {
         int variant = entity.getVariant();
         return new ResourceLocation("fantastikmod",
-                "textures/entity/kitsune/kitsune_light_" + variant + ".png");
+                "textures/entity/kitsune/kitsune_1/kitsune_" + variant + ".png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(KitsuneLightEntity entity) {
-        return new ResourceLocation("fantastikmod", "animations/kitsune_light.animation.json");
+        return new ResourceLocation("fantastikmod", "animations/kitsune_1.animation.json");
     }
 
     public ResourceLocation getEyeTexture(KitsuneLightEntity entity) {

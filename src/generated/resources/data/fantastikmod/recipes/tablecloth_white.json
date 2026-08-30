@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": {
+      "item": "minecraft:gold_nugget"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "NNN",
+    "   "
+  ],
+  "result": {
+    "count": 6,
+    "item": "fantastikmod:tablecloth_white"
+  },
+  "show_notification": true
+}

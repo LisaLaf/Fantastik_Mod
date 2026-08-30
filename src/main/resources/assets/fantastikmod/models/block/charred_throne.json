@@ -1,0 +1,5 @@
+{
+  "loader": "geckolib:geo",
+  "model": "fantastikmod:geo/block/charred_throne",
+  "texture": "fantastikmod:block/charred_throne"
+}
