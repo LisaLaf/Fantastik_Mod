@@ -56,24 +56,20 @@ import java.util.UUID;
 public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    // Data Parameters
     private static final EntityDataAccessor<Boolean> DATA_TAMED = SynchedEntityData.defineId(MoonDeerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_AI_MODE = SynchedEntityData.defineId(MoonDeerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_DRINKING = SynchedEntityData.defineId(MoonDeerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_RUNNING = SynchedEntityData.defineId(MoonDeerEntity.class, EntityDataSerializers.BOOLEAN);
 
-    // AI Modes
     public static final int AI_FOLLOW = 0;
     public static final int AI_WANDER = 1;
 
-    // Таймеры
     private int drinkCooldown = 0;
     private int drinkAnimationTimer = 0;
     private int runCooldown = 0;
     private UUID ownerUUID;
     private int jumpCooldown = 0;
 
-    // Константы для анимации питья
     private static final int DRINK_ANIMATION_DURATION = 72;
     private static final int DRINK_COOLDOWN = 1200;
 
@@ -121,7 +117,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         if (jumpCooldown > 0) jumpCooldown--;
     }
 
-    // === ХОЖДЕНИЕ ПО ВОДЕ НОЧЬЮ ===
     private void handleWaterWalking() {
         if (this.level().isNight() && !isDrinking()) {
             BlockPos pos = this.blockPosition();
@@ -155,7 +150,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === ПОВЕДЕНИЕ ПИТЬЯ ВОДЫ ===
     private void handleDrinkBehavior() {
         if (drinkCooldown > 0 || isDrinking()) return;
 
@@ -206,7 +200,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === СИСТЕМА БЕГА ===
     private void handleRunning() {
         if (isRunning() && runCooldown <= 0) {
             setRunning(false);
@@ -220,12 +213,10 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === ПРИРУЧЕНИЕ И УПРАВЛЕНИЕ ===
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
 
-        // ЛЕЧЕНИЕ ЯГОДАМИ
         if (itemstack.is(ModItems.MOON_CROWBERRY.get())) {
             if (!isTamed()) {
                 if (!player.getAbilities().instabuild) {
@@ -240,25 +231,21 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
                 return InteractionResult.sidedSuccess(level().isClientSide);
 
             } else {
-                // Прирученный олень - лечение
                 if (this.getHealth() < this.getMaxHealth()) {
                     if (!player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
 
-                    // Восстановление здоровья
-                    this.heal(4.0F); // 2 сердца = 4 единицы здоровья
+                    this.heal(4.0F);
 
                     spawnHealingParticles();
                     this.playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
 
-                    // Сообщение для прирученного оленя
                     Component message = getTamedHealingMessage(player);
                     player.displayClientMessage(message, true);
 
                     return InteractionResult.sidedSuccess(level().isClientSide);
                 } else {
-                    // Если здоровье полное
                     Component message = getFullHealthMessage(player);
                     player.displayClientMessage(message, true);
                     return InteractionResult.PASS;
@@ -266,7 +253,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
             }
         }
 
-        // ДИАЛОГ С ПРИРУЧЕННЫМ ОЛЕНЕМ (Shift + ПКМ без предмета)
         if (itemstack.isEmpty() && hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown()) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 try {
@@ -358,8 +344,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-
-    // === СМЕРТЬ ===
     @Override
     public void die(DamageSource cause) {
         if (!this.level().isClientSide && isTamed()) {
@@ -372,7 +356,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         super.die(cause);
     }
 
-    // === AI И РЕЖИМЫ ===
     private void cycleAIMode() {
         int newMode = (getAIMode() + 1) % 2;
         setAIMode(newMode);
@@ -395,8 +378,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
-
-    // === ЕЗДА НА ОЛЕНЕ ===
 
     private class MoonDeerJumpControl extends JumpControl {
         public MoonDeerJumpControl() {
@@ -425,27 +406,23 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
 
     private void performCustomJump() {
         if (this.onGround() && jumpCooldown <= 0) {
-            // Мощный прыжок вперед
-            float jumpPower = 1.8F; // Увеличена базовая мощность прыжка
+            float jumpPower = 1.8F;
 
             if (isRunning()) {
-                jumpPower *= 1.5F; // Усиленный прыжок в режиме бега
+                jumpPower *= 1.5F;
             }
 
-            // Получаем направление взгляда всадника
             LivingEntity rider = this.getControllingPassenger();
             float yRot = rider != null ? rider.getYRot() : this.getYRot();
             float yRotRad = yRot * ((float)Math.PI / 180F);
 
-            // Горизонтальная составляющая прыжка
             double jumpX = -Math.sin(yRotRad) * jumpPower * 1.0;
             double jumpZ = Math.cos(yRotRad) * jumpPower * 1.5;
 
-            // Вертикальная составляющая
             double jumpY = jumpPower * 0.3;
 
             this.setDeltaMovement(jumpX, jumpY, jumpZ);
-            jumpCooldown = 20; // 1 секунда кулдауна
+            jumpCooldown = 20;
             this.playSound(SoundEvents.HORSE_JUMP, 0.8F, 1.0F);
             this.hasImpulse = true;
 
@@ -479,9 +456,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return this.getFirstPassenger() instanceof LivingEntity living ? living : null;
     }
 
-    // === ПРЫЖКИ ===
-
-    // === ДВИЖЕНИЕ ПРИ ЕЗДЕ ===
     @Override
     public void travel(Vec3 travelVector) {
         if (this.isVehicle() && this.getControllingPassenger() != null) {
@@ -514,8 +488,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-
-    // === ЗАЩИТА ОТ УРОНА ПРИ ПАДЕНИИ ===
     @Override
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
         if (fallDistance <= 4.0F) {
@@ -556,7 +528,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return ownerUUID != null && player.getUUID().equals(ownerUUID);
     }
 
-    // === АНИМАЦИИ ===
     private void handleAnimations() {
         if (isDrinking() && drinkAnimationTimer <= 0) {
             setDrinking(false);
@@ -587,7 +558,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return event.setAndContinue(RawAnimation.begin().thenPlay("idle"));
     }
 
-    // === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ===
     private boolean isPanicking() {
         return this.getDeltaMovement().horizontalDistanceSqr() > 0.03D;
     }
@@ -617,7 +587,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === ОСНОВНЫЕ МЕТОДЫ ===
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
@@ -638,7 +607,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return stack.is(ModItems.MOON_CROWBERRY.get());
     }
 
-    // === ГЕТТЕРЫ И СЕТТЕРЫ ===
     public boolean isTamed() { return entityData.get(DATA_TAMED); }
     public void setTamed(boolean tamed) { entityData.set(DATA_TAMED, tamed); }
 
@@ -667,7 +635,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         return null;
     }
 
-    // === АТРИБУТЫ ===
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0D)
@@ -676,7 +643,6 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
                 .add(Attributes.JUMP_STRENGTH, 1.0D);
     }
 
-    // === СОХРАНЕНИЕ ДАННЫХ ===
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
@@ -752,17 +718,14 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         }
     }
 
-    // === СООБЩЕНИЯ ПРИ УДАРЕ ===
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof Player player) {
             if (!this.level().isClientSide) {
                 if (isTamed()) {
-                    // Прирученный олень - компаньон в путешествии
                     Component message = getHurtTamedMessage(player);
                     player.sendSystemMessage(message);
                 } else {
-                    // Дикий олень - дух леса
                     Component message = getHurtWildMessage(player);
                     player.sendSystemMessage(message);
                 }
@@ -803,42 +766,34 @@ public class MoonDeerEntity extends Animal implements GeoEntity, PlayerRideable 
         );
     }
 
-    // Кормление дикого
     private Component getWildFeedingMessage(Player player) {
         return MoonDeerPhrases.getWildFeedingMessage();
     }
 
-    // Лечение прирученного
     private Component getTamedHealingMessage(Player player) {
         return MoonDeerPhrases.getTamedHealingMessage();
     }
 
-    // Полное здоровье
     private Component getFullHealthMessage(Player player) {
         return MoonDeerPhrases.getFullHealthMessage();
     }
 
-    // Приручение
     private Component getTamingMessage(Player player) {
         return MoonDeerPhrases.getTamedMessage();
     }
 
-    // Смерть
     private Component getDeathMessage(Player player) {
         return MoonDeerPhrases.getDeathMessage();
     }
 
-    // Удар по дикому
     private Component getHurtWildMessage(Player player) {
         return MoonDeerPhrases.getHurtWildMessage();
     }
 
-    // Удар по прирученному
     private Component getHurtTamedMessage(Player player) {
         return MoonDeerPhrases.getHurtTamedMessage();
     }
 
-    // Именование
     private Component getNamingMessage(Player player, String name) {
         return MoonDeerPhrases.getNamingMessage(name);
     }

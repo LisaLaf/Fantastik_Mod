@@ -3,7 +3,10 @@ package net.lisalaf.fantastikmod.event;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.custom.*;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -18,5 +21,8 @@ public class ModEventBusEvents {
         event.put(ModEntities.BLUE_BUTTERFLY.get(), BlueButterflyEntity.createAttributes().build());
         event.put(ModEntities.BAKENEKO.get(), BakenekoEntity.createAttributes().build());
         event.put(ModEntities.WITCH_CAT.get(), WitchCatEntity.createAttributes().build());
+        event.put(ModEntities.GHOST_GUARDS.get(), GhostGuardsEntity.createAttributes().build());
+        event.put(ModEntities.KITSUNE_SOUL_POSSESSED.get(),KitsuneSoulPossessedEntity.createAttributes().build());
     }
+
 }

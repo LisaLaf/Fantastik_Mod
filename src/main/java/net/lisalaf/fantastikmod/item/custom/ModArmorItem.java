@@ -33,8 +33,6 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("removal")
 public class ModArmorItem extends ArmorItem {
-
-    // ID модификаторов Аттрибутов
     private static final UUID HEALTH_HELMET_UUID = UUID.fromString("4d068fb2-dda5-4545-8df3-e1fa1a7a5c9c");
     private static final UUID HEALTH_CHEST_UUID  = UUID.fromString("db889cd8-752b-4c11-9b2d-6f440e43e9fc");
     private static final UUID HEALTH_LEGS_UUID   = UUID.fromString("5e82f7e5-f6e2-4e9a-bacd-d3a0549367cd");

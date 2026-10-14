@@ -9,6 +9,7 @@ import net.lisalaf.fantastikmod.block.ModBlocks;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,22 +56,20 @@ public class KitsuneStatueBlock extends Block {
         }
     }
 
-    private static final String[] DIALOG_LINES_RU = {
-            "Кажется ты нашёл статую лисы",
-            "Люди делали такие и ставили в храмах как посланников богини Инари",
-            "Они верили что если статуям делать подношения, то так смогут предрасположить кицунэ",
-            "И они встанут перед богиней на сторону преподносящего",
-            "Статуям часто преподносили рис и сакэ",
-            "Рис нам без надобности. Но можешь попробовать дать его статуе"
+    private static final String[] DIALOG_LINES_KEYS = {
+            "dialog.kitsune_statue.line1",
+            "dialog.kitsune_statue.line2",
+            "dialog.kitsune_statue.line3",
+            "dialog.kitsune_statue.line4",
+            "dialog.kitsune_statue.line5",
+            "dialog.kitsune_statue.line6"
     };
 
-    private static final String[] DIALOG_LINES_EN = {
-            "It seems you've found a fox statue",
-            "People made these and placed them in temples as messengers of the goddess Inari",
-            "They believed that making offerings to statues could win the favor of kitsune",
-            "And they would stand before the goddess on the side of the one making offerings",
-            "Rice and sake were often offered to the statues",
-            "We have no need for rice. But you can try giving it to the statue"
+    private static final String[] MOON_DEER_DIALOG_LINES_KEYS = {
+            "dialog.moon_deer_statue.line1",
+            "dialog.moon_deer_statue.line2",
+            "dialog.moon_deer_statue.line3",
+            "dialog.moon_deer_statue.line4"
     };
 
     public KitsuneStatueBlock(Properties properties) {
@@ -245,7 +244,7 @@ public class KitsuneStatueBlock extends Block {
 
                 state.currentLine = nextLineIndex;
 
-                if (state.currentLine < DIALOG_LINES_RU.length) {
+                if (state.currentLine < DIALOG_LINES_KEYS.length) {
                     sendNextDialogLine(level, player, kitsune, state);
                     scheduleNextDialog(level, player, kitsune, state, state.currentLine + 1);
                 } else {
@@ -257,30 +256,18 @@ public class KitsuneStatueBlock extends Block {
     }
 
     private void sendNextDialogLine(Level level, Player player, KitsuneLightEntity kitsune, DialogState state) {
-        boolean isRussian = isRussianPlayer(player);
-        String[] lines = isRussian ? DIALOG_LINES_RU : DIALOG_LINES_EN;
+        if (state.currentLine >= DIALOG_LINES_KEYS.length) return;
 
-        if (state.currentLine < lines.length) {
-            String kitsuneName = kitsune.getCustomName() != null ?
-                    kitsune.getCustomName().getString() :
-                    (isRussian ? "Кицунэ" : "Kitsune");
+        String kitsuneName = kitsune.getCustomName() != null
+                ? kitsune.getCustomName().getString()
+                : Component.translatable("entity.fantastikmod.kitsune_light").getString();
 
-            String message = kitsuneName + ": " + lines[state.currentLine];
-            player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
-        }
+        Component line = Component.translatable(DIALOG_LINES_KEYS[state.currentLine]);
+
+        Component message = Component.literal(kitsuneName + ": ").append(line);
+        player.sendSystemMessage(message);
     }
 
-    private boolean isRussianPlayer(Player player) {
-        try {
-            if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-                String language = serverPlayer.getLanguage();
-                return language != null && language.startsWith("ru");
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
-    }
 
     private void startDialogWithNearbyMoonDeer(Level level, Player player) {
         MoonDeerEntity nearbyMoonDeer = null;
@@ -313,20 +300,6 @@ public class KitsuneStatueBlock extends Block {
         }
     }
 
-    private static final String[] MOON_DEER_DIALOG_LINES_RU = {
-            "Это чья-то статуя? Божества или зверя?",
-            "Много лет назад в Лунном лесу жили люди, они верили в своих богов",
-            "У них были подобные статуи для своих божеств, но люди ушли вместе с упавшим осколком луны...",
-            "А от статуй почти ничего не осталось"
-    };
-
-    private static final String[] MOON_DEER_DIALOG_LINES_EN = {
-            "Is this someone's statue? A deity or a beast?",
-            "Many years ago, people lived in the Moon Forest, they believed in their gods",
-            "They had similar statues for their deities, but the people left with a fallen shard of the moon...",
-            "Almost nothing remains of the statues"
-    };
-
     private void scheduleNextMoonDeerDialog(ServerLevel level, Player player, MoonDeerEntity moonDeer, DialogState state, int nextLineIndex) {
         new Thread(() -> {
             try {
@@ -343,7 +316,7 @@ public class KitsuneStatueBlock extends Block {
 
                 state.currentLine = nextLineIndex;
 
-                if (state.currentLine < MOON_DEER_DIALOG_LINES_RU.length) {
+                if (state.currentLine < MOON_DEER_DIALOG_LINES_KEYS.length) {
                     sendNextMoonDeerDialogLine(level, player, moonDeer, state);
                     scheduleNextMoonDeerDialog(level, player, moonDeer, state, state.currentLine + 1);
                 } else {
@@ -355,16 +328,15 @@ public class KitsuneStatueBlock extends Block {
     }
 
     private void sendNextMoonDeerDialogLine(Level level, Player player, MoonDeerEntity moonDeer, DialogState state) {
-        boolean isRussian = isRussianPlayer(player);
-        String[] lines = isRussian ? MOON_DEER_DIALOG_LINES_RU : MOON_DEER_DIALOG_LINES_EN;
+        if (state.currentLine >= MOON_DEER_DIALOG_LINES_KEYS.length) return;
 
-        if (state.currentLine < lines.length) {
-            String deerName = moonDeer.getCustomName() != null ?
-                    moonDeer.getCustomName().getString() :
-                    (isRussian ? "Лунный олень" : "Moon Deer");
+        String deerName = moonDeer.getCustomName() != null
+                ? moonDeer.getCustomName().getString()
+                : Component.translatable("entity.fantastikmod.moon_deer").getString();
 
-            String message = deerName + ": " + lines[state.currentLine];
-            player.sendSystemMessage(net.minecraft.network.chat.Component.literal(message));
-        }
+        Component line = Component.translatable(MOON_DEER_DIALOG_LINES_KEYS[state.currentLine]);
+
+        Component message = Component.literal(deerName + ": ").append(line);
+        player.sendSystemMessage(message);
     }
 }

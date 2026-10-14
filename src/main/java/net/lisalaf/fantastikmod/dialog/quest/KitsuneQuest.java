@@ -16,13 +16,12 @@ public class KitsuneQuest extends Quest {
     private final boolean isForTamed;
     private final QuestType questType;
 
-    // ВРЕМЕННО УБИРАЕМ КВЕСТЫ НА УБИЙСТВО
     // private String targetMob;
     // private int killCount = 0;
 
     public enum QuestType {
         COLLECT_ITEMS
-        // KILL_MOBS временно убрано
+        // KILL_MOBS
     }
 
     public KitsuneQuest(KitsuneLightEntity kitsune, boolean isForTamed) {
@@ -130,9 +129,9 @@ public class KitsuneQuest extends Quest {
 
     // Геттеры
     public QuestType getQuestType() { return questType; }
-    // public String getTargetMob() { return targetMob; } // временно убрано
-    // public int getKillCount() { return killCount; } // временно убрано
-    // public void incrementKillCount() { killCount++; } // временно убрано
+    // public String getTargetMob() { return targetMob; }
+    // public int getKillCount() { return killCount; }
+    // public void incrementKillCount() { killCount++; }
 
     private Player getPlayerToCheck() {
         if (isForTamed) {
@@ -189,31 +188,30 @@ public class KitsuneQuest extends Quest {
         if (forTamed) {
 
             Item[] tamedRewards = {
-                    Items.BONE,            // Кости 1-3
-                    Items.ROTTEN_FLESH,    // Гнилая плоть 1-3
-                    Items.STRING,          // Нить 1-3
-                    Items.GUNPOWDER,       // Порох 1-2
-                    Items.SPIDER_EYE,      // Паучий глаз 1-2
-                    Items.ARROW,           // Стрелы 3-8
-                    Items.IRON_INGOT,      // Железный слиток 1
-                    Items.GOLD_NUGGET,     // Самородок золота 1-3
-                    Items.COAL,            // Уголь 1-3
-                    Items.REDSTONE,         // Редстоун 1-3
+                    Items.BONE,
+                    Items.ROTTEN_FLESH,
+                    Items.STRING,
+                    Items.GUNPOWDER,
+                    Items.SPIDER_EYE,
+                    Items.ARROW,
+                    Items.IRON_INGOT,
+                    Items.GOLD_NUGGET,
+                    Items.COAL,
+                    Items.REDSTONE,
                     Items.ENDER_EYE
             };
             return tamedRewards[(int)(Math.random() * tamedRewards.length)];
         }
 
-        // Для диких квестов на сбор
         Item[] wildRewards = {
-                Items.IRON_INGOT,          // Железный слиток 1
-                Items.GOLD_NUGGET,         // Самородок золота 2-5
-                Items.EXPERIENCE_BOTTLE,   // Пузырек опыта 1
-                Items.COAL,                // Уголь 2-5
-                Items.REDSTONE,            // Редстоун 2-5
-                Items.LAPIS_LAZULI,        // Лазурит 2-5
-                Items.COPPER_INGOT,        // Медный слиток 1-3
-                Items.EMERALD              // Изумруд 1
+                Items.IRON_INGOT,
+                Items.GOLD_NUGGET,
+                Items.EXPERIENCE_BOTTLE,
+                Items.COAL,
+                Items.REDSTONE,
+                Items.LAPIS_LAZULI,
+                Items.COPPER_INGOT,
+                Items.EMERALD
         };
         return wildRewards[(int)(Math.random() * wildRewards.length)];
     }

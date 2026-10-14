@@ -34,6 +34,7 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
         public void generate(HolderLookup.Provider registries, Consumer<Advancement> consumer, ExistingFileHelper helper) {
             ResourceLocation minecraftRoot = new ResourceLocation("minecraft", "story/root");
 
+            //ROOT
             Advancement root = Advancement.Builder.advancement()
                     .display(ModItems.MOONMASCOT.get(),
                             Component.translatable("advancement.fantastikmod.root.title"),
@@ -43,9 +44,10 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
                     .addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
                     .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "root"), helper);
 
+            //БИОМЫ
             Advancement enterBiome = Advancement.Builder.advancement()
                     .parent(root)
-                    .display(ModItems.GEM_MOON.get(),
+                    .display(ModBlocks.MOON_SAPLING.get(),
                             Component.translatable("advancement.fantastikmod.enter_biome.title"),
                             Component.translatable("advancement.fantastikmod.enter_biome.description"),
                             null, FrameType.TASK, true, true, false)
@@ -54,36 +56,14 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
                                     new ResourceLocation(fantastikmod.MOD_ID, "blue_moon_forest")))))
                     .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "enter_biome"), helper);
 
-            Advancement getAuripigment = Advancement.Builder.advancement()
-                    .parent(root)
-                    .display(ModItems.AURIPIGMENT.get(),
-                            Component.translatable("advancement.fantastikmod.get_auripigment.title"),
-                            Component.translatable("advancement.fantastikmod.get_auripigment.description"),
-                            null, FrameType.TASK, true, true, false)
-                    .addCriterion("has_auripigment", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT.get()))
-                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "get_auripigment"), helper);
-
-            Advancement fullAuripigmentArmor = Advancement.Builder.advancement()
-                    .parent(getAuripigment)
-                    .display(ModItems.AURIPIGMENT_CHESTPLATE.get(),
-                            Component.translatable("advancement.fantastikmod.full_auripigment_armor.title"),
-                            Component.translatable("advancement.fantastikmod.full_auripigment_armor.description"),
+            Advancement tameMoonDeer = Advancement.Builder.advancement()
+                    .parent(enterBiome)
+                    .display(ModItems.MOONMASCOT.get(),
+                            Component.translatable("advancement.fantastikmod.tame_moon_deer.title"),
+                            Component.translatable("advancement.fantastikmod.tame_moon_deer.description"),
                             null, FrameType.GOAL, true, true, false)
-                    .addCriterion("has_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_HELMET.get()))
-                    .addCriterion("has_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_CHESTPLATE.get()))
-                    .addCriterion("has_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_LEGGINGS.get()))
-                    .addCriterion("has_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_BOOTS.get()))
-                    .requirements(RequirementsStrategy.AND)
-                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "full_auripigment_armor"), helper);
-
-            Advancement totemBlueprint = Advancement.Builder.advancement()
-                    .parent(getAuripigment)
-                    .display(ModItems.TOTEM_BLUEPRINT.get(),
-                            Component.translatable("advancement.fantastikmod.totem_blueprint.title"),
-                            Component.translatable("advancement.fantastikmod.totem_blueprint.description"),
-                            null, FrameType.TASK, true, true, false)
-                    .addCriterion("has_totem_blueprint", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOTEM_BLUEPRINT.get()))
-                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "totem_blueprint"), helper);
+                    .addCriterion("has_moonmascot", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.MOONMASCOT.get()))
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "tame_moon_deer"), helper);
 
             Advancement getMoonGem = Advancement.Builder.advancement()
                     .parent(enterBiome)
@@ -120,25 +100,96 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
                     .requirements(RequirementsStrategy.OR)
                     .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "full_moon_tools"), helper);
 
+            //АУРИПИГМЕНТ
+            Advancement getAuripigment = Advancement.Builder.advancement()
+                    .parent(root)
+                    .display(ModItems.AURIPIGMENT.get(),
+                            Component.translatable("advancement.fantastikmod.get_auripigment.title"),
+                            Component.translatable("advancement.fantastikmod.get_auripigment.description"),
+                            null, FrameType.TASK, true, true, false)
+                    .addCriterion("has_auripigment", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT.get()))
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "get_auripigment"), helper);
+
+            Advancement fullAuripigmentArmor = Advancement.Builder.advancement()
+                    .parent(getAuripigment)
+                    .display(ModItems.AURIPIGMENT_CHESTPLATE.get(),
+                            Component.translatable("advancement.fantastikmod.full_auripigment_armor.title"),
+                            Component.translatable("advancement.fantastikmod.full_auripigment_armor.description"),
+                            null, FrameType.GOAL, true, true, false)
+                    .addCriterion("has_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_HELMET.get()))
+                    .addCriterion("has_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_CHESTPLATE.get()))
+                    .addCriterion("has_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_LEGGINGS.get()))
+                    .addCriterion("has_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AURIPIGMENT_BOOTS.get()))
+                    .requirements(RequirementsStrategy.AND)
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "full_auripigment_armor"), helper);
+
+            Advancement totemBlueprint = Advancement.Builder.advancement()
+                    .parent(getAuripigment)
+                    .display(ModItems.TOTEM_BLUEPRINT.get(),
+                            Component.translatable("advancement.fantastikmod.totem_blueprint.title"),
+                            Component.translatable("advancement.fantastikmod.totem_blueprint.description"),
+                            null, FrameType.TASK, true, true, false)
+                    .addCriterion("has_totem_blueprint", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOTEM_BLUEPRINT.get()))
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "totem_blueprint"), helper);
+
+            //СЕРЕБРО
+            Advancement sacredMetal = Advancement.Builder.advancement()
+                    .parent(root)
+                    .display(ModItems.SILVER_INGOT.get(),
+                            Component.translatable("advancement.fantastikmod.sacred_metal.title"),
+                            Component.translatable("advancement.fantastikmod.sacred_metal.description"),
+                            null, FrameType.TASK, true, true, false)
+                    .addCriterion("has_silver_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_INGOT.get()))
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "sacred_metal"), helper);
+
+            Advancement sacredArmor = Advancement.Builder.advancement()
+                    .parent(sacredMetal)
+                    .display(ModItems.SILVER_CHESTPLATE.get(),
+                            Component.translatable("advancement.fantastikmod.sacred_armor.title"),
+                            Component.translatable("advancement.fantastikmod.sacred_armor.description"),
+                            null, FrameType.GOAL, true, true, false)
+                    .addCriterion("has_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_HELMET.get()))
+                    .addCriterion("has_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_CHESTPLATE.get()))
+                    .addCriterion("has_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_LEGGINGS.get()))
+                    .addCriterion("has_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_BOOTS.get()))
+                    .requirements(RequirementsStrategy.OR)
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "sacred_armor"), helper);
+
+            Advancement sacredTool = Advancement.Builder.advancement()
+                    .parent(sacredMetal)
+                    .display(ModItems.SILVER_SWORD.get(),
+                            Component.translatable("advancement.fantastikmod.sacred_tool.title"),
+                            Component.translatable("advancement.fantastikmod.sacred_tool.description"),
+                            null, FrameType.GOAL, true, true, false)
+                    .addCriterion("has_sword", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_SWORD.get()))
+                    .addCriterion("has_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_PICKAXE.get()))
+                    .addCriterion("has_axe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_AXE.get()))
+                    .addCriterion("has_shovel", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_SHOVEL.get()))
+                    .addCriterion("has_hoe", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SILVER_HOE.get()))
+                    .requirements(RequirementsStrategy.OR)
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "sacred_tool"), helper);
+
+            //КИЦУНЭ
             Advancement tameKitsune = Advancement.Builder.advancement()
                     .parent(root)
-                    .display(ModItems.SOUL_TAMED_KITSUNE.get(),
+                    .display(ModItems.TOFU.get(),
                             Component.translatable("advancement.fantastikmod.tame_kitsune.title"),
                             Component.translatable("advancement.fantastikmod.tame_kitsune.description"),
-                            null, FrameType.GOAL, true, true, false)
-                    .addCriterion("tame_kitsune", TameAnimalTrigger.TriggerInstance.tamedAnimal(
-                            EntityPredicate.Builder.entity().of(ModEntities.KITSUNE_LIGHT.get()).build()))
+                            null, FrameType.TASK, true, true, false)
+                    .addCriterion("has_tofu", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOFU.get()))
                     .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "tame_kitsune"), helper);
 
-            Advancement tameMoonDeer = Advancement.Builder.advancement()
-                    .parent(root)
-                    .display(ModItems.EGG_MOON_DEER.get(),
-                            Component.translatable("advancement.fantastikmod.tame_moon_deer.title"),
-                            Component.translatable("advancement.fantastikmod.tame_moon_deer.description"),
+            Advancement strangeMask = Advancement.Builder.advancement()
+                    .parent(tameKitsune)
+                    .display(ModItems.KITSUNE_SOUL_MASK_0.get(),
+                            Component.translatable("advancement.fantastikmod.strange_mask.title"),
+                            Component.translatable("advancement.fantastikmod.strange_mask.description"),
                             null, FrameType.GOAL, true, true, false)
-                    .addCriterion("tame_moon_deer", TameAnimalTrigger.TriggerInstance.tamedAnimal(
-                            EntityPredicate.Builder.entity().of(ModEntities.MOON_DEER.get()).build()))
-                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "tame_moon_deer"), helper);
+                    .addCriterion("has_mask_0", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.KITSUNE_SOUL_MASK_0.get()))
+                    .addCriterion("has_mask_1", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.KITSUNE_SOUL_MASK_1.get()))
+                    .addCriterion("has_mask_2", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.KITSUNE_SOUL_MASK_2.get()))
+                    .requirements(RequirementsStrategy.OR)
+                    .save(consumer, new ResourceLocation(fantastikmod.MOD_ID, "strange_mask"), helper);
 
             Advancement catnipMaster = Advancement.Builder.advancement()
                     .parent(root)

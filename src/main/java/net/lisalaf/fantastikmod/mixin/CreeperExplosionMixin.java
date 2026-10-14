@@ -16,19 +16,12 @@ public class CreeperExplosionMixin {
     private void onExplode(CallbackInfo ci) {
         Creeper creeper = (Creeper)(Object)this;
         CompoundTag persistentData = creeper.getPersistentData();
-
-        // Проверяем защиту
         if (persistentData.getBoolean("KitsuneProtectedExplosion")) {
-            // Создаем взрыв только с уроном по сущностям (без разрушения блоков)
             Level level = creeper.level();
             if (!level.isClientSide) {
-                // Микро оптимизация
                 final Vec3 position = creeper.position();
                 level.explode(null, position.x, position.y, position.z, 3.0F, false, Level.ExplosionInteraction.NONE);
-            }
-            ci.cancel(); // Отменяем оригинальный взрыв
-
-            // Убираем метку после взрыва
+            } ci.cancel();
             persistentData.remove("KitsuneProtectedExplosion");
         }
     }

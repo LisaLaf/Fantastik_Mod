@@ -33,8 +33,8 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
         BlockPos startPos = findGround(level, origin, 10);
         if (startPos == null) return false;
 
-        int height = 5 + random.nextInt(6); // 5-10 блоков
-        int baseSize = 2 + random.nextInt(3); // 2-4 блока радиус основания
+        int height = 5 + random.nextInt(6);
+        int baseSize = 2 + random.nextInt(3);
 
         generateSpike(level, startPos, height, baseSize, random);
         fillGaps(level, startPos, height, baseSize, random);
@@ -99,7 +99,7 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
                 for (int dz = -baseSize - 1; dz <= baseSize + 1; dz++) {
                     pos.set(startPos.getX() + dx, startPos.getY() + y, startPos.getZ() + dz);
 
-                    checkPos.setWithOffset(pos, 0, 1, 0); // Проверяем блок сверху
+                    checkPos.setWithOffset(pos, 0, 1, 0);
                     if (level.getBlockState(checkPos).is(moonBlock)) {
                         if (level.isEmptyBlock(pos) && random.nextFloat() < 0.7f) {
                             setBlock(level, pos, moonBlockState);
@@ -126,10 +126,9 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     private void addCrystals(WorldGenLevel level, BlockPos startPos, int height, RandomSource random) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-        // Кристаллы на основном пике
         for (int y = 0; y < height; y++) {
             BlockPos layerPos = startPos.above(y);
-            float chance = 0.2f + (y / (float) height) * 0.2f; // Больше шанс наверху
+            float chance = 0.2f + (y / (float) height) * 0.2f;
 
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dz = -2; dz <= 2; dz++) {
@@ -144,7 +143,6 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
             }
         }
 
-        // Кристаллы вокруг основания
         BlockPos groundPos = startPos.below();
         for (int dx = -3; dx <= 3; dx++) {
             for (int dz = -3; dz <= 3; dz++) {
@@ -199,7 +197,6 @@ public class MoonCrystalClusterFeature extends Feature<NoneFeatureConfiguration>
     }
 
     private boolean canReplace(BlockState state) {
-        // Лучше использовать теги, чтобы мод был совместим с другими генераторами биомов
         return state.isAir() ||
                 state.is(Blocks.GRASS) ||
                 state.is(Blocks.TALL_GRASS) ||

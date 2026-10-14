@@ -81,7 +81,7 @@
 				{
 					"name": "ears",
 					"parent": "head",
-					"pivot": [2.1, 13.5, -6.8]
+					"pivot": [0.1, 13.5, -4.4]
 				},
 				{
 					"name": "ears1",

@@ -91,6 +91,25 @@ public enum ModArmorMaterials implements ArmorMaterial {
         public float getKnockbackResistance() { return 0; }
     };
 
+    public static final ArmorMaterial SOUL_TAIL_MATERIAL = new ArmorMaterial() {
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) { return 0; }
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) { return 0; }
+        @Override
+        public int getEnchantmentValue() { return 0; }
+        @Override
+        public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_LEATHER; }
+        @Override
+        public Ingredient getRepairIngredient() { return Ingredient.EMPTY; }
+        @Override
+        public String getName() { return fantastikmod.MOD_ID + ":kitsune_soul_tail"; }
+        @Override
+        public float getToughness() { return 0; }
+        @Override
+        public float getKnockbackResistance() { return 0; }
+    };
+
 
     private final String name;
     private final int durabilityMultiplier;

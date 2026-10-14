@@ -176,21 +176,19 @@ public class MoonDeerQuest extends Quest {
 
     private static Item getRandomRewardItem(boolean forTamed) {
         if (forTamed) {
-            // Для прирученных - изумруд или серебряные/золотые осколки
             Item[] tamedRewards = {
-                    Items.EMERALD,                    // Изумруд 1
-                    Items.IRON_INGOT,                 // Железный слиток 1-2
-                    Items.GOLD_NUGGET,                // Самородок золота 3-6
-                    ModItems.SILVER_INGOT.get()       // Серебряный слиток 1-3
+                    Items.EMERALD,
+                    Items.IRON_INGOT,
+                    Items.GOLD_NUGGET,
+                    ModItems.SILVER_INGOT.get()
             };
             return tamedRewards[(int)(Math.random() * tamedRewards.length)];
         } else {
-            // Для диких - лунный самоцвет, изумруд или алмаз
             Item[] wildRewards = {
-                    ModItems.GEM_MOON.get(),          // Лунный самоцвет 1
-                    Items.DIAMOND,                    // Алмаз 1
-                    Items.EMERALD,                    // Изумруд 1-2
-                    ModItems.SILVER_INGOT.get()       // Серебряный слиток 1
+                    ModItems.GEM_MOON.get(),
+                    Items.DIAMOND,
+                    Items.EMERALD,
+                    ModItems.SILVER_INGOT.get()
             };
             return wildRewards[(int)(Math.random() * wildRewards.length)];
         }
@@ -200,15 +198,15 @@ public class MoonDeerQuest extends Quest {
         Item item = getRandomRewardItem(forTamed);
 
         if (forTamed) {
-            // Награды прирученных
+
             if (item == Items.GOLD_NUGGET) {
-                return 3 + (int)(Math.random() * 4); // 3-6 осколков
+                return 3 + (int)(Math.random() * 4);
             }
             if (item == ModItems.SILVER_INGOT.get()) {
-                return 1 + (int)(Math.random() * 3); // 1-3 слитка
+                return 1 + (int)(Math.random() * 3);
             }
             if (item == Items.IRON_INGOT) {
-                return 1 + (int)(Math.random() * 2); // 1-2 слитка
+                return 1 + (int)(Math.random() * 2);
             }
             return 1;
         } else {
@@ -219,7 +217,7 @@ public class MoonDeerQuest extends Quest {
         }
     }
 
-    private static long getRandomDuration(boolean forTamed) { // УБРАЛ QuestType
+    private static long getRandomDuration(boolean forTamed) {
         long minSeconds, maxSeconds;
 
         if (forTamed) {

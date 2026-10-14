@@ -84,6 +84,9 @@ public class ModItems {
     public static final RegistryObject<Item> BUILDERS_WAND = ITEMS.register("builders_wand",
             () -> new BuildersWandItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> KITSUNE_SOUL_TAIL = ITEMS.register("kitsune_soul_tail",
+            () -> new KitsuneSoulTailItem(ModArmorMaterials.MASK_MATERIAL, new Item.Properties(), 0));
+
     public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON = ITEMS.register("withered_scales_fire_dragon",
             () -> new Item(new Item.Properties()));
 
@@ -95,6 +98,15 @@ public class ModItems {
             () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<Item> WITHERED_SCALES_FIRE_DRAGON_BOOTS = ITEMS.register("withered_scales_fire_dragon_boots",
             () -> new FireDragonArmorItem(ModArmorMaterials.FIRE_DRAGON, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> NOTE_PRINCESS = ITEMS.register("note_princess",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> NOTE_KING = ITEMS.register("note_king",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> NOTE_DRAGON_SCHOLAR = ITEMS.register("note_dragon_scholar",
+            () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> TOFU = ITEMS.register("tofu",
             ()-> new Item( new Item.Properties().stacksTo(64).food(ModFoods.TOFU)));
@@ -259,11 +271,10 @@ public class ModItems {
             () -> new SwordItem(ModToolTiers.SILVER, 3, -2.0f, new Item.Properties()) {
                 @Override
                 public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-                    // Проверяем является ли цель нежитью
                     if (target instanceof Zombie || target instanceof Skeleton ||
                             target instanceof Phantom || target instanceof WitherSkeleton ||
                             target instanceof ZombifiedPiglin || target instanceof Drowned) {
-                        target.hurt(attacker.damageSources().magic(), 5.0F); // +5 магического урона
+                        target.hurt(attacker.damageSources().magic(), 5.0F);
                     }
                     return super.hurtEnemy(stack, target, attacker);
                 }

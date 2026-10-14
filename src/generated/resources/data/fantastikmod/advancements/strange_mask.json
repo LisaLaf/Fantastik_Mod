@@ -1,0 +1,64 @@
+{
+  "parent": "fantastikmod:tame_kitsune",
+  "criteria": {
+    "has_mask_0": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:kitsune_soul_mask_0"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_mask_1": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:kitsune_soul_mask_1"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_mask_2": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:kitsune_soul_mask_2"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.strange_mask.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:kitsune_soul_mask_0"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.strange_mask.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mask_0",
+      "has_mask_1",
+      "has_mask_2"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

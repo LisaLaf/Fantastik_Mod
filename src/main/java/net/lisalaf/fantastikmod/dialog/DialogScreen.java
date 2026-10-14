@@ -3,14 +3,13 @@ package net.lisalaf.fantastikmod.dialog;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.lisalaf.fantastikmod.dialog.components.MoodTabButton;
-import net.lisalaf.fantastikmod.dialog.mood.MobMood;
-import net.lisalaf.fantastikmod.dialog.mood.MoodSystem;
 import net.lisalaf.fantastikmod.dialog.quest.Quest;
 import net.lisalaf.fantastikmod.dialog.quest.QuestSystem;
 import net.lisalaf.fantastikmod.dialog.quest.QuestTabButton;
 import net.lisalaf.fantastikmod.entity.custom.KitsuneLightEntity;
 import net.lisalaf.fantastikmod.entity.custom.MoonDeerEntity;
 import net.lisalaf.fantastikmod.fantastikmod;
+import net.lisalaf.fantastikmod.network.MaskGivePacket;
 import net.lisalaf.fantastikmod.network.QuestPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -47,21 +46,17 @@ public class DialogScreen extends Screen {
 
     private MoodTabButton[] tabButtons;
     private int currentTab = 0;
-    private MoodSystem moodSystem;
-
     private DialogButton[] optionButtons;
     private int selectedButtonIndex = -1;
 
     private QuestTabButton questTabButton;
     private DialogButton cancelQuestButton;
+    private boolean questRequested = false;
 
     public DialogScreen(Entity entity, Dialog dialog) {
         super(Component.empty());
         this.entity = entity;
         this.dialog = dialog;
-        if (entity instanceof MobMood mobMood) {
-            this.moodSystem = mobMood.getMoodSystem();
-        }
     }
 
     @Override
@@ -128,9 +123,31 @@ public class DialogScreen extends Screen {
                     if (dialog.isFinished()) minecraft.setScreen(null);
                     else { selectedButtonIndex = -1; updateOptionButtons(); }
                 });
+                optionButtons[i] = new DialogButton(bx, by, maxW, bh, opt.getText(), i, b -> {
+                    selectedButtonIndex = fi;
+
+                    String nextId = opt.getNextNodeId();
+                    if ("give_mask".equals(nextId) || "refuse_mask".equals(nextId)) {
+                        handleMaskDialogEnd(nextId);
+                        return;
+                    }
+
+                    dialog.selectOption(fi);
+                    if (dialog.isFinished()) minecraft.setScreen(null);
+                    else { selectedButtonIndex = -1; updateOptionButtons(); }
+                });
                 addRenderableWidget(optionButtons[i]);
             }
         } else optionButtons = new DialogButton[0];
+    }
+
+    private void handleMaskDialogEnd(String endNodeId) {
+        int action = "give_mask".equals(endNodeId)
+                ? MaskGivePacket.ACTION_GIVE
+                : MaskGivePacket.ACTION_REFUSE;
+
+        fantastikmod.sendToServer(new MaskGivePacket(entity.getId(), action));
+        minecraft.setScreen(null);
     }
 
     @Override
@@ -209,18 +226,26 @@ public class DialogScreen extends Screen {
         g.fill(contentX, contentY, contentX + CONTENT_WIDTH, contentY + CONTENT_HEIGHT, 0xB3000000);
         g.drawCenteredString(font, Component.translatable("gui.quest.title"), contentX + CONTENT_WIDTH / 2, contentY + 15, 0xFFFFFF);
 
-        if (questInfo == null) {
-            g.drawCenteredString(font, Component.translatable("gui.quest.none"), contentX + CONTENT_WIDTH / 2, contentY + 60, 0xAAAAAA);
+        if (questInfo != null && questRequested) {
+            questRequested = false;
+            resetQuestButtons();
+        }
 
-            if (acceptQuestButton == null) {
-                int cx = contentX + CONTENT_WIDTH / 2;
-                acceptQuestButton = new DialogButton(cx - 45, contentY + 100, 90, 24,
-                        Component.translatable("gui.quest.request"), 0, b -> {
-                    fantastikmod.sendToServer(new QuestPacket(entity.getId(), 0));
-                    resetQuestButtons();
-                    questCreationChecked = false;
-                });
-                addRenderableWidget(acceptQuestButton);
+        if (questInfo == null) {
+            if (questRequested) {
+                g.drawCenteredString(font, Component.translatable("gui.quest.waiting"), contentX + CONTENT_WIDTH / 2, contentY + 60, 0xAAAAAA);
+            } else {
+                g.drawCenteredString(font, Component.translatable("gui.quest.none"), contentX + CONTENT_WIDTH / 2, contentY + 60, 0xAAAAAA);
+                if (acceptQuestButton == null) {
+                    int cx = contentX + CONTENT_WIDTH / 2;
+                    acceptQuestButton = new DialogButton(cx - 45, contentY + 100, 90, 24,
+                            Component.translatable("gui.quest.request"), 0, b -> {
+                        fantastikmod.sendToServer(new QuestPacket(entity.getId(), 0));
+                        questRequested = true;
+                        resetQuestButtons();
+                    });
+                    addRenderableWidget(acceptQuestButton);
+                }
             }
         } else if (!questInfo.isActive) {
             renderQuestInfo(g, questInfo);
@@ -233,7 +258,9 @@ public class DialogScreen extends Screen {
                     resetQuestButtons();
                 });
                 addRenderableWidget(acceptQuestButton);
-
+            }
+            if (declineQuestButton == null) {
+                int cx = contentX + CONTENT_WIDTH / 2;
                 declineQuestButton = new DialogButton(cx + 10, contentY + 155, 90, 24,
                         Component.translatable("gui.quest.decline"), 1, b -> {
                     fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
@@ -248,6 +275,8 @@ public class DialogScreen extends Screen {
                     minecraft.player.getInventory().countItem(questInfo.requiredItem) >= questInfo.requiredAmount;
 
             if (canComplete) {
+                if (cancelQuestButton != null) { removeWidget(cancelQuestButton); cancelQuestButton = null; }
+
                 if (completeQuestButton == null) {
                     int cx = contentX + CONTENT_WIDTH / 2;
                     completeQuestButton = new DialogButton(cx - 45, contentY + 155, 90, 24,
@@ -259,23 +288,31 @@ public class DialogScreen extends Screen {
                     addRenderableWidget(completeQuestButton);
                 }
             } else {
+                if (completeQuestButton != null) { removeWidget(completeQuestButton); completeQuestButton = null; }
+
                 if (cancelQuestButton == null) {
                     int cx = contentX + CONTENT_WIDTH / 2;
-                    long tl = questInfo.timeLeft;
-                    Component cancelText = Component.translatable("gui.quest.cancel");
-                    if (tl > 0) {
-                        long m = tl / 60000, s = (tl % 60000) / 1000;
-                        cancelText = cancelText.copy().append(" (" + String.format("%d:%02d", m, s) + ")");
-                    }
-                    cancelQuestButton = new DialogButton(cx - 45, contentY + 155, 90, 24, cancelText, 3, b -> {
+                    cancelQuestButton = new DialogButton(cx - 45, contentY + 155, 90, 24,
+                            Component.translatable("gui.quest.cancel"), 3, b -> {
                         fantastikmod.sendToServer(new QuestPacket(entity.getId(), 2));
                         ClientQuestData.clearData();
                         resetQuestButtons();
                     });
                     addRenderableWidget(cancelQuestButton);
                 }
+                long tl = questInfo.getTimeLeft();
+                Component cancelText;
+                if (tl > 0) {
+                    long m = tl / 60000, s = (tl % 60000) / 1000;
+                    cancelText = Component.translatable("gui.quest.cancel").copy()
+                            .append(" (" + String.format("%d:%02d", m, s) + ")");
+                } else {
+                    cancelText = Component.translatable("gui.quest.cancel");
+                }
+                cancelQuestButton.setMessage(cancelText);
             }
         }
+
     }
     private void renderQuestInfo(GuiGraphics g, ClientQuestData.ClientQuestInfo questInfo) {
         int cx = contentX + CONTENT_WIDTH / 2;

@@ -33,7 +33,7 @@ public class IceDragonGoal {
         @Override
         public void start() {
             currentTarget = getFlightTarget();
-            cooldown = 200 + this.dragon.getRandom().nextInt(200); // Увеличиваем время между сменой целей
+            cooldown = 200 + this.dragon.getRandom().nextInt(200);
         }
 
         @Override
@@ -49,7 +49,6 @@ public class IceDragonGoal {
             Vec3 currentPos = this.dragon.position();
             double distanceToTarget = currentPos.distanceTo(currentTarget);
 
-            // Если близко к цели или застрял - ищем новую цель
             if (distanceToTarget < 10.0 || stuckTimer > 100) {
                 currentTarget = getFlightTarget();
                 cooldown = 200 + this.dragon.getRandom().nextInt(200);
@@ -57,13 +56,11 @@ public class IceDragonGoal {
                 return;
             }
 
-            // Направление к цели
             Vec3 direction = currentTarget.subtract(currentPos).normalize();
 
-            // Более плавное движение
-            double speed = 0.2; // Уменьшаем скорость для плавности
 
-            // Плавное изменение движения
+            double speed = 0.2;
+
             Vec3 currentMotion = this.dragon.getDeltaMovement();
             double motionX = currentMotion.x + (direction.x * speed - currentMotion.x) * 0.1;
             double motionY = currentMotion.y + (direction.y * speed - currentMotion.y) * 0.1;
@@ -71,13 +68,11 @@ public class IceDragonGoal {
 
             this.dragon.setDeltaMovement(motionX, motionY, motionZ);
 
-            // Плавный поворот головы в направлении движения
             if (this.dragon.getDeltaMovement().horizontalDistanceSqr() > 0.01) {
                 float targetYaw = (float) Math.toDegrees(Math.atan2(motionX, motionZ));
                 this.dragon.setYRot(rotlerp(this.dragon.getYRot(), targetYaw, 5.0F));
             }
 
-            // Проверяем не застрял ли дракон
             if (distanceToTarget > currentPos.distanceTo(this.dragon.position())) {
                 stuckTimer++;
             } else {
@@ -89,11 +84,9 @@ public class IceDragonGoal {
             RandomSource random = this.dragon.getRandom();
             Level level = this.dragon.level();
 
-            // Больший радиус для более разнообразного полета
             double x = this.dragon.getX() + (random.nextDouble() - 0.5) * 60;
             double z = this.dragon.getZ() + (random.nextDouble() - 0.5) * 60;
 
-            // Более широкий диапазон высот
             double currentY = this.dragon.getY();
             double minY = Math.max(level.getSeaLevel() + 5, currentY - 20);
             double maxY = Math.min(level.getMaxBuildHeight() - 5, currentY + 20);
@@ -141,9 +134,8 @@ public class IceDragonGoal {
                 return false;
             }
 
-            // Решаем приземлиться только если летим и прошло достаточно времени
             return this.dragon.isFlying() && !this.dragon.isTakingOff() && !this.dragon.isLanding() &&
-                    this.dragon.getRandom().nextInt(400) == 0 && // Увеличиваем шанс приземления
+                    this.dragon.getRandom().nextInt(400) == 0 &&
                     findLandingPosition();
         }
 
@@ -153,7 +145,7 @@ public class IceDragonGoal {
 
             for (int i = 0; i < 10; i++) {
                 BlockPos landPos = currentPos.offset(
-                        this.dragon.getRandom().nextInt(30) - 15, // Увеличиваем радиус поиска
+                        this.dragon.getRandom().nextInt(30) - 15,
                         -this.dragon.getRandom().nextInt(10),
                         this.dragon.getRandom().nextInt(30) - 15
                 );
@@ -205,9 +197,8 @@ public class IceDragonGoal {
                 return false;
             }
 
-            // Только если на земле и не выполняем другие анимации
             return !this.dragon.isFlying() && !this.dragon.isTakingOff() && !this.dragon.isLanding() &&
-                    this.dragon.getRandom().nextInt(600) == 0 && // Уменьшаем шанс взлета
+                    this.dragon.getRandom().nextInt(600) == 0 &&
                     this.dragon.onGround();
         }
 
@@ -222,7 +213,7 @@ public class IceDragonGoal {
                 this.dragon.setFlying(true);
                 this.dragon.setTakingOff(false);
             }
-            this.takeoffCooldown = 600; // Увеличиваем кулдаун
+            this.takeoffCooldown = 600;
         }
     }
 }

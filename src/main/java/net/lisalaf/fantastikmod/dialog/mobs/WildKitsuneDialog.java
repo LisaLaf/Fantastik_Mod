@@ -46,7 +46,7 @@ public class WildKitsuneDialog extends Dialog {
                 .addOption(Component.translatable("dialog.player.ask_follow"), "ask_follow") // "Хочешь последовать за мной?" ведет на обычный ответ
                 .addOption(Component.translatable("dialog.player.back"), "activities"));
 
-// Узел "Вот так! В следующий раз думай..." (переименован из test_fire)
+// Узел "Вот так! В следующий раз думай..."
         addNode("test_fire", new DialogNode(
                 Component.translatable("dialog.wild_kitsune.test_fire"), "test_fire"
         ).addOption(Component.translatable("dialog.player.ask_follow"), "ask_follow")

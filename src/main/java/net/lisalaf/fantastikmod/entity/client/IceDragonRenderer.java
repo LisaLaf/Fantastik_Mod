@@ -25,7 +25,6 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
     private boolean hasOptifine() {
         if (hasOptifineCache == null) {
             try {
-                // Простая проверка
                 Class.forName("optifine.Installer");
                 hasOptifineCache = true;
             } catch (ClassNotFoundException e) {
@@ -39,10 +38,8 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
         super(renderManager, new IceDragonModel());
         this.shadowRadius = 8.0f;
     }
-    // ОТКЛЮЧАЕМ стандартный culling для огромных драконов
     @Override
     public boolean shouldRender(IceDragonEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        // Всегда рендерить если дракон в пределах 1024 блоков
         double distanceSqr = livingEntity.distanceToSqr(camX, camY, camZ);
         return distanceSqr < 1024.0 * 1024.0;
     }
@@ -74,8 +71,6 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
         }
 
         poseStack.scale(scale, scale, scale);
-
-        // Анимация наклона в полете
         if (entity.isFlying()) {
             Vec3 motion = entity.getDeltaMovement();
             if (motion.horizontalDistance() > 0.1) {
@@ -104,7 +99,6 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
 
         poseStack.pushPose();
 
-        // ПРИМЕНЯЕМ ТОЛЬКО ОСНОВНОЙ МАСШТАБ (без дублирования трансформаций)
         float scale;
         int growthStage = entity.getGrowthStage();
 
@@ -137,7 +131,6 @@ public class IceDragonRenderer extends GeoEntityRenderer<IceDragonEntity> {
         poseStack.popPose();
     }
 
-    // Альтернативный подход - рендерим глаза в основном методе
     @Override
     protected void applyRotations(IceDragonEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         super.applyRotations(entity, poseStack, ageInTicks, rotationYaw, partialTick);

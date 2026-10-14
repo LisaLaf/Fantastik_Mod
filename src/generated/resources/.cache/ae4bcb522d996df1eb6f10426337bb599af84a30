@@ -1,4 +1,4 @@
-// 1.20.1	2026-07-20T02:32:44.154571	Block States: fantastikmod
+// 1.20.1	2026-10-04T02:44:31.9749555	Block States: fantastikmod
 ac7438448d75e22f93e94da392ca3025f3d2455a assets/fantastikmod/blockstates/ash_block.json
 f4ec7d494d1a6448c41be24f60fcb35e64b02def assets/fantastikmod/blockstates/auripigment_block.json
 150f05bccb28f5f947f7f1d13044b30f52dbe7d1 assets/fantastikmod/blockstates/auripigment_ore_block.json
@@ -59,6 +59,7 @@ ecc4172a5be6b3f164575fc4095043d7ce391a2c assets/fantastikmod/blockstates/petrifi
 61d42b4f854ee670c0dbb6a781fa12b5e37ae108 assets/fantastikmod/blockstates/potted_moon_lily.json
 e751350d33885ead87f5921da52076aa28ee67a5 assets/fantastikmod/blockstates/potted_moon_northern_bluebell.json
 970b3387b240669b3dd3448c0293bbb054873d2d assets/fantastikmod/blockstates/potted_spider_lily.json
+a7cbb268e5759f57716b7bcf221bff7168310b95 assets/fantastikmod/blockstates/remains_guards.json
 318a88ff99de738d30cff9b46cc8b550a43a9127 assets/fantastikmod/blockstates/rice_crop.json
 99d0fb5b56efae3cfece22e1923884faee677d08 assets/fantastikmod/blockstates/roof_cap_medieval_clay_damaged.json
 2caa04e6c671624e39babadb82a03468105aa6ed assets/fantastikmod/blockstates/roof_cap_medieval_copper_damaged.json
@@ -271,6 +272,7 @@ ab37c6c43e96eb2d2f35be8df1939653479d0963 assets/fantastikmod/models/item/potted_
 cb28f63389a89806fbf0ae0627bd8140eda1c910 assets/fantastikmod/models/item/potted_moon_lily.json
 b89bf7b61be88b0e89d085f0bc96578a110d3f58 assets/fantastikmod/models/item/potted_moon_northern_bluebell.json
 a70320ba715787f4e4f6199a19d277357c459b09 assets/fantastikmod/models/item/potted_spider_lily.json
+51d9cc60583b6511730cea3c38b2c18f8201a327 assets/fantastikmod/models/item/remains_guards.json
 44c86bb3d4eaf877f7431d22b099129a29318766 assets/fantastikmod/models/item/royal_bed.json
 4d40fea2d07e51dcb09d6c742535ee98042947fb assets/fantastikmod/models/item/sake.json
 6430d9721fff97f9ad7b68d01ea04723a11cbcce assets/fantastikmod/models/item/silver_block.json

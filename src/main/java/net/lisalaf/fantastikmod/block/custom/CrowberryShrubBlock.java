@@ -58,13 +58,8 @@ public class CrowberryShrubBlock extends CropBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int age = state.getValue(AGE);
-
-        // Если куст достиг последней стадии
         if (age == MAX_AGE) {
-            // Выпадают ягоды
             popResource(level, pos, new ItemStack(ModItems.MOON_CROWBERRY.get(), 1 + level.random.nextInt(2)));
-
-            // Обновляем до стадии 3
             level.setBlock(pos, state.setValue(AGE, 3), 2);
 
             return InteractionResult.sidedSuccess(level.isClientSide);

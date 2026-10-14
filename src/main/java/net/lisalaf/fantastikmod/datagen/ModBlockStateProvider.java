@@ -341,7 +341,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.ROYAL_BED.get(), models().getExistingFile(modLoc("block/royal_bed")));
         simpleBlockItem(ModBlocks.ROYAL_BED.get(), models().getExistingFile(modLoc("block/royal_bed")));
 
-        // Черепица средневековая глиняная
         ModelFile roofStraight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged"));
         ModelFile roofInnerLeft = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_inner_left"));
         ModelFile roofInnerRight = models().getExistingFile(modLoc("block/roof_tile/roof_tile_medieval_clay_damaged_inner_right"));
@@ -484,6 +483,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .rotationY((int) state.getValue(YukimiToroBlock.FACING).toYRot())
                     .build();
         });
+
+        ModelFile remainsModel = models().getExistingFile(modLoc("block/remains_guards"));
+        getVariantBuilder(ModBlocks.REMAINS_GUARDS.get()).forAllStates(state -> {
+            return ConfiguredModel.builder()
+                    .modelFile(remainsModel)
+                    .rotationY((int) state.getValue(RemainsGuardsBlock.FACING).toYRot())
+                    .build();
+        });
+        simpleBlockItem(ModBlocks.REMAINS_GUARDS.get(), remainsModel);
 
         ModelFile eggModel = models().getExistingFile(modLoc("block/petrified_large_egg"));
         simpleBlockWithItem(ModBlocks.PETRIFIED_LARGE_EGG.get(), eggModel);

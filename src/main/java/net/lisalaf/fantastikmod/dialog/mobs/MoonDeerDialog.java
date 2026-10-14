@@ -8,26 +8,26 @@ public class MoonDeerDialog extends Dialog {
 
     @Override
     protected void setupDialog() {
-        // === НАЧАЛО ДИАЛОГА ===
+        //НАЧАЛО ДИАЛОГА
         addNode("start", new DialogNode(
                 Component.translatable("dialog.moon_deer.greeting")
         ).addOption(Component.translatable("dialog.player.ask_outside_world"), "outside_world")
                 .addOption(Component.translatable("dialog.player.ask_feelings"), "feelings")
                 .addOption(Component.translatable("dialog.player.goodbye"), "end"));
 
-        // === МИР ЗА ПРЕДЕЛАМИ ===
+        //МИР ЗА ПРЕДЕЛАМИ
         addNode("outside_world", new DialogNode(
                 Component.translatable("dialog.moon_deer.outside_world")
         ).addOption(Component.translatable("dialog.player.ask_feelings"), "feelings")
                 .addOption(Component.translatable("dialog.player.back"), "start"));
 
-        // === САМОЧУВСТВИЕ ===
+        //САМОЧУВСТВИЕ
         addNode("feelings", new DialogNode(
                 Component.translatable("dialog.moon_deer.feelings")
         ).addOption(Component.translatable("dialog.player.ask_outside_world"), "outside_world")
                 .addOption(Component.translatable("dialog.player.back"), "start"));
 
-        // === КОНЕЦ ДИАЛОГА ===
+        //КОНЕЦ ДИАЛОГА
         addNode("end", new DialogNode(
                 Component.translatable("dialog.moon_deer.farewell")
         ));

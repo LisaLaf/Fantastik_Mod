@@ -25,7 +25,6 @@ import static net.lisalaf.fantastikmod.worldgen.structures.ModTemplatePools.*;
 
 @SuppressWarnings("removal")
 public class ModStructures {
-    // Старая структура
     public static final ResourceKey<Structure> TEA_HOUSE = ResourceKey.create(Registries.STRUCTURE,
             new ResourceLocation(fantastikmod.MOD_ID, "tea_house"));
 
@@ -61,18 +60,6 @@ public class ModStructures {
 
     public static final ResourceKey<StructureSet> ONSEN_SMALL_SET = ResourceKey.create(Registries.STRUCTURE_SET,
             new ResourceLocation(fantastikmod.MOD_ID, "onsen_small"));
-
-    public static final ResourceKey<Structure> CASTLE_PLAINS = ResourceKey.create(Registries.STRUCTURE,
-            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains"));
-
-    public static final ResourceKey<StructureSet> CASTLE_PLAINS_SET = ResourceKey.create(Registries.STRUCTURE_SET,
-            new ResourceLocation(fantastikmod.MOD_ID, "castle_plains"));
-
-    public static final ResourceKey<Structure> CASTLE_TEST = ResourceKey.create(Registries.STRUCTURE,
-            new ResourceLocation(fantastikmod.MOD_ID, "castle_test"));
-
-    public static final ResourceKey<StructureSet> CASTLE_TEST_SET = ResourceKey.create(Registries.STRUCTURE_SET,
-            new ResourceLocation(fantastikmod.MOD_ID, "castle_test"));
 
     public static final ResourceKey<Structure> INARI_SHRINE_VILLAGE = ResourceKey.create(Registries.STRUCTURE,
             new ResourceLocation(fantastikmod.MOD_ID, "inari_shrine_village"));
@@ -176,37 +163,6 @@ public class ModStructures {
                         TerrainAdjustment.BEARD_THIN
                 ),
                 context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.ONSEN_SMALL_START),
-                Optional.empty(),
-                1,
-                ConstantHeight.of(VerticalAnchor.absolute(0)),
-                true,
-                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
-                116
-        ));
-        context.register(CASTLE_PLAINS, new JigsawStructure(
-                new Structure.StructureSettings(
-                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.NONE),
-                        Map.of(),
-                        GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_THIN
-                ),
-                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(CASTLE_PLAINS_START),
-                Optional.empty(),
-                7,
-                ConstantHeight.of(VerticalAnchor.absolute(1)),
-                true,
-                Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
-                116
-        ));
-
-        context.register(CASTLE_TEST, new JigsawStructure(
-                new Structure.StructureSettings(
-                        context.lookup(Registries.BIOME).getOrThrow(ModTags.Biomes.NONE),
-                        Map.of(),
-                        GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_THIN
-                ),
-                context.lookup(Registries.TEMPLATE_POOL).getOrThrow(CASTLE_TEST_START),
                 Optional.empty(),
                 1,
                 ConstantHeight.of(VerticalAnchor.absolute(0)),

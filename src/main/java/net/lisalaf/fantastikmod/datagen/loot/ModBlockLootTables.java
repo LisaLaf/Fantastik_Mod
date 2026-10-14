@@ -52,6 +52,7 @@ public class ModBlockLootTables extends LootTableProvider {
             // Блоки, которые дропают сами себя
             this.dropSelf(ModBlocks.GEMKITSUNE_BLOCK.get());
             this.dropSelf(ModBlocks.TREE_MOON_LOG_BLOCK.get());
+            this.add(ModBlocks.REMAINS_GUARDS.get(), noDrop());
 
             this.dropSelf(ModBlocks.ASH_BLOCK.get());
             this.dropSelf(ModBlocks.MOON_CRYSTAL_BLOCK.get());

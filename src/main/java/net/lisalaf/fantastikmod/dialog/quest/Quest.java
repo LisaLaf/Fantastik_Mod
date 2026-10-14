@@ -16,16 +16,17 @@ public abstract class Quest {
     protected final Item rewardItem;
     protected final int requiredAmount;
     protected final int rewardAmount;
-    protected final long durationMinutes; // Длительность квеста в минутах
+    protected final long durationMillis;
     protected boolean isActive = false;
     protected boolean isCompleted = false;
     protected long startTime = 0;
     protected int currentCount = 0;
+    protected long endTime = 0;
 
     public Quest(String questId, String nameKey, String descriptionKey,
                  Item requiredItem, int requiredAmount,
                  Item rewardItem, int rewardAmount,
-                 long durationMinutes) {
+                 long durationMillis) {
         this.questId = questId;
         this.nameKey = nameKey;
         this.descriptionKey = descriptionKey;
@@ -33,10 +34,28 @@ public abstract class Quest {
         this.requiredAmount = requiredAmount;
         this.rewardItem = rewardItem;
         this.rewardAmount = rewardAmount;
-        this.durationMinutes = durationMinutes;
+        this.durationMillis = durationMillis;
     }
 
-    public abstract boolean canStart(); // Условия начала квеста
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public long getTimeLeft() {
+        if (!isActive || endTime == 0) return 0;
+        return Math.max(0, endTime - System.currentTimeMillis());
+    }
+
+    public void start() {
+        if (canStart()) {
+            isActive = true;
+            startTime = System.currentTimeMillis();
+            endTime = startTime + durationMillis;
+            onStart();
+        }
+    }
+
+    public abstract boolean canStart();
     public abstract void onStart();
     public abstract void onComplete();
     public abstract void onFail();
@@ -50,11 +69,6 @@ public abstract class Quest {
     public Item getRewardItem() { return rewardItem; }
     public int getRequiredAmount() { return requiredAmount; }
     public int getRewardAmount() { return rewardAmount; }
-    public long getTimeLeft() {
-        if (!isActive || startTime == 0) return 0;
-        long elapsed = System.currentTimeMillis() - startTime;
-        return Math.max(0, durationMinutes - elapsed);
-    }
 
     public Component getName() {
         return Component.translatable(nameKey);
@@ -64,13 +78,6 @@ public abstract class Quest {
         return Component.translatable(descriptionKey);
     }
 
-    public void start() {
-        if (canStart()) {
-            isActive = true;
-            startTime = System.currentTimeMillis();
-            onStart();
-        }
-    }
 
 
     public void complete() {
@@ -102,8 +109,6 @@ public abstract class Quest {
 
     public boolean canComplete() {
         return isActive();
-
-       // return isActive() && getCurrentCount() >= getRequiredAmount();
     }
 
     public void updateProgress(Player player, Level level) {

@@ -8,7 +8,9 @@ import net.lisalaf.fantastikmod.entity.client. WitchCatRenderer;
 import net.lisalaf.fantastikmod.entity.client. SeatEntityRenderer;
 import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.entity.client.MoonDeerRenderer;
+import net.lisalaf.fantastikmod.entity.client.GhostGuardsRenderer;
 import net.lisalaf.fantastikmod.entity.client.BlueButterflyRenderer;
+import net.lisalaf.fantastikmod.entity.client.KitsuneSoulPossessedRenderer;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.lisalaf.fantastikmod.item.client.FireDragonScalesOverlay;
 import net.lisalaf.fantastikmod.item.client.KitsuneMaskOverlay;
@@ -34,10 +36,13 @@ public class ModEventBusClientEvents {
         event.registerEntityRenderer(ModEntities.BAKENEKO.get(), BakenekoRenderer::new);
         event.registerEntityRenderer(ModEntities.WITCH_CAT.get(), WitchCatRenderer::new);
         event.registerEntityRenderer(ModEntities.SEAT.get(), SeatEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.GHOST_GUARDS.get(), GhostGuardsRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.TAPESTRY.get(), TapestryRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ROYAL_BED.get(), RoyalBedRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.CHARRED_THRONE.get(), CharredThroneRenderer::new);
+        event.registerEntityRenderer(ModEntities.KITSUNE_SOUL_POSSESSED.get(),
+                KitsuneSoulPossessedRenderer::new);
     }
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {

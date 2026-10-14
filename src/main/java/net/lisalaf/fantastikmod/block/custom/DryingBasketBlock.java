@@ -50,7 +50,6 @@ public class DryingBasketBlock extends BaseEntityBlock {
 
     public DryingBasketBlock(Properties properties) {
         super(properties);
-        // По умолчанию корзина не сушит
         this.registerDefaultState(this.stateDefinition.any().setValue(DRYING, false));
     }
 
@@ -61,7 +60,6 @@ public class DryingBasketBlock extends BaseEntityBlock {
 
     @Override
     public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-        // Используем стандартную модель из json
         return RenderShape.MODEL;
     }
 
@@ -83,7 +81,6 @@ public class DryingBasketBlock extends BaseEntityBlock {
             @NotNull InteractionHand hand,
             @NotNull BlockHitResult hit
     ) {
-        // Логика выполняется только на сервере
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         BlockEntity be = level.getBlockEntity(pos);
@@ -98,14 +95,12 @@ public class DryingBasketBlock extends BaseEntityBlock {
         if (stack.isEmpty() || !basket.getInventory().getStackInSlot(1).isEmpty()) {
             if (!basket.isEmpty()) {
                 ItemStack extracted = basket.playerExtract();
-                // Если инвентарь игрока полон, выбрасываем предмет в мир
                 if (!player.getInventory().add(extracted)) {
                     player.drop(extracted, false);
                 }
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.8f, 1.2f);
                 return InteractionResult.SUCCESS;
             } else {
-                // Если корзина пуста, пытаемся запустить диалог с ближайшим Мастером Чая или Кицунэ
                 startDialog((ServerLevel) level, player, pos);
                 return InteractionResult.SUCCESS;
             }
@@ -118,8 +113,6 @@ public class DryingBasketBlock extends BaseEntityBlock {
         if (stack.getItem() == ModItems.TEA_LEAF.get()) {
             int before = stack.getCount();
             ItemStack resultStack = basket.playerInsert(stack);
-
-            // Если количество предметов в руке изменилось, значит вкладывание прошло успешно
             if (resultStack.getCount() != before) {
                 level.playSound(null, pos, SoundEvents.BAMBOO_PLACE, SoundSource.BLOCKS, 0.8f, 1.0f);
                 return InteractionResult.SUCCESS;
@@ -143,22 +136,17 @@ public class DryingBasketBlock extends BaseEntityBlock {
         );
 
         if(findEntities.length == 0) return;
-
-        // Ищем Мастера Чая
         final Entity villager = findEntities[0];
         if(villager != null && ((Villager)villager).getVillagerData().getProfession() == ModVillagers.TEA_MASTER.get()) {
             playDelayedDialog(level, player, "dialog.fantastikmod.drying.teamaster", 2);
             return;
         }
-
-        // Ищем прирученную Кицунэ
         final Entity kitsune = findEntities[1];
         if(kitsune != null && ((KitsuneLightEntity)kitsune).isTamed()) {
             playDelayedDialog(level, player, "dialog.fantastikmod.drying.kitsune", 4);
             return;
         }
 
-        // Ищем прирученного Лунного Оленя
         final Entity moonDeer = findEntities[2];
         if(moonDeer != null && ((MoonDeerEntity)moonDeer).isTamed()) {
             playDelayedDialog(level, player, "dialog.fantastikmod.drying.moon_deer", 2);
@@ -175,12 +163,12 @@ public class DryingBasketBlock extends BaseEntityBlock {
     private void playDelayedDialog(
             ServerLevel level, Player player, String baseKey, int linesCount
     ) {
-        int delaySeconds = 4; // Интервал между сообщениями
+        int delaySeconds = 4;
 
         for (int i = 0; i < linesCount; i++) {
             if (!(player instanceof ServerPlayer serverPlayer)) continue;
 
-            final int lineIndex = i + 1; // Индекс строки для ключа (.1, .2 и т.д.)
+            final int lineIndex = i + 1;
             int currentDelay = i * delaySeconds;
 
             /*
@@ -213,11 +201,9 @@ public class DryingBasketBlock extends BaseEntityBlock {
     public void onRemove(
             BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving
     ) {
-        // Если блок действительно удален (а не просто изменилось состояние)
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof DryingBasketBlockEntity basket) {
-                // Выбрасываем содержимое инвентаря на землю
                 FantastikModUtils.dropInventoryItems(level, pos, basket.getInventory());
             }
             super.onRemove(state, level, pos, newState, isMoving);

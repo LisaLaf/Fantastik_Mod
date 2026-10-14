@@ -284,7 +284,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tree_moon_log_block", has(ModBlocks.TREE_MOON_LOG_BLOCK.get()))
                 .save(pWriter);
 
-        // Серебряный меч
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_SWORD.get(), 1)
                 .pattern(" s ")
                 .pattern(" s ")
@@ -294,7 +293,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Серебряная кирка
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SILVER_PICKAXE.get(), 1)
                 .pattern("sss")
                 .pattern(" k ")
@@ -304,7 +302,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Серебряный топор
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SILVER_AXE.get(), 1)
                 .pattern("ss ")
                 .pattern("sk ")
@@ -314,7 +311,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Серебряная лопата
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SILVER_SHOVEL.get(), 1)
                 .pattern(" s ")
                 .pattern(" k ")
@@ -324,7 +320,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Серебряная мотыга
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SILVER_HOE.get(), 1)
                 .pattern("ss ")
                 .pattern(" k ")
@@ -337,7 +332,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SWORD_AURIPIGMENT.get(), 1)
                 .pattern(" a ")
                 .pattern(" a ")
-                .pattern(" s ") // третья строка
+                .pattern(" s ")
                 .define('a', ModItems.AURIPIGMENT.get())
                 .define('s', Items.STICK)
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
@@ -346,7 +341,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.AURIPIGMENT_BOOTS.get(), 1)
                 .pattern("a a")
                 .pattern("a a")
-                .pattern("   ") // третья строка
+                .pattern("   ")
                 .define('a', ModItems.AURIPIGMENT.get())
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
                 .save(pWriter);
@@ -354,7 +349,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.AURIPIGMENT_HELMET.get(), 1)
                 .pattern("aaa")
                 .pattern("a a")
-                .pattern("   ") // третья строка
+                .pattern("   ")
                 .define('a', ModItems.AURIPIGMENT.get())
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
                 .save(pWriter);
@@ -362,7 +357,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.AURIPIGMENT_LEGGINGS.get(), 1)
                 .pattern("aaa")
                 .pattern("a a")
-                .pattern("a a") // третья строка
+                .pattern("a a")
                 .define('a', ModItems.AURIPIGMENT.get())
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
                 .save(pWriter);
@@ -370,7 +365,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.AURIPIGMENT_CHESTPLATE.get(), 1)
                 .pattern("a a")
                 .pattern("aaa")
-                .pattern("aaa") // третья строка
+                .pattern("aaa")
                 .define('a', ModItems.AURIPIGMENT.get())
                 .unlockedBy("has_auripigment", has(ModItems.AURIPIGMENT.get()))
                 .save(pWriter);
@@ -407,7 +402,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gem_moon", has(ModItems.GEM_MOON.get()))
                 .save(pWriter);
 
-        // Шлем
+
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_HELMET.get(), 1)
                 .pattern("sss")
                 .pattern("s s")
@@ -416,7 +411,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Нагрудник
+
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_CHESTPLATE.get(), 1)
                 .pattern("s s")
                 .pattern("sss")
@@ -425,7 +420,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Поножи
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_LEGGINGS.get(), 1)
                 .pattern("sss")
                 .pattern("s s")
@@ -434,7 +428,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Ботинки
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SILVER_BOOTS.get(), 1)
                 .pattern("s s")
                 .pattern("s s")
@@ -447,7 +440,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("i i")
                 .pattern("a a")
                 .pattern("a a")
-                 // третья строка
                 .define('a', ModItems.FUR_ICE_DRAGON.get())
                 .define('i', Items.IRON_INGOT)
                 .unlockedBy("has_fur_ice_dragon", has(ModItems.FUR_ICE_DRAGON.get()))
@@ -456,7 +448,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HELMET_FUR_ICE_DRAGON.get(), 1)
                 .pattern("aaa")
                 .pattern("a a")
-                .pattern("i i") // третья строка
+                .pattern("i i")
                 .define('a', ModItems.FUR_ICE_DRAGON.get())
                 .define('i', Items.IRON_INGOT)
                 .unlockedBy("has_fur_ice_dragon", has(ModItems.FUR_ICE_DRAGON.get()))
@@ -465,7 +457,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.LEGGINGS_FUR_ICE_DRAGON.get(), 1)
                 .pattern("iai")
                 .pattern("a a")
-                .pattern("a a") // третья строка
+                .pattern("a a")
                 .define('a', ModItems.FUR_ICE_DRAGON.get())
                 .define('i', Items.IRON_INGOT)
                 .unlockedBy("has_fur_ice_dragon", has(ModItems.FUR_ICE_DRAGON.get()))
@@ -474,7 +466,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.CHESTPLATE_FUR_ICE_DRAGON.get(), 1)
                 .pattern("i i")
                 .pattern("aaa")
-                .pattern("aaa") // третья строка
+                .pattern("aaa")
                 .define('a', ModItems.FUR_ICE_DRAGON.get())
                 .define('i', Items.IRON_INGOT)
                 .unlockedBy("has_fur_ice_dragon", has(ModItems.FUR_ICE_DRAGON.get()))
@@ -493,67 +485,60 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-        // КАЛИТКА (FENCE GATE) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_PLANKS_FENCE_GATE.get(), 1) // обычно 1 калитка
                 .pattern("sds")
                 .pattern("sds")
-                .pattern("   ") // третья строка (можно использовать пробелы или пустую строку)
+                .pattern("   ")
                 .define('s', Items.STICK)
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// СТЕНА (WALL) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_WALL.get(), 6)
                 .pattern("ddd")
                 .pattern("ddd")
-                .pattern("   ") // третья строка
+                .pattern("   ")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// ЗАБОР (FENCE) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_PLANKS_FENCE.get(), 3) // обычно 3 секции забора
                 .pattern("dsd")
                 .pattern("dsd")
-                .pattern("   ") // третья строка
+                .pattern("   ")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .define('s', Items.STICK)
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// ПЛИТА (SLAB) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_PLANKS_SLAB.get(), 6)
                 .pattern("ddd")
                 .pattern("   ")
-                .pattern("   ") // три строки всего
+                .pattern("   ")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// НАЖИМНАЯ ПЛАСТИНА (PRESSURE PLATE) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.MOON_PLANKS_PLATE.get(), 1)
                 .pattern("dd")
                 .pattern("  ")
-                .pattern("  ") // три строки
+                .pattern("  ")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// ЛЮК (TRAPDOOR) - исправлено (у вас уже правильно)
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.MOON_TREE_TRAPDOOR.get(), 2)
                 .pattern("ddd")
                 .pattern("ddd")
-                .pattern("   ") // третья строка
+                .pattern("   ")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
 
-// СТУПЕНЬКИ (STAIRS) - исправлено
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_PLANKS_STAIRS.get(), 4)
                 .pattern("d  ")
                 .pattern("dd ")
-                .pattern("ddd") // три строки
+                .pattern("ddd")
                 .define('d', ModBlocks.MOON_PLANKS.get())
                 .unlockedBy("has_moon_planks", has(ModBlocks.MOON_PLANKS.get()))
                 .save(pWriter);
@@ -664,12 +649,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.SILVER_RAW.get()),
                         RecipeCategory.MISC,
                         ModItems.SILVER_INGOT.get(),
-                        0.35f,  // Опыт
-                        200)    // Время в тиках (10 секунд)
+                        0.35f,
+                        200)
                 .unlockedBy("has_silver_raw", has(ModItems.SILVER_RAW.get()))
                 .save(pWriter, "silver_ingot_from_smelting");
 
-        // Крафт серебряной палки
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILVER_STICK.get(), 2)
                 .pattern("s  ")
                 .pattern("s  ")
@@ -677,7 +661,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_silver_ingot", has(ModItems.SILVER_INGOT.get()))
                 .save(pWriter);
 
-// Крафт лунных инструментов
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.MOON_PICKAXE.get(), 1)
                 .pattern("ggg")
                 .pattern(" s ")

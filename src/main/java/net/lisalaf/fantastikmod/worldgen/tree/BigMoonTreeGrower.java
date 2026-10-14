@@ -53,11 +53,7 @@ public class BigMoonTreeGrower {
         if (!checkSpace(level, pos, height)) {
             return false;
         }
-
-        // Очищаем саженцы только когда убедились, что есть место
         removeSaplings(level, pos);
-
-        // Строим дерево
         buildTree(level, pos, height, random);
         return true;
     }
@@ -80,7 +76,6 @@ public class BigMoonTreeGrower {
             return false;
         }
 
-        // Строим дерево
         buildTree(level, pos, height, random);
         return true;
     }
@@ -224,15 +219,11 @@ public class BigMoonTreeGrower {
     private static void generateTrunk(LevelAccessor level, BlockPos pos, int height, RandomSource random) {
         final BlockState logState = ModBlocks.TREE_MOON_LOG_BLOCK.get().defaultBlockState();
         final Block moonSapling = ModBlocks.MOON_SAPLING.get();
-
-        // Цикл по высоте дерева
         for (int y = 0; y <= height; y++) {
-            // Ствол 2x2 блока
             for (int x = 0; x < 2; x++) {
                 for (int z = 0; z < 2; z++) {
                     BlockPos trunkPos = pos.offset(x, y, z);
                     BlockState state = level.getBlockState(trunkPos);
-                    // Заменяем только воздух или саженцы
                     if (state.isAir() || state.is(moonSapling)) {
                         setTreeBlock(level, trunkPos, logState);
                     }
@@ -240,11 +231,9 @@ public class BigMoonTreeGrower {
             }
         }
 
-        // Создаем утолщение у основания (юбка дерева)
         for (int y = -2; y <= 3; y++) {
             for (int x = -1; x <= 2; x++) {
                 for (int z = -1; z <= 2; z++) {
-                    // Пропускаем углы, чтобы утолщение было более округлым
                     if ((x == -1 || x == 2) && (z == -1 || z == 2)) continue;
                     BlockPos thickPos = pos.offset(x, y, z);
                     if (level.getBlockState(thickPos).isAir()) {
@@ -253,7 +242,6 @@ public class BigMoonTreeGrower {
                 }
             }
         }
-        // Небольшой шпиль на самой вершине ствола
         for (int y = height + 1; y <= height + 2; y++) {
             BlockPos topPos = pos.offset(0, y, 0);
             if (level.getBlockState(topPos).isAir()) {
@@ -274,21 +262,14 @@ public class BigMoonTreeGrower {
         BlockState woodState = ModBlocks.TREE_MOON_WOOD.get().defaultBlockState();
         int rootLength = 6 + random.nextInt(4);
         Direction[] directions = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-
-        // Основные корни в 4 стороны (север, юг, запад, восток)
         for (Direction dir : directions) {
             for (int i = 1; i <= rootLength; i++) {
-                // Плавное понижение корня по мере удаления от ствола
                 int yOffset = (i == 1) ? 0 : (i >= 6) ? -3 : (i >= 4) ? -2 : -1;
-
                 BlockPos rootPos = pos.offset(dir.getStepX() * i, yOffset, dir.getStepZ() * i);
                 BlockState state = level.getBlockState(rootPos);
-                // Корень может расти сквозь землю или воздух
                 if (state.isAir() || state.is(Blocks.DIRT) || state.is(Blocks.GRASS_BLOCK)) {
                     setTreeBlock(level, rootPos, woodState);
                 }
-
-                // Утолщение корня в самом начале (возле ствола)
                 if (i == 1) {
                     for (int w = -1; w <= 1; w++) {
                         for (int h = -1; h <= 0; h++) {
@@ -302,7 +283,6 @@ public class BigMoonTreeGrower {
                 }
             }
 
-            // Дополнительные маленькие ответвления от корней в стороны
             for (int i = 2; i <= rootLength - 1; i++) {
                 if (random.nextFloat() < 0.6f) {
                     Direction sideDir = random.nextBoolean() ? dir.getClockWise() : dir.getCounterClockWise();
@@ -315,8 +295,6 @@ public class BigMoonTreeGrower {
                 }
             }
         }
-
-        // Диагональные корни
         int[] diagX = {1, 1, -1, -1};
         int[] diagZ = {1, -1, 1, -1};
 
@@ -330,8 +308,6 @@ public class BigMoonTreeGrower {
                 }
             }
         }
-
-        // Вертикальные стержневые корни (уходят прямо вниз под стволом)
         for (int x = -2; x <= 3; x++) {
             for (int z = -2; z <= 3; z++) {
                 if (random.nextFloat() < 0.5f) {
@@ -419,11 +395,8 @@ public class BigMoonTreeGrower {
             if (startY >= endY) continue;
 
             BlockPos currentPos = pos.offset(startDir.getStepX(), startY, startDir.getStepZ());
-
-            // Если место занято (например, основным стволом), пропускаем
             if (!level.getBlockState(currentPos).isAir()) continue;
 
-            // Растем вверх, иногда немного смещаясь в стороны
             for (int y = startY; y <= endY; y++) {
                 int xOffset = startDir.getStepX();
                 int zOffset = startDir.getStepZ();
@@ -439,7 +412,6 @@ public class BigMoonTreeGrower {
                     setTreeBlock(level, branchPos, logState);
                     currentPos = branchPos;
 
-                    // На кончике ветки вешаем листву
                     if (y > endY - 4 && random.nextFloat() < 0.6f) {
                         placeSmallLeafCluster(level, branchPos, random);
                     }
@@ -451,7 +423,6 @@ public class BigMoonTreeGrower {
             placeSmallLeafCluster(level, currentPos, random);
         }
 
-        // Диагональные ветки, растущие под углом вверх
         int diagonalBranchCount = 8 + random.nextInt(6);
 
         for (int i = 0; i < diagonalBranchCount; i++) {
@@ -464,13 +435,10 @@ public class BigMoonTreeGrower {
             BlockPos startPos = pos.offset(0, startY, 0);
 
             for (int l = 1; l <= branchLength; l++) {
-                // Плавный подъем по Y (на 1 блок вверх каждые 2 блока длины)
                 int yOffset = 1 + (l / 2);
                 BlockPos branchPos = startPos.offset(branchDir.getStepX() * l, yOffset, branchDir.getStepZ() * l);
                 if (level.getBlockState(branchPos).isAir()) {
                     setTreeBlock(level, branchPos, logState);
-
-                    // Иногда ветка раздваивается
                     if (random.nextFloat() < 0.4f && l > 2) {
                         Direction sideDir = random.nextBoolean() ? branchDir.getClockWise() : branchDir.getCounterClockWise();
                         BlockPos sidePos = branchPos.offset(sideDir.getStepX(), 0, sideDir.getStepZ());
@@ -501,7 +469,6 @@ public class BigMoonTreeGrower {
         int maxRadius = 7;
 
         for (int y = crownStart; y <= height + 2; y++) {
-            // Радиус кроны уменьшается к верхушке (форма купола)
             int radius = (y <= height - 3) ? maxRadius : (y <= height) ? maxRadius - 1 : (y == height + 1) ? maxRadius - 2 : maxRadius - 3;
             if (radius < 1) radius = 1;
 
@@ -511,15 +478,11 @@ public class BigMoonTreeGrower {
                 for (int z = -radius; z <= radius + 1; z++) {
                     BlockPos leafPos = pos.offset(x, y, z);
 
-                    // Пропускаем место, где проходит основной ствол
                     if (x >= 0 && x <= 1 && z >= 0 && z <= 1 && y <= height) {
                         continue;
                     }
-
-                    // Проверка расстояния от центра для создания круга
                     int distSq = x * x + z * z;
                     if (distSq <= maxDistSq) {
-                        // Края кроны делаем менее плотными для естественности
                         float density = (Math.abs(x) > radius - 1 || Math.abs(z) > radius - 1) ? 0.6f : 0.85f;
                         if (random.nextFloat() < density && level.getBlockState(leafPos).isAir()) {
                             setTreeBlock(level, leafPos, foliageState);
@@ -529,7 +492,6 @@ public class BigMoonTreeGrower {
             }
         }
 
-        // Самая верхняя "шапка" листвы
         for (int y = height + 1; y <= height + 4; y++) {
             int radius = Math.max(0, 4 - (y - height - 1));
             double maxDistSq = (radius + 0.5) * (radius + 0.5);
@@ -547,7 +509,6 @@ public class BigMoonTreeGrower {
             }
         }
 
-        // Добавляем "свисающие" клочья листвы по краям нижней части кроны
         double minOuterDistSq = (maxRadius - 0.5) * (maxRadius - 0.5);
         double maxOuterDistSq = (maxRadius + 0.5) * (maxRadius + 0.5);
 
@@ -584,7 +545,6 @@ public class BigMoonTreeGrower {
         for (int x = -clusterSize; x <= clusterSize; x++) {
             for (int z = -clusterSize; z <= clusterSize; z++) {
                 for (int y = -2; y <= 2; y++) {
-                    // Замена Math.sqrt
                     int distSq = x * x + y * y + z * z;
                     if (distSq <= maxDistSq && random.nextFloat() < 0.65f) {
                         BlockPos leafPos = pos.offset(x, y, z);
@@ -613,7 +573,6 @@ public class BigMoonTreeGrower {
         for (int x = -clusterSize; x <= clusterSize; x++) {
             for (int z = -clusterSize; z <= clusterSize; z++) {
                 for (int y = -1; y <= 1; y++) {
-                    // Замена Math.sqrt
                     int distSq = x * x + y * y + z * z;
                     if (distSq <= maxDistSq && random.nextFloat() < 0.7f) {
                         BlockPos leafPos = pos.offset(x, y, z);

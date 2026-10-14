@@ -123,6 +123,7 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.KITSUNE_SOUL_MASK_0.get());
                         output.accept(ModItems.KITSUNE_SOUL_MASK_1.get());
                         output.accept(ModItems.KITSUNE_SOUL_MASK_2.get());
+                        output.accept(ModItems.KITSUNE_SOUL_TAIL.get());
 
 // Декорации и свет
                         output.accept(ModItems.MOON_LAMP.get());
@@ -157,6 +158,7 @@ public class ModCreativeModTabs {
                         output.accept(ModBlocks.PAPER_LANTERN.get());
                         output.accept(ModBlocks.YUKIMI_TORO.get());
                         output.accept(ModBlocks.PETRIFIED_LARGE_EGG.get());
+                        output.accept(ModBlocks.REMAINS_GUARDS.get());
 
 // Природные блоки
                         output.accept(ModBlocks.ASH_BLOCK.get());

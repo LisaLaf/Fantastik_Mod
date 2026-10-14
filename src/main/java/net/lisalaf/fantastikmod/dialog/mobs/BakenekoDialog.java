@@ -113,12 +113,18 @@ public class BakenekoDialog extends Dialog {
         String toNode = node.getOptions().get(optionIndex).getNextNodeId();
 
         if (player.level().isClientSide) {
-            fantastikmod.sendToServer(new DialogPacket(bakeneko.getId(), optionIndex, "bakeneko"));
+            fantastikmod.sendToServer(new DialogPacket(bakeneko.getId(), optionIndex, "bakeneko", toNode));
         }
-        if ("response_follow_2".equals(toNode) && player.level().isClientSide) {
-            Minecraft.getInstance().setScreen(null);
+
+        if ("response_follow_2".equals(toNode)
+                || "response_business_2".equals(toNode)
+                || "response_steal_1".equals(toNode)) {
+            if (player.level().isClientSide) {
+                Minecraft.getInstance().setScreen(null);
+            }
             return;
         }
+
         super.selectOption(optionIndex);
     }
 }

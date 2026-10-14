@@ -35,7 +35,6 @@ public class KitsuneOwnerKillHandler {
                         kitsune.playSound(SoundEvents.SOUL_ESCAPE, 1.0F, 0.5F);
                     }
 
-                    // Сообщение игроку
                     player.sendSystemMessage(KitsunePhrases.getOwnerKillMessage());
                 }
             }

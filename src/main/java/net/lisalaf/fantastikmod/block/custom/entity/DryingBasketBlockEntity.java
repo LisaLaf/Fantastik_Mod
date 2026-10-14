@@ -38,7 +38,6 @@ public class DryingBasketBlockEntity extends BlockEntity {
     private final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
-            // Помечаем BlockEntity как измененный для сохранения данных
             setChanged();
             if (level != null) {
                 /*
@@ -130,16 +129,12 @@ public class DryingBasketBlockEntity extends BlockEntity {
      */
     public static void serverTick(Level level, BlockPos pos, BlockState state, DryingBasketBlockEntity entity) {
         ItemStack input = entity.inventory.getStackInSlot(INPUT_SLOT);
-
-        // Если во входном слоте есть листья, увеличиваем прогресс
         if (!input.isEmpty()) {
             entity.dryingProgress++;
-            // Если прогресс достиг максимума, превращаем листья в чай
             if (entity.dryingProgress >= MAX_DRYING_TIME) {
                 entity.processDrying();
             }
         } else {
-            // Если слот пуст, сбрасываем прогресс
             entity.dryingProgress = 0;
         }
     }
@@ -207,8 +202,6 @@ public class DryingBasketBlockEntity extends BlockEntity {
             inventory.setStackInSlot(OUTPUT_SLOT, ItemStack.EMPTY);
             return extracted;
         }
-
-        // Если чая нет, забираем сырые листья (например, если игрок передумал сушить)
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
         if (!inputStack.isEmpty()) {
             ItemStack extracted = inputStack.copy();
@@ -231,7 +224,6 @@ public class DryingBasketBlockEntity extends BlockEntity {
 
         ItemStack leftover = inventory.insertItem(INPUT_SLOT, toInsert, false);
 
-        // Если предмет успешно вложен (нет остатка), уменьшаем стак в руке игрока
         if (leftover.isEmpty()) {
             stack.shrink(MAX_INPUT_SIZE);
         }

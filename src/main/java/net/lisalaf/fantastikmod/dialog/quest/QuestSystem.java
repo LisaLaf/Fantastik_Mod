@@ -27,7 +27,7 @@ public class QuestSystem {
 
         long lastTime = lastQuestTimes.getOrDefault(entityUUID, 0L);
         long currentTime = System.currentTimeMillis();
-        long cooldown = 60 * 1000; // 60 секунд
+        long cooldown = 60 * 1000;
 
         return (currentTime - lastTime) > cooldown;
     }

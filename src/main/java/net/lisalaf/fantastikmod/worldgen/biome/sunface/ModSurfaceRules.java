@@ -11,7 +11,6 @@ public class ModSurfaceRules {
                 SurfaceRules.ifTrue(
                         SurfaceRules.isBiome(ModBiomes.BLUE_MOON_FOREST_BIOME),
                         SurfaceRules.sequence(
-                                // Более простые правила - только верхний слой
                                 SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
                                         SurfaceRules.sequence(
                                                 SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0),
@@ -19,7 +18,6 @@ public class ModSurfaceRules {
                                                 SurfaceRules.state(Blocks.DIRT.defaultBlockState())
                                         )
                                 ),
-                                // Подповерхностный слой
                                 SurfaceRules.ifTrue(SurfaceRules.ON_CEILING,
                                         SurfaceRules.state(Blocks.STONE.defaultBlockState())
                                 )

@@ -27,7 +27,7 @@ public class BakenekoSitGoal extends MoveToBlockGoal {
 
         return !this.bakeneko.isAngry()
                 && !this.bakeneko.isSleeping()
-                && this.bakeneko.getRandom().nextFloat() < 0.01f // Шанс захотеть посидеть
+                && this.bakeneko.getRandom().nextFloat() < 0.01f
                 && super.canUse();
     }
 

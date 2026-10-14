@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class QuestPacket {
 
     private final int entityId;
-    private final int action; // 0=start, 1=complete, 2=cancel
+    private final int action;
 
     public QuestPacket(int entityId, int action) {
         this.entityId = entityId;

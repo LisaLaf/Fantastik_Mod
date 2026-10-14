@@ -1,9 +1,6 @@
 package net.lisalaf.fantastikmod.block;
 
-import net.lisalaf.fantastikmod.block.custom.entity.CharredThroneBlockEntity;
-import net.lisalaf.fantastikmod.block.custom.entity.DryingBasketBlockEntity;
-import net.lisalaf.fantastikmod.block.custom.entity.RoyalBedBlockEntity;
-import net.lisalaf.fantastikmod.block.custom.entity.TapestryBlockEntity;
+import net.lisalaf.fantastikmod.block.custom.entity.*;
 import net.lisalaf.fantastikmod.fantastikmod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -45,6 +42,11 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<CharredThroneBlockEntity>> CHARRED_THRONE =
             BLOCK_ENTITIES.register("charred_throne", () ->
                     BlockEntityType.Builder.of(CharredThroneBlockEntity::new, ModBlocks.CHARRED_THRONE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<RemainsGuardsBlockEntity>> REMAINS_GUARDS =
+            BLOCK_ENTITIES.register("remains_guards", () ->
+                    BlockEntityType.Builder.of(RemainsGuardsBlockEntity::new,
+                            ModBlocks.REMAINS_GUARDS.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

@@ -77,6 +77,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSimpleItem("tapestry_castle_burned_2");
         registerSimpleItem("tapestry_castle_burned_3");
         registerSimpleItem("tapestry_castle_burned_4");
+        registerSimpleItem("kitsune_soul_tail");
         registerSimpleItem("royal_bed");
         registerSimpleItem("roof_tile_medieval_clay_damaged");
         registerSimpleItem("builders_wand");
@@ -104,6 +105,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerArmorItem("withered_scales_fire_dragon_boots");
         registerSimpleItem("lilac_branch");
         registerSimpleItem("petrified_large_egg");
+        withExistingParent("note_princess", mcLoc("item/written_book"));
+        withExistingParent("note_king", mcLoc("item/written_book"));
+        withExistingParent("note_dragon_scholar", mcLoc("item/written_book"));
 
 
 

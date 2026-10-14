@@ -48,6 +48,19 @@ public class ModEntities {
                     .clientTrackingRange(10)
                     .build("seat"));
 
+    public static final RegistryObject<EntityType<KitsuneSoulPossessedEntity>> KITSUNE_SOUL_POSSESSED =
+            ENTITY_TYPES.register("kitsune_soul_possessed",
+                    () -> EntityType.Builder.of(KitsuneSoulPossessedEntity::new, MobCategory.MONSTER)
+                            .sized(0.6f, 1.8f) // размеры игрока
+                            .clientTrackingRange(32)
+                            .build("kitsune_soul_possessed"));
+
+    public static final RegistryObject<EntityType<GhostGuardsEntity>> GHOST_GUARDS =
+            ENTITY_TYPES.register("ghost_guards",
+                    () -> EntityType.Builder.<GhostGuardsEntity>of(GhostGuardsEntity::new, MobCategory.MONSTER)
+                            .sized(0.7f, 1.8f)
+                            .clientTrackingRange(10)
+                            .build("ghost_guards"));
 
 
     public static void register(IEventBus eventBus) {

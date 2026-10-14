@@ -62,12 +62,9 @@ public class MoonVineBlock extends Block implements BonemealableBlock {
         Level level = pContext.getLevel();
         BlockPos above = pos.above();
         BlockPos below = pos.below();
-
-        // Если сверху есть лоза ИЛИ снизу есть лоза — мы ТЕЛО
         if (level.getBlockState(above).is(this) || level.getBlockState(below).is(this)) {
             return this.defaultBlockState().setValue(TIP, false);
         }
-        // Иначе — КОНЧИК
         return this.defaultBlockState().setValue(TIP, true);
     }
 

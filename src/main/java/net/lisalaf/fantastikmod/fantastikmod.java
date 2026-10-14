@@ -10,9 +10,7 @@ import net.lisalaf.fantastikmod.entity.ModEntities;
 import net.lisalaf.fantastikmod.event.ModEvent;
 import net.lisalaf.fantastikmod.item.ModCreativeModTabs;
 import net.lisalaf.fantastikmod.item.ModItems;
-import net.lisalaf.fantastikmod.network.DialogPacket;
-import net.lisalaf.fantastikmod.network.QuestPacket;
-import net.lisalaf.fantastikmod.network.SyncQuestPacket;
+import net.lisalaf.fantastikmod.network.*;
 import net.lisalaf.fantastikmod.particle.HeatParticle;
 import net.lisalaf.fantastikmod.particle.LeavesParticle;
 import net.lisalaf.fantastikmod.particle.ModParticles;
@@ -123,6 +121,8 @@ public class fantastikmod {
             NETWORK.registerMessage(id++, DialogPacket.class, DialogPacket::encode, DialogPacket::decode, DialogPacket::handle);
             NETWORK.registerMessage(id++, QuestPacket.class, QuestPacket::encode, QuestPacket::decode, QuestPacket::handle);
             NETWORK.registerMessage(id++, SyncQuestPacket.class, SyncQuestPacket::encode, SyncQuestPacket::decode, SyncQuestPacket::handle);
+            NETWORK.registerMessage(id++, OpenMaskDialogPacket.class, OpenMaskDialogPacket::encode, OpenMaskDialogPacket::decode, OpenMaskDialogPacket::handle);
+            NETWORK.registerMessage(id++, MaskGivePacket.class, MaskGivePacket::encode, MaskGivePacket::decode, MaskGivePacket::handle);
             LOGGER.info("Packets registered successfully");
         });
     }

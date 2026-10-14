@@ -23,7 +23,7 @@ public class SyncQuestPacket {
     private final int requiredAmount;
     private final String rewardItemId;
     private final int rewardAmount;
-    private final long timeLeft;
+    private final long endTime;
 
     public SyncQuestPacket(UUID entityUUID, Quest quest) {
         this.entityUUID = entityUUID;
@@ -37,7 +37,7 @@ public class SyncQuestPacket {
             this.requiredAmount = quest.getRequiredAmount();
             this.rewardItemId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(quest.getRewardItem()).toString();
             this.rewardAmount = quest.getRewardAmount();
-            this.timeLeft = quest.getTimeLeft();
+            this.endTime = quest.getEndTime();
         } else {
             this.isActive = false;
             this.questId = "";
@@ -47,7 +47,7 @@ public class SyncQuestPacket {
             this.requiredAmount = 0;
             this.rewardItemId = "";
             this.rewardAmount = 0;
-            this.timeLeft = 0;
+            this.endTime = 0;
         }
     }
 
@@ -64,7 +64,7 @@ public class SyncQuestPacket {
         this.requiredAmount = requiredAmount;
         this.rewardItemId = rewardItemId;
         this.rewardAmount = rewardAmount;
-        this.timeLeft = timeLeft;
+        this.endTime = timeLeft;
     }
 
     public static void encode(SyncQuestPacket msg, FriendlyByteBuf buf) {
@@ -79,7 +79,7 @@ public class SyncQuestPacket {
             buf.writeInt(msg.requiredAmount);
             buf.writeUtf(msg.rewardItemId);
             buf.writeInt(msg.rewardAmount);
-            buf.writeLong(msg.timeLeft);
+            buf.writeLong(msg.endTime);
         }
     }
 
@@ -101,7 +101,7 @@ public class SyncQuestPacket {
                         msg.entityUUID, msg.hasQuest, msg.isActive,
                         msg.questId, msg.nameKey, msg.descKey,
                         msg.requiredItemId, msg.requiredAmount,
-                        msg.rewardItemId, msg.rewardAmount, msg.timeLeft
+                        msg.rewardItemId, msg.rewardAmount, msg.endTime
                 );
             }
         });
@@ -118,5 +118,5 @@ public class SyncQuestPacket {
     public int getRequiredAmount() { return requiredAmount; }
     public String getRewardItemId() { return rewardItemId; }
     public int getRewardAmount() { return rewardAmount; }
-    public long getTimeLeft() { return timeLeft; }
+    public long getendTime() { return endTime; }
 }

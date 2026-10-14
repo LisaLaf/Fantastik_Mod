@@ -29,15 +29,15 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> KITSUNE_IDLE3 = registerSoundEvents("kitsune_idle3");
     public static final RegistryObject<SoundEvent> KITSUNE_IDLE4 = registerSoundEvents("kitsune_idle4");
 
-    // Смех (laugh)
+    // Смех
     public static final RegistryObject<SoundEvent> KITSUNE_LAUGH1 = registerSoundEvents("kitsune_laugh1");
     public static final RegistryObject<SoundEvent> KITSUNE_LAUGH2 = registerSoundEvents("kitsune_laugh2");
     public static final RegistryObject<SoundEvent> KITSUNE_LAUGH3 = registerSoundEvents("kitsune_laugh3");
 
-    // Злость (angry)
+    // Злость
     public static final RegistryObject<SoundEvent> KITSUNE_ANGRY1 = registerSoundEvents("kitsune_angry1");
 
-    // Боль (hurt)
+    // Боль
     public static final RegistryObject<SoundEvent> KITSUNE_HURT1 = registerSoundEvents("kitsune_hurt1");
     public static final RegistryObject<SoundEvent> KITSUNE_HURT2 = registerSoundEvents("kitsune_hurt2");
 
@@ -45,6 +45,12 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> DRAGON_IDLE2 = registerSoundEvents("dragon_idle2");
     public static final RegistryObject<SoundEvent> DRAGON_IDLE3 = registerSoundEvents("dragon_idle3");
     public static final RegistryObject<SoundEvent> DRAGON_AGGRESSIVE_ROAR = registerSoundEvents("aggressive_dragon_roar");
+
+    public static final RegistryObject<SoundEvent> GHOST_GUARDS_IDLE1 = registerSoundEvents("ghost_guards_idle1");
+    public static final RegistryObject<SoundEvent> GHOST_GUARDS_IDLE2 = registerSoundEvents("ghost_guards_idle2");
+    public static final RegistryObject<SoundEvent> GHOST_GUARDS_WALK1 = registerSoundEvents("ghost_guards_walk1");
+    public static final RegistryObject<SoundEvent> GHOST_GUARDS_WALK2 = registerSoundEvents("ghost_guards_walk2");
+    public static final RegistryObject<SoundEvent> GHOST_GUARDS_ATTACK = registerSoundEvents("ghost_guards_attack");
 
     public static final ForgeSoundType GEMKITSUNE_BLOCK_SOUNDS = new ForgeSoundType(1f, 1f,
             ModSounds.GEMKITSUNE_BLOCK_BREAK, ModSounds.GEMKITSUNE_BLOCK_FALL, ModSounds.GEMKITSUNE_BLOCK_HIT,

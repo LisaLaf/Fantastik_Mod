@@ -207,11 +207,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> MOON_GRASS = registerBlock("moon_grass",
             () -> new FlowerBlock(() -> MobEffects.NIGHT_VISION, 5,
                     BlockBehaviour.Properties.copy(Blocks.ALLIUM)
-                            .sound(SoundType.GRASS) // Более подходящий звук
+                            .sound(SoundType.GRASS)
                             .noOcclusion()
                             .noCollission()
                             .lightLevel(state -> 5)
-                            .offsetType(BlockBehaviour.OffsetType.XZ) // Для правильного позиционирования
+                            .offsetType(BlockBehaviour.OffsetType.XZ)
             ));
 
     public static final RegistryObject<Block> MOON_GRASS_1 = registerBlock("moon_grass_1",
@@ -221,7 +221,7 @@ public class ModBlocks {
                             .noOcclusion()
                             .noCollission()
                             .lightLevel(state -> 5)
-                            .offsetType(BlockBehaviour.OffsetType.XZ) // Для правильного позиционирования
+                            .offsetType(BlockBehaviour.OffsetType.XZ)
             ));
 
     public static final RegistryObject<Block> MOON_VINE = registerBlock("moon_vine",
@@ -268,7 +268,6 @@ public class ModBlocks {
                 }
             });
 
-    // Бревно сирени
     public static final RegistryObject<Block> LILAC_LOG = registerBlock("lilac_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)) {
                 @Override
@@ -859,6 +858,12 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(3.0f)
                     .sound(SoundType.STONE)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> REMAINS_GUARDS = registerBlock("remains_guards",
+            () -> new RemainsGuardsBlock(BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK)
+                    .strength(1.5f, 2.0f)
+                    .sound(SoundType.BONE_BLOCK)
                     .noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

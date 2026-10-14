@@ -1,0 +1,38 @@
+{
+  "parent": "fantastikmod:root",
+  "criteria": {
+    "has_silver_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fantastikmod:silver_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.fantastikmod.sacred_metal.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fantastikmod:silver_ingot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.fantastikmod.sacred_metal.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_silver_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

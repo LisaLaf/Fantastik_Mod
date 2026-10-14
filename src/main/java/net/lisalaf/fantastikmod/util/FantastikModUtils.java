@@ -65,7 +65,7 @@ public class FantastikModUtils {
     @SafeVarargs
     public static Entity[] findFirstOfClasses(Level level, AABB bounds, Predicate<Entity> predicate, Class<? extends Entity>... targetClasses) {
         Entity[] results = new Entity[targetClasses.length];
-        final int[] foundCount = {0}; // Счетчик найденных
+        final int[] foundCount = {0};
 
         if(!(level instanceof ServerLevel serverLevel)) return results;
 

@@ -35,16 +35,13 @@ public class DragonCaveFeature extends Feature<NoneFeatureConfiguration> {
 
         int radius = 50 + random.nextInt(25);
         int depth = 25 + random.nextInt(15);
-
-        // ОТКРЫТАЯ пещера-провал
-        // Сначала создаем пещеру
-        int baseHeight = -9; // Опускаем на 10 блоков (1 - 10 = -9)
+        int baseHeight = -9;
         int floorHeight = 8;
-        int newDepth = depth + 10; // Увеличиваем высоту на 10
+        int newDepth = depth + 10;
 
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
-                for (int y = 0; y < newDepth; y++) { // Используем новую высоту
+                for (int y = 0; y < newDepth; y++) {
                     BlockPos pos = origin.offset(x, baseHeight + y, z);
                     double distance = Math.sqrt(x * x + z * z);
 
@@ -56,7 +53,6 @@ public class DragonCaveFeature extends Feature<NoneFeatureConfiguration> {
         }
 
 
-// Пол тоже поднимаем
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 BlockPos bottomPos = origin.offset(x, floorHeight, z);
@@ -67,11 +63,7 @@ public class DragonCaveFeature extends Feature<NoneFeatureConfiguration> {
                     int bowlDepth = (int)((1.0 - normalizedDist * normalizedDist) * 10);
                     int actualDepth = bowlDepth + random.nextInt(3) - 1;
                     BlockPos actualBottom = bottomPos.below(actualDepth);
-
-                    // Создаем блок пола
                     level.setBlock(actualBottom, Blocks.STONE.defaultBlockState(), 3);
-
-                    // Сразу заполняем вниз от этого блока
                     for (int y = 1; y <= 10; y++) {
                         BlockPos fillPos = actualBottom.below(y);
                         if (random.nextFloat() < 0.8f) {
@@ -86,14 +78,12 @@ public class DragonCaveFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // Затем заполняем ВНИЗ только под созданными блоками пола
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 BlockPos bottomPos = origin.offset(x, floorHeight, z);
                 double distance = Math.sqrt(x * x + z * z);
 
                 if (distance <= radius && distance > 7) {
-                    // Ищем самый нижний созданный блок пола в этом столбце
                     int lowestBlockY = floorHeight;
                     for (int y = floorHeight; y >= floorHeight - 15; y--) {
                         BlockPos checkPos = new BlockPos(bottomPos.getX(), y, bottomPos.getZ());
@@ -102,11 +92,9 @@ public class DragonCaveFeature extends Feature<NoneFeatureConfiguration> {
                             break;
                         }
                     }
-
-                    // Заполняем вниз от самого нижнего блока пола
                     for (int y = lowestBlockY - 1; y >= baseHeight; y--) {
                         BlockPos fillPos = new BlockPos(bottomPos.getX(), y, bottomPos.getZ());
-                        if (random.nextFloat() < 0.9f) { // 90% заполнения
+                        if (random.nextFloat() < 0.9f) {
                             level.setBlock(fillPos, Blocks.STONE.defaultBlockState(), 3);
                         }
                     }

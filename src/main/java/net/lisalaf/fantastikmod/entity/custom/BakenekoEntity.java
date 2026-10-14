@@ -65,7 +65,6 @@ import java.util.List;
 @Getter
 public class BakenekoEntity extends Animal implements GeoEntity {
 
-    // ==================== АНИМАЦИИ И ДАННЫЕ ====================
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final EntityDataAccessor<Boolean> DATA_STANDING = SynchedEntityData.defineId(BakenekoEntity.class, EntityDataSerializers.BOOLEAN);
@@ -76,7 +75,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Boolean> DATA_IS_MALE = SynchedEntityData.defineId(BakenekoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_BABY = SynchedEntityData.defineId(BakenekoEntity.class, EntityDataSerializers.BOOLEAN);
 
-    // Состояния анимации
     public static final int ANIMATION_IDLE = 0;
     public static final int ANIMATION_WALK = 1;
     public static final int ANIMATION_STAND_IDLE = 2;
@@ -88,15 +86,12 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     public static final int ANIMATION_SLEEP2 = 8;
     public static final int ANIMATION_SLEEP3 = 9;
 
-    // Размеры (мальчики на 10% больше)
     private static final float BASE_WIDTH = 0.6f;
     private static final float BASE_HEIGHT = 0.6f;
     private static final float MALE_SCALE = 1.9f;
     private static final float STANDING_WIDTH = 0.8f;
     private static final float STANDING_HEIGHT = 1.2f;
-    private static final float BABY_SCALE = 0.5f;
 
-    // Таймеры и состояния
     private int standCooldown = 0;
     private int animationChangeCooldown = 0;
 
@@ -123,13 +118,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     private boolean isSleeping = false;
     private int loveCooldown = 0;
 
-    // Время роста детёныша (20 минут = 24000 тиков)
-    private static final int GROWTH_TIME = 24000;
-
-    // Шанс размножения 10%
-    private static final float BREEDING_CHANCE = 0.1f;
-
-    // Варианты окраса
     private static final double[] VARIANT_SPAWN_CHANCES = {
             0.30,  // variant 0 - 30%
             0.24,  // variant 1 - 24%
@@ -144,7 +132,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         this.refreshDimensions();
     }
 
-    // ==================== СИНХРОНИЗАЦИЯ ДАННЫХ ====================
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -173,8 +160,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         entityData.set(DATA_IS_BABY, baby);
         refreshDimensions();
     }
-
-    // ==================== ХИТБОКСЫ И РАЗМЕРЫ ====================
     @Override
     public void refreshDimensions() {
         super.refreshDimensions();
@@ -185,19 +170,10 @@ public class BakenekoEntity extends Animal implements GeoEntity {
 
     @Override
     public boolean doHurtTarget(@NotNull Entity target) {
-        /*
-            Включаем анимацию атаки
-         */
         this.setAnimationState(ANIMATION_ATTACK);
 
-        /*
-            Шипим
-         */
         this.playSound(SoundEvents.CAT_HISS, 1.0F, 0.5F);
 
-        /*
-            Вызываем ванильный расчет урона (взятый из атрибутов)
-         */
         return super.doHurtTarget(target);
     }
 
@@ -218,16 +194,10 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     private float getCurrentWidth() {
         float width = BASE_WIDTH;
 
-        // Детёныши в 2 раза меньше
-        if (isBabyEntity()) {
-            width *= BABY_SCALE;
-        }
-        // Мальчики на 10% больше
-        else if (isMale()) {
+      if (isMale()) {
             width *= MALE_SCALE;
         }
 
-        // В режиме стояния ширина увеличивается
         if (isStanding()) {
             width = STANDING_WIDTH;
             if (isMale() && !isBabyEntity()) {
@@ -241,9 +211,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     private float getCurrentHeight() {
         float height = BASE_HEIGHT;
 
-        if (isBabyEntity()) {
-            height *= BABY_SCALE;
-        } else if (isMale()) {
+         if (isMale()) {
             height *= MALE_SCALE;
         }
 
@@ -269,24 +237,9 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         this.setBoundingBox(this.getDimensions(this.getPose()).makeBoundingBox(this.position()));
     }
 
-    // ==================== РОСТ ДЕТЁНЫША ====================
-    private void updateGrowth() {
-        if (!this.level().isClientSide && isBabyEntity()) {
-
-
-        }
-    }
-
-    // ==================== РАЗМНОЖЕНИЕ ====================
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(Items.COD) || stack.is(Items.SALMON) || stack.is(Items.TROPICAL_FISH) ||
-                stack.is(Items.PUFFERFISH) || stack.is(Items.COOKED_COD) || stack.is(Items.COOKED_SALMON) ||
-                stack.is(Items.BEEF) || stack.is(Items.COOKED_BEEF) || stack.is(Items.PORKCHOP) ||
-                stack.is(Items.COOKED_PORKCHOP) || stack.is(Items.CHICKEN) || stack.is(Items.COOKED_CHICKEN) ||
-                stack.is(Items.MUTTON) || stack.is(Items.COOKED_MUTTON) || stack.is(Items.RABBIT) ||
-                stack.is(Items.COOKED_RABBIT) || stack.is(Items.MILK_BUCKET) || stack.is(Items.SPIDER_EYE) ||
-                stack.is(Items.FERMENTED_SPIDER_EYE);
+        return false;
     }
 
     @Override
@@ -311,51 +264,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         setBabyEntity(age < 0);
     }
 
-    private InteractionResult handleBreeding(Player player, ItemStack itemstack) {
-        if (!this.canBreed()) {
-            return InteractionResult.PASS;
-        }
-
-        BakenekoEntity partner = findMate();
-
-        if (partner != null && partner.canBreed()) {
-            if (this.random.nextFloat() < BREEDING_CHANCE) {
-                AgeableMob baby = this.getBreedOffspring((ServerLevel) this.level(), partner);
-                if (baby != null) {
-                    baby.setBaby(true);
-                    baby.setPos(this.getX(), this.getY(), this.getZ());
-                    this.level().addFreshEntity(baby);
-
-                    this.loveCooldown = 6000;
-                    partner.loveCooldown = 6000;
-
-                    if (!player.getAbilities().instabuild) {
-                        itemstack.shrink(1);
-                    }
-
-                    this.level().broadcastEntityEvent(this, (byte) 18);
-                    partner.level().broadcastEntityEvent(partner, (byte) 18);
-
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        }
-
-        return InteractionResult.PASS;
-    }
-
-    private BakenekoEntity findMate() {
-        List<BakenekoEntity> nearby = this.level().getEntitiesOfClass(BakenekoEntity.class,
-                this.getBoundingBox().inflate(8.0D));
-
-        for (BakenekoEntity other : nearby) {
-            if (other != this && !other.isBabyEntity() && other.isMale() != this.isMale()) {
-                return other;
-            }
-        }
-        return null;
-    }
-
     public void wakeUp() {
         if (isSleeping || isSitting) {
             setSitting(false, null);
@@ -373,8 +281,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         }
     }
 
-
-    // ==================== ОСНОВНОЙ ТИК ====================
     @Override
     protected void customServerAiStep() {
         /*
@@ -383,7 +289,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
          */
         super.customServerAiStep();
 
-        updateGrowth();
         updateTimers();
 
         if (standCooldown <= 0 && this.random.nextFloat() < 0.001f && !isAngry() && !isBabyEntity()) {
@@ -427,7 +332,7 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         /*
             Как только клиент узнает, что кот встал/сел/вырос, он мгновенно обновит хитбокс
          */
-        if (DATA_STANDING.equals(key) || DATA_IS_BABY.equals(key) || DATA_IS_MALE.equals(key)) {
+        if (DATA_STANDING.equals(key) || DATA_IS_MALE.equals(key)) {
             this.refreshDimensions();
         }
     }
@@ -610,7 +515,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         }
     }
 
-    // ==================== ВЗАИМОДЕЙСТВИЕ С ИГРОКОМ ====================
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
@@ -627,7 +531,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
 
-        // Диалог на Shift + ПКМ
         if (player.isShiftKeyDown()) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 DialogClientHelper.openBakenekoDialog(this, player);
@@ -658,11 +561,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
                 }
             }
             return InteractionResult.SUCCESS;
-        }
-
-        if (isFood(itemstack) && !isBabyEntity()) {
-            InteractionResult result = handleBreeding(player, itemstack);
-            if (result != InteractionResult.PASS) return result;
         }
 
         if (isFood(itemstack)) {
@@ -758,7 +656,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         return InteractionResult.sidedSuccess(this.level().isClientSide);
     }
 
-    // ==================== ЗВУКИ ====================
     private void playCatSound() {
         SoundEvent[] sounds = {SoundEvents.CAT_AMBIENT, SoundEvents.CAT_PURR, SoundEvents.CAT_PURREOW, SoundEvents.CAT_HISS};
         playSound(sounds[random.nextInt(sounds.length)], 0.5F, 0.8F + random.nextFloat() * 0.4F);
@@ -779,7 +676,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         return SoundEvents.CAT_DEATH;
     }
 
-    // ==================== ИММУНИТЕТЫ ====================
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
         return effect.getEffect() != MobEffects.POISON && super.canBeAffected(effect);
@@ -793,7 +689,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
     @Override
     protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) { }
 
-    // ==================== ЦЕЛИ AI ====================
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -844,7 +739,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
     }
 
-    // ==================== АНИМАЦИИ ====================
     public void startSittingAnimation() {
         setAnimationState(ANIMATION_SIT_IDLE);
     }
@@ -897,7 +791,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         return cache;
     }
 
-    // ==================== АТРИБУТЫ ====================
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0D)
@@ -907,7 +800,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
                 .add(Attributes.ARMOR, 4.0D);
     }
 
-    // ==================== СОХРАНЕНИЕ ДАННЫХ ====================
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
@@ -960,7 +852,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         refreshDimensions();
     }
 
-    // ==================== СПАВН ====================
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty,
@@ -994,7 +885,6 @@ public class BakenekoEntity extends Animal implements GeoEntity {
         return super.checkSpawnRules(level, spawnType);
     }
 
-    // ==================== ГЕТТЕРЫ/СЕТТЕРЫ ====================
     public void setSitting(boolean sitting, @Nullable BlockPos pos) {
         this.isSitting = sitting;
         this.sittingPos = pos;

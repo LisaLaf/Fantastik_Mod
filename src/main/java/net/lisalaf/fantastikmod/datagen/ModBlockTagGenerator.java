@@ -22,7 +22,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        // Инструменты для добычи
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.MOON_PLANKS.get(),
                         ModBlocks.MOON_PLANKS_STAIRS.get(),
@@ -79,7 +78,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.PETRIFIED_LARGE_EGG.get(),
                         ModBlocks.KITSUNE_STATUE.get());
 
-        // Уровень инструментов
+
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.GEMKITSUNE_BLOCK.get());
 
@@ -109,7 +108,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.STRIPPED_LILAC_WOOD.get());
 
 
-        // Функциональные теги
+
         tag(BlockTags.FENCES)
                 .add(ModBlocks.MOON_PLANKS_FENCE.get());
         tag(BlockTags.WOODEN_FENCES)

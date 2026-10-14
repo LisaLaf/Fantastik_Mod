@@ -1,5 +1,6 @@
 package net.lisalaf.fantastikmod.dialog.quest;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -16,8 +17,8 @@ public class ClientQuestData {
                                        String requiredItemId, int requiredAmount,
                                        String rewardItemId, int rewardAmount, long timeLeft) {
         if (hasQuest) {
-            Item requiredItem = ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(requiredItemId));
-            Item rewardItem = ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(rewardItemId));
+            Item requiredItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(requiredItemId));
+            Item rewardItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(rewardItemId));
 
             questData.put(entityUUID, new ClientQuestInfo(
                     isActive, questId, nameKey, descKey,
@@ -45,11 +46,11 @@ public class ClientQuestData {
         public final int requiredAmount;
         public final Item rewardItem;
         public final int rewardAmount;
-        public final long timeLeft;
+        public final long endTime;
 
         public ClientQuestInfo(boolean isActive, String questId, String nameKey, String descKey,
                                Item requiredItem, int requiredAmount,
-                               Item rewardItem, int rewardAmount, long timeLeft) {
+                               Item rewardItem, int rewardAmount, long endTime) {
             this.isActive = isActive;
             this.questId = questId;
             this.nameKey = nameKey;
@@ -58,7 +59,14 @@ public class ClientQuestData {
             this.requiredAmount = requiredAmount;
             this.rewardItem = rewardItem;
             this.rewardAmount = rewardAmount;
-            this.timeLeft = timeLeft;
+            this.endTime = endTime;
+        }
+
+        public long getTimeLeft() {
+            if (!isActive || endTime == 0) return 0;
+            return Math.max(0, endTime - System.currentTimeMillis());
         }
     }
+
+
 }

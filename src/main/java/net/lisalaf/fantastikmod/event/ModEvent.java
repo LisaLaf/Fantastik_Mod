@@ -154,9 +154,6 @@ public class ModEvent {
 
 
     }
-
-
-
     @SubscribeEvent
     public static void  addCustomWanderingTrades(WandererTradesEvent event) {
         List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
@@ -191,7 +188,10 @@ public class ModEvent {
                 stack.getItem() == ModItems.NOTE_3.get() ||
                 stack.getItem() == ModItems.NOTE_4.get() ||
                 stack.getItem() == ModItems.NOTE_5.get() ||
-                stack.getItem() == ModItems.NOTE_6.get()) {
+                stack.getItem() == ModItems.NOTE_6.get() ||
+                stack.getItem() == ModItems.NOTE_PRINCESS.get() ||
+                stack.getItem() == ModItems.NOTE_KING.get() ||
+                stack.getItem() == ModItems.NOTE_DRAGON_SCHOLAR.get()) {
 
             ItemStack book = BookHelper.getCorrespondingBook(stack.getItem());
             if (!book.isEmpty()) {

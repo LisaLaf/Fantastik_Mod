@@ -124,5 +124,36 @@
     "sounds": [
       "fantastikmod:aggressive_dragon_roar"
     ]
+  },
+
+  "ghost_guards_idle1": {
+    "subtitle": "sounds.fantastikmod.ghost_guards_idle",
+    "sounds": [
+      "fantastikmod:ghost_guards_idle1"
+    ]
+  },
+  "ghost_guards_idle2": {
+    "subtitle": "sounds.fantastikmod.ghost_guards_idle",
+    "sounds": [
+      "fantastikmod:ghost_guards_idle2"
+    ]
+  },
+  "ghost_guards_walk1": {
+    "subtitle": "sounds.fantastikmod.ghost_guards_walk",
+    "sounds": [
+      "fantastikmod:ghost_guards_walk1"
+    ]
+  },
+  "ghost_guards_walk2": {
+    "subtitle": "sounds.fantastikmod.ghost_guards_walk",
+    "sounds": [
+      "fantastikmod:ghost_guards_walk2"
+    ]
+  },
+  "ghost_guards_attack": {
+    "subtitle": "sounds.fantastikmod.ghost_guards_attack",
+    "sounds": [
+      "fantastikmod:ghost_guards_attack"
+    ]
   }
 }

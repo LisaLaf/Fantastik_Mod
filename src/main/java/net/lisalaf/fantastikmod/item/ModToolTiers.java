@@ -15,21 +15,21 @@ import java.util.List;
 public class ModToolTiers {
     @SuppressWarnings("removal")
     public static final Tier AURIPIGMENT = TierSortingRegistry.registerTier(
-            new ForgeTier(2, 280, 6.0f, 2.0f, 14, // Похоже на железо
+            new ForgeTier(2, 280, 6.0f, 2.0f, 14,
                     ModTags.Blocks.NEEDS_AURIPIGMENT_TOOL, () -> Ingredient.of(ModItems.AURIPIGMENT.get())),
             new ResourceLocation(fantastikmod.MOD_ID, "auripigment"), List.of(Tiers.IRON), List.of());
 
     public static final ForgeTier SILVER = new ForgeTier(
-            2,                      // Уровень (железо = 2)
-            220,                    // Прочность (железо = 250) - чуть больше
-            4.0f,                   // Скорость копания (железо = 6.0) - чуть быстрее
-            2.0f,                   // Базовый урон (железо = 2.0) - повышен против нежити
-            18,                     // Зачаровываемость
-            ModTags.Blocks.NEEDS_SILVER_TOOL, // Тэг для блоков
+            2,
+            220,
+            4.0f,
+            2.0f,
+            18,
+            ModTags.Blocks.NEEDS_SILVER_TOOL,
             () -> Ingredient.of(ModItems.SILVER_INGOT.get()));
 
     public static final Tier GEM_MOON = TierSortingRegistry.registerTier(
-            new ForgeTier(3, 1861, 8.0f, 4.0f, 15, // Уровень выше алмаза (3 вместо 3, но с лучшими параметрами)
+            new ForgeTier(3, 1861, 8.0f, 4.0f, 15,
                     ModTags.Blocks.NEEDS_GEM_MOON_TOOL, () -> Ingredient.of(ModItems.GEM_MOON.get())),
             new ResourceLocation(fantastikmod.MOD_ID, "gem_moon"),
             List.of(Tiers.DIAMOND),

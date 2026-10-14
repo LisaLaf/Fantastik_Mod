@@ -8,10 +8,7 @@
           "name": "minecraft:book",
           "weight": 25,
           "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": { "min": 1, "max": 5 }
-            }
+            { "function": "minecraft:set_count", "count": { "min": 1, "max": 5 } }
           ]
         },
         {
@@ -19,10 +16,7 @@
           "name": "minecraft:gold_nugget",
           "weight": 20,
           "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": { "min": 1, "max": 8 }
-            }
+            { "function": "minecraft:set_count", "count": { "min": 1, "max": 8 } }
           ]
         },
         {
@@ -30,10 +24,7 @@
           "name": "minecraft:gold_ingot",
           "weight": 10,
           "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": { "min": 1, "max": 3 }
-            }
+            { "function": "minecraft:set_count", "count": { "min": 1, "max": 3 } }
           ]
         },
         {
@@ -41,11 +32,18 @@
           "name": "minecraft:paper",
           "weight": 20,
           "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": { "min": 1, "max": 8 }
-            }
+            { "function": "minecraft:set_count", "count": { "min": 1, "max": 8 } }
           ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:note_king",
+          "weight": 1
         }
       ]
     }

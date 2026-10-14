@@ -17,6 +17,16 @@
       ]
     },
     {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fantastikmod:note_dragon_scholar",
+          "weight": 1
+        }
+      ]
+    },
+    {
       "rolls": 2,
       "entries": [
         {

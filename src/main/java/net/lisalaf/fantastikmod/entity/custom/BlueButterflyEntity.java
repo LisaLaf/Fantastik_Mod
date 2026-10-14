@@ -42,10 +42,7 @@ public class BlueButterflyEntity extends FlyingMob implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-
-        // Просто летает - движек Minecraft сам обрабатывает полет
         if (!this.level().isClientSide) {
-            // Случайное движение
             this.setDeltaMovement(
                     this.getDeltaMovement().add(
                             (this.random.nextDouble() - 0.5) * 0.1,
@@ -56,23 +53,18 @@ public class BlueButterflyEntity extends FlyingMob implements GeoEntity {
         }
     }
 
-    // Геттер для размера
     public float getScale() {
         return this.entityData.get(DATA_SCALE);
     }
-
-    // Установка случайного размера при спавне
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
         if (!this.level().isClientSide) {
-            // Случайный размер от 0.5 до 1.5
-            float scale = 0.5f + this.random.nextFloat() * 1.0f;
+            float scale = 0.2f + this.random.nextFloat() * 1.6f;
             this.entityData.set(DATA_SCALE, scale);
         }
     }
 
-    // Сохранение и загрузка размера
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
@@ -87,14 +79,12 @@ public class BlueButterflyEntity extends FlyingMob implements GeoEntity {
         }
     }
 
-    // ГЕОЛАЙБ МЕТОДЫ
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     private PlayState predicate(AnimationState<BlueButterflyEntity> event) {
-        // Используйте правильное имя анимации - просто "fly"
         event.getController().setAnimation(RawAnimation.begin()
                 .then("fly", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
@@ -107,11 +97,11 @@ public class BlueButterflyEntity extends FlyingMob implements GeoEntity {
 
     @Override
     public boolean isNoGravity() {
-        return true; // Бабочка всегда летает
+        return true;
     }
 
     @Override
     public boolean removeWhenFarAway(double distance) {
-        return false; // Не деспавнится
+        return false;
     }
 }

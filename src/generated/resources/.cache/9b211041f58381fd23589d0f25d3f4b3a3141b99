@@ -1,4 +1,4 @@
-// 1.20.1	2026-07-20T02:32:44.1667021	Item Models: fantastikmod
+// 1.20.1	2026-10-08T03:53:09.6073137	Item Models: fantastikmod
 e4f952957c58594f63cdf5e2e6b57e821a387f1a assets/fantastikmod/models/item/ash_block.json
 5d412a10e5413e91a5554c1c9341e44e9796ee0b assets/fantastikmod/models/item/auripigment.json
 d1d02a227b9f0309c4fd0d949cbd418c5b0c8651 assets/fantastikmod/models/item/auripigment_block.json
@@ -39,6 +39,7 @@ a5916516f2679db5276c4143f046e2142a13cb9c assets/fantastikmod/models/item/kitsune
 5f93cbd347b75efdef33498de942ccabf42353b2 assets/fantastikmod/models/item/kitsune_soul_mask_0.json
 dcda53ca15bc2f16e95f27930a25885f4ad9f6fe assets/fantastikmod/models/item/kitsune_soul_mask_1.json
 241192a794c9b376334a997274c8b39da3d6238b assets/fantastikmod/models/item/kitsune_soul_mask_2.json
+266aee6aa68244c26efc7fd4266878504fbd1ea8 assets/fantastikmod/models/item/kitsune_soul_tail.json
 ef19f4b69e17d1b6154e43a21fbb4e0556853ec4 assets/fantastikmod/models/item/kitsune_statue.json
 ee1601a7e0acd3c570cf3077104b307dc2dfef57 assets/fantastikmod/models/item/large_torch.json
 660870b3f04cf5a97e25439522a9f1ca571dda92 assets/fantastikmod/models/item/leggings_fur_ice_dragon.json
@@ -103,6 +104,9 @@ d53b1d41671941d96f0e4b1d6b87b8b6c07a21dd assets/fantastikmod/models/item/moon_sa
 923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_4.json
 923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_5.json
 923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_6.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_dragon_scholar.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_king.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/fantastikmod/models/item/note_princess.json
 a9b1c1ada4aec7285f52cf4c378c42c4466447fb assets/fantastikmod/models/item/paper_lantern.json
 91af76f985cd5ff820d469103ccb3b58072a9dfc assets/fantastikmod/models/item/petrified_large_egg.json
 830fdbc079025f9ca7ee9776a137c0905c217924 assets/fantastikmod/models/item/rice.json

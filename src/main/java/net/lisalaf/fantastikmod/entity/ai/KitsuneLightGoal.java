@@ -25,7 +25,6 @@ import java.util.List;
 
 public class KitsuneLightGoal {
 
-    // === ЦЕЛЬ АТАКИ ===
     public static class KitsuneAttackGoal extends MeleeAttackGoal {
         private final KitsuneLightEntity kitsune;
 
@@ -104,7 +103,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ЗАЩИТА ВЛАДЕЛЬЦА ===
     public static class DefendOwnerGoal extends TargetGoal {
         private final KitsuneLightEntity kitsune;
         private LivingEntity ownerLastHurt;
@@ -157,7 +155,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ИЗБЕГАНИЕ КРИПЕРА ===
     public static class AvoidCreeperGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private Creeper avoidTarget;
@@ -259,7 +256,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ПОБЕГ ПРИ НИЗКОМ HP ===
     public static class KitsuneEscapeGoal extends PanicGoal {
         public KitsuneEscapeGoal(KitsuneLightEntity kitsune, double speed) {
             super(kitsune, speed);
@@ -274,7 +270,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ЦЕЛЬ ПРИ АТАКЕ НА КИЦУНЭ ===
     public static class KitsuneHurtByTargetGoal extends HurtByTargetGoal {
         public KitsuneHurtByTargetGoal(KitsuneLightEntity kitsune) {
             super(kitsune);
@@ -290,7 +285,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ЗАЩИТА ЖИТЕЛЕЙ ===
     public static class DefendVillagersGoal extends Goal {
         private final KitsuneLightEntity kitsune;
 
@@ -343,7 +337,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ЗАЩИТА ИГРОКОВ ===
     public static class ProtectPlayersGoal extends Goal {
         private final KitsuneLightEntity kitsune;
 
@@ -396,7 +389,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === АВТОМАТИЧЕСКАЯ АТАКА МОНСТРОВ ===
     public static class KitsuneDefendVillagersTargetGoal extends NearestAttackableTargetGoal<Monster> {
         public KitsuneDefendVillagersTargetGoal(KitsuneLightEntity kitsune) {
             super(kitsune, Monster.class, 20, true, false, null);
@@ -422,7 +414,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === СОЦИАЛЬНОЕ ПОВЕДЕНИЕ ===
     public static class SocialBehaviorGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private int laughCheckCooldown = 0;
@@ -476,7 +467,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === СЛЕДОВАНИЕ ЗА ВЛАДЕЛЬЦЕМ ===
     public static class FollowOwnerGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private LivingEntity owner;
@@ -542,7 +532,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === РЕЖИМ БРОДЯЖНИЧЕСТВА ===
     public static class WanderGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private final double speedModifier;
@@ -583,7 +572,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === ВЗАИМОДЕЙСТВИЕ С ЖИТЕЛЯМИ ===
     public static class InteractWithVillagersGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private Villager villagerTarget;
@@ -649,7 +637,6 @@ public class KitsuneLightGoal {
         }
     }
 
-    // === СИДЕНИЕ (для диких) ===
     public static class SitGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private int sitCheckCooldown;
@@ -690,7 +677,6 @@ public class KitsuneLightGoal {
         public void stop() {}
     }
 
-    // === СОН (для диких) ===
     public static class SleepGoal extends Goal {
         private final KitsuneLightEntity kitsune;
         private int sleepCheckCooldown;

@@ -1,19 +1,17 @@
 {
-  "parent": "fantastikmod:root",
+  "parent": "fantastikmod:enter_biome",
   "criteria": {
-    "tame_moon_deer": {
+    "has_moonmascot": {
       "conditions": {
-        "entity": [
+        "items": [
           {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "fantastikmod:moon_deer"
-            }
+            "items": [
+              "fantastikmod:moonmascot"
+            ]
           }
         ]
       },
-      "trigger": "minecraft:tame_animal"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -24,7 +22,7 @@
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "fantastikmod:egg_moon_deer"
+      "item": "fantastikmod:moonmascot"
     },
     "show_toast": true,
     "title": {
@@ -33,7 +31,7 @@
   },
   "requirements": [
     [
-      "tame_moon_deer"
+      "has_moonmascot"
     ]
   ],
   "sends_telemetry_event": true
